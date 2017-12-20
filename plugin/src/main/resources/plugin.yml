@@ -1,0 +1,33 @@
+name: EmojiChat
+version: 1.0
+description: Adds emojis to your chat
+author: RadBuilder
+website: "https://github.com/RadBuilder/EmojiChat/"
+main: io.github.radbuilder.emojichat.EmojiChat
+
+commands:
+  emojichat:
+    description: The main emojichat command
+    aliases: ec
+    usage: /<command>
+
+permissions:
+  emojichat.*:
+    description: Allows you to use all of the EmojiChat commands and features
+    children:
+      emojichat.help: true
+      emojichat.reload: true
+      emojichat.list: true
+      emojichat.use: true
+  emojichat.help:
+    description: Allows you to open the emojichat help menu
+    default: op
+  emojichat.reload:
+    description: Allows you to reload the config
+    default: op
+  emojichat.list:
+    description: Allows you to list all of the emojis
+    default: op
+  emojichat.use:
+    description: Allows you to use emojis in chat
+    default: op
