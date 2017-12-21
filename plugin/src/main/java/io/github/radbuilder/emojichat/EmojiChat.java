@@ -16,20 +16,16 @@ public class EmojiChat extends JavaPlugin {
 	 * Stores the shortcuts and the emojis with the shortcut as the key and emoji as the value.
 	 */
 	HashMap<String, String> emojiMap;
+	/**
+	 * The ResourcePack URL.
+	 */
+	final String PACK_URL = "https://github.com/RadBuilder/EmojiChat/releases/download/v1.1/EmojiChat.ResourcePack.v1.1.zip";
 	
 	@Override
 	public void onEnable() {
 		emojiMap = new HashMap<>();
 		
-		// Save the config if there isn't one already
-		saveDefaultConfig();
-		
-		// Load the emoji list from the config
-		if (!loadList()) {
-			getLogger().warning("There was an issue with your config: " + emojiMap.size() + " shortcuts were loaded.");
-		} else {
-			getLogger().info("Config loaded without any issues.");
-		}
+		loadList();
 		
 		// Register the chat listener
 		Bukkit.getPluginManager().registerEvents(new EmojiChatListener(this), this);
@@ -41,24 +37,38 @@ public class EmojiChat extends JavaPlugin {
 	}
 	
 	/**
-	 * Loads the emojis and their shortcuts from the config and puts them into the {@link #emojiMap}.
-	 *
-	 * @return True if the emojis and their shortcuts were successfully loaded, false otherwise.
+	 * Loads the emojis and their shortcuts into the {@link #emojiMap}.
 	 */
-	boolean loadList() {
-		// Remove previous items in case the user is reloading the config
-		emojiMap.clear();
-		
-		try {
-			for (String item : getConfig().getStringList("emojis")) {
-				String[] line = item.split(" "); // Split by spaces
-				for (int i = 1; i < line.length; i++) {
-					emojiMap.put(line[i], line[0]);
-				}
-			}
-		} catch (Exception e) {
-			return false;
-		}
-		return true;
+	private void loadList() {
+		emojiMap.put(":100:", "가");
+		emojiMap.put(":1234:", "각");
+		emojiMap.put(":grinning:", "갂");
+		emojiMap.put(":grimacing:", "갃");
+		emojiMap.put(":grin:", "간");
+		emojiMap.put(":joy:", "갅");
+		emojiMap.put(":rofl:", "갆");
+		emojiMap.put(":smiley:", "갇");
+		emojiMap.put(":smile:", "갈");
+		emojiMap.put(":sweat_smile:", "갉");
+		emojiMap.put(":laughing:", "갊");
+		emojiMap.put(":innocent:", "갋");
+		emojiMap.put(":wink:", "갌");
+		emojiMap.put(":blush:", "갍");
+		emojiMap.put(":slightly_smiling_face:", "갎");
+		emojiMap.put(":upside_down_face:", "갏");
+		emojiMap.put(":relaxed:", "감");
+		emojiMap.put(":yum:", "갑");
+		emojiMap.put(":relieved:", "값");
+		emojiMap.put(":heart_eyes:", "갓");
+		emojiMap.put(":kissing_heart:", "갔");
+		emojiMap.put(":kissing:", "강");
+		emojiMap.put(":kissing_smiling_eyes:", "갖");
+		emojiMap.put(":kissing_closed_eyes:", "갗");
+		emojiMap.put(":stuck_out_tongue_winking_eye:", "갘");
+		emojiMap.put(":stuck_out_tongue_closed_eyes:", "같");
+		emojiMap.put(":stuck_out_tongue:", "갚");
+		emojiMap.put(":money_mouth_face:", "갛");
+		emojiMap.put(":nerd_face:", "개");
+		emojiMap.put(":sunglasses:", "객");
 	}
 }

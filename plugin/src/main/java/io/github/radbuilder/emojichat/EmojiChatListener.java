@@ -1,8 +1,10 @@
 package io.github.radbuilder.emojichat;
 
+import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 
 /**
  * EmojiChat listener class.
@@ -23,6 +25,15 @@ class EmojiChatListener implements Listener {
 	 */
 	EmojiChatListener(EmojiChat plugin) {
 		this.plugin = plugin;
+	}
+	
+	@EventHandler
+	void onJoin(PlayerJoinEvent event) {
+		Bukkit.getScheduler().runTaskLater(plugin, () -> {
+			if (event.getPlayer().hasPermission("emojichat.see")) { // If the player can see emojis
+				event.getPlayer().setResourcePack(plugin.PACK_URL);
+			}
+		}, 20L); // Give time for the player to join
 	}
 	
 	@EventHandler
