@@ -58,7 +58,7 @@ class EmojiChatListener implements Listener {
 	void onInventoryClick(InventoryClickEvent event) {
 		if (event.getInventory().getTitle().contains("Emoji List")) {
 			event.setCancelled(true);
-			if (event.getCurrentItem().getType() == Material.DIAMOND && event.getCurrentItem().hasItemMeta()
+			if (event.getCurrentItem() != null && event.getCurrentItem().getType() == Material.DIAMOND && event.getCurrentItem().hasItemMeta()
 					&& event.getCurrentItem().getItemMeta().hasDisplayName()) { // Make sure the item clicked is a page change item
 				try {
 					int currentPage = Integer.parseInt(event.getInventory().getTitle().split(" ")[3]) - 1; // Get the page number from the title
