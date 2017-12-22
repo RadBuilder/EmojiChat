@@ -19,7 +19,7 @@ public class EmojiChat extends JavaPlugin {
 	/**
 	 * The ResourcePack URL.
 	 */
-	final String PACK_URL = "https://github.com/RadBuilder/EmojiChat/releases/download/v1.1/EmojiChat.ResourcePack.v1.1.zip";
+	final String PACK_URL = "https://github.com/RadBuilder/EmojiChat/releases/download/v1.2/EmojiChat.ResourcePack.v1.2.zip";
 	
 	@Override
 	public void onEnable() {

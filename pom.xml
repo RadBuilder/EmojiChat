@@ -7,7 +7,7 @@
     <groupId>io.github.radbuilder</groupId>
     <name>EmojiChat Parent</name>
     <artifactId>emojichat-parent</artifactId>
-    <version>1.1</version>
+    <version>1.2</version>
     <packaging>pom</packaging>
 
     <modules>
