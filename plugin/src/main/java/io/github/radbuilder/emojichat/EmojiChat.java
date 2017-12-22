@@ -17,6 +17,10 @@ public class EmojiChat extends JavaPlugin {
 	 */
 	HashMap<String, String> emojiMap;
 	/**
+	 * The EmojiChat GUI.
+	 */
+	EmojiChatGui emojiChatGui;
+	/**
 	 * The ResourcePack URL.
 	 */
 	final String PACK_URL = "https://github.com/RadBuilder/EmojiChat/releases/download/v1.2/EmojiChat.ResourcePack.v1.2.zip";
@@ -24,6 +28,7 @@ public class EmojiChat extends JavaPlugin {
 	@Override
 	public void onEnable() {
 		emojiMap = new HashMap<>();
+		emojiChatGui = new EmojiChatGui(this);
 		
 		loadList();
 		
