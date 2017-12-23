@@ -28,12 +28,17 @@ public class EmojiChat extends JavaPlugin {
 	 * The ResourcePack URL.
 	 */
 	final String PACK_URL = "https://github.com/RadBuilder/EmojiChat/releases/download/v1.2/EmojiChat.ResourcePack.v1.2.zip";
+	/**
+	 * The number of emojis used, sent for metrics.
+	 */
+	int emojisUsed;
 	
 	@Override
 	public void onEnable() {
 		emojiMap = new HashMap<>();
 		emojiChatGui = new EmojiChatGui(this);
 		updateChecker = new EmojiChatUpdateChecker(this);
+		emojisUsed = 0;
 		
 		loadList();
 		
@@ -52,6 +57,13 @@ public class EmojiChat extends JavaPlugin {
 				getLogger().info("Current version: " + updateChecker.currentVersion + ". Latest version: " + updateChecker.latestVersion + ".");
 			}
 		});
+		
+		Metrics metrics = new Metrics(this); // Start Metrics
+		metrics.addCustomChart(new Metrics.SingleLineChart("emojisUsed", () -> {
+			int temp = emojisUsed;
+			emojisUsed = 0; // Reset the number of emojis used when this is called
+			return temp;
+		}));
 	}
 	
 	/**

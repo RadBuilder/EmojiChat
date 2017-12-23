@@ -1,5 +1,6 @@
 package io.github.radbuilder.emojichat;
 
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -9,6 +10,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.util.StringUtil;
 
 /**
  * EmojiChat listener class.
@@ -59,6 +61,7 @@ class EmojiChatListener implements Listener {
 		
 		// Replace shortcuts with emojis
 		for (String key : plugin.emojiMap.keySet()) {
+			plugin.emojisUsed += StringUtils.countMatches(message, key);
 			message = message.replace(key, plugin.emojiMap.get(key));
 		}
 		
