@@ -21,6 +21,10 @@ public class EmojiChat extends JavaPlugin {
 	 */
 	EmojiChatGui emojiChatGui;
 	/**
+	 * The EmojiChat update checker.
+	 */
+	EmojiChatUpdateChecker updateChecker;
+	/**
 	 * The ResourcePack URL.
 	 */
 	final String PACK_URL = "https://github.com/RadBuilder/EmojiChat/releases/download/v1.2/EmojiChat.ResourcePack.v1.2.zip";
@@ -29,6 +33,7 @@ public class EmojiChat extends JavaPlugin {
 	public void onEnable() {
 		emojiMap = new HashMap<>();
 		emojiChatGui = new EmojiChatGui(this);
+		updateChecker = new EmojiChatUpdateChecker(this);
 		
 		loadList();
 		
@@ -39,6 +44,14 @@ public class EmojiChat extends JavaPlugin {
 		EmojiChatCommand emojiChatCommand = new EmojiChatCommand(this);
 		getCommand("emojichat").setExecutor(emojiChatCommand);
 		getCommand("ec").setExecutor(emojiChatCommand);
+		
+		Bukkit.getScheduler().runTaskAsynchronously(this, () -> {
+			updateChecker.checkForUpdates();
+			if (updateChecker.updatesAvailable) {
+				getLogger().info("An update for EmojiChat is available.");
+				getLogger().info("Current version: " + updateChecker.currentVersion + ". Latest version: " + updateChecker.latestVersion + ".");
+			}
+		});
 	}
 	
 	/**

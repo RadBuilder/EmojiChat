@@ -3,6 +3,7 @@ package io.github.radbuilder.emojichat;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -32,6 +33,16 @@ class EmojiChatListener implements Listener {
 	
 	@EventHandler
 	void onJoin(PlayerJoinEvent event) {
+		Player player = event.getPlayer();
+		
+		// Send the player an alert if there's an update available
+		if (player.hasPermission("emojichat.updates") && plugin.updateChecker.updatesAvailable) {
+			player.sendMessage(ChatColor.AQUA + "An update for EmojiChat is available.");
+			player.sendMessage(ChatColor.AQUA + "Current version: " + ChatColor.GOLD + plugin.updateChecker.currentVersion
+					+ ChatColor.AQUA + ". Latest version: " + ChatColor.GOLD + plugin.updateChecker.latestVersion + ChatColor.AQUA + ".");
+		}
+		
+		// Send the player the resource pack
 		Bukkit.getScheduler().runTaskLater(plugin, () -> {
 			if (event.getPlayer().hasPermission("emojichat.see")) { // If the player can see emojis
 				event.getPlayer().setResourcePack(plugin.PACK_URL);
