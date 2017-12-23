@@ -21,7 +21,7 @@ class EmojiChatUpdateChecker {
 	/**
 	 * If an update is available.
 	 */
-	boolean updatesAvailable;
+	boolean updateAvailable;
 	/**
 	 * The latest version of EmojiChat.
 	 */
@@ -36,6 +36,9 @@ class EmojiChatUpdateChecker {
 		currentVersion = plugin.getDescription().getVersion();
 	}
 	
+	/**
+	 * Checks if updates are available.
+	 */
 	void checkForUpdates() {
 		try {
 			URL url = new URL("https://api.spiget.org/v2/resources/50955/versions?size=1&sort=-id");
@@ -50,9 +53,9 @@ class EmojiChatUpdateChecker {
 			Version[] version = gson.fromJson(reader, Version[].class);
 			latestVersion = version[0].name;
 			
-			updatesAvailable = !currentVersion.equalsIgnoreCase(latestVersion);
+			updateAvailable = !currentVersion.equalsIgnoreCase(latestVersion);
 		} catch (Exception ignored) { // Something happened, not sure what (possibly no internet connection), so no updates available
-			updatesAvailable = false;
+			updateAvailable = false;
 		}
 	}
 }

@@ -47,7 +47,7 @@ public class EmojiChat extends JavaPlugin {
 		
 		Bukkit.getScheduler().runTaskAsynchronously(this, () -> {
 			updateChecker.checkForUpdates();
-			if (updateChecker.updatesAvailable) {
+			if (updateChecker.updateAvailable) {
 				getLogger().info("An update for EmojiChat is available.");
 				getLogger().info("Current version: " + updateChecker.currentVersion + ". Latest version: " + updateChecker.latestVersion + ".");
 			}

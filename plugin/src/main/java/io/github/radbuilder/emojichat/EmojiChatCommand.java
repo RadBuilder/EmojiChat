@@ -45,6 +45,7 @@ class EmojiChatCommand implements CommandExecutor {
 				
 				sender.sendMessage(ChatColor.AQUA + "---------- EmojiChat Help ----------");
 				sender.sendMessage(ChatColor.GREEN + "/emojichat help: " + ChatColor.AQUA + "Opens up this help menu.");
+				sender.sendMessage(ChatColor.GREEN + "/emojichat resourcepack: " + ChatColor.AQUA + "Re-sends the resourcepack.");
 				sender.sendMessage(ChatColor.GREEN + "/emojichat list: " + ChatColor.AQUA + "Lists all of the emojis configured.");
 				return true;
 			case "resourcepack":
