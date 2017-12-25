@@ -10,7 +10,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.util.StringUtil;
 
 /**
  * EmojiChat listener class.
@@ -47,7 +46,7 @@ class EmojiChatListener implements Listener {
 		// Send the player the resource pack
 		Bukkit.getScheduler().runTaskLater(plugin, () -> {
 			if (player.hasPermission("emojichat.see")) { // If the player can see emojis
-				player.setResourcePack(plugin.PACK_URL);
+				player.setResourcePack(plugin.PACK_URL, plugin.PACK_SHA1);
 			}
 		}, 20L); // Give time for the player to join
 	}

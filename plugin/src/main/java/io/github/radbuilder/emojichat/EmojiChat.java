@@ -1,5 +1,6 @@
 package io.github.radbuilder.emojichat;
 
+import com.google.common.io.BaseEncoding;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -27,7 +28,11 @@ public class EmojiChat extends JavaPlugin {
 	/**
 	 * The ResourcePack URL.
 	 */
-	final String PACK_URL = "https://github.com/RadBuilder/EmojiChat/releases/download/v1.2/EmojiChat.ResourcePack.v1.2.zip";
+	final String PACK_URL = "https://github.com/RadBuilder/EmojiChat/releases/download/v1.3/EmojiChat.ResourcePack.v1.3.zip";
+	/**
+	 * The SHA1 sum of the ResourcePack as a byte array.
+	 */
+	byte[] PACK_SHA1;
 	/**
 	 * The number of emojis used, sent for metrics.
 	 */
@@ -39,6 +44,8 @@ public class EmojiChat extends JavaPlugin {
 		emojiChatGui = new EmojiChatGui(this);
 		updateChecker = new EmojiChatUpdateChecker(this);
 		emojisUsed = 0;
+		
+		PACK_SHA1 = BaseEncoding.base16().lowerCase().decode("446369bae955920c20c6c9441cb1f47f89338c19"); // Allows applying a cached version of the ResourcePack if available
 		
 		loadList();
 		
