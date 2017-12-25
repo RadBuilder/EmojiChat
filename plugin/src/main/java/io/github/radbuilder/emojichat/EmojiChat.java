@@ -3,6 +3,7 @@ package io.github.radbuilder.emojichat;
 import com.google.common.io.BaseEncoding;
 import io.github.radbuilder.emojichat.hooks.DiscordSrvHook;
 import io.github.radbuilder.emojichat.hooks.EmojiChatHook;
+import io.github.radbuilder.emojichat.hooks.MVdWPlaceholderApiHook;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -90,6 +91,9 @@ public class EmojiChat extends JavaPlugin {
 	private void loadHooks() {
 		if (Bukkit.getPluginManager().isPluginEnabled("DiscordSRV")) { // Hook DiscordSRV if installed
 			enabledHooks.add(new DiscordSrvHook(this));
+		}
+		if (Bukkit.getPluginManager().isPluginEnabled("MVdWPlaceholderAPI")) {
+			enabledHooks.add(new MVdWPlaceholderApiHook(this));
 		}
 	}
 	

@@ -33,6 +33,12 @@
             <id>repo-androkai</id>
             <url>https://repo.androkai.net/minecraft</url>
         </repository>
+        <!-- MVdWPlaceholderAPI -->
+        <repository>
+            <id>mvdw-software</id>
+            <name>MVdW Public Repositories</name>
+            <url>http://repo.mvdw-software.be/content/groups/public/</url>
+        </repository>
     </repositories>
 
     <build>
