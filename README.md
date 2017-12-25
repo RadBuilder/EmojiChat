@@ -1,6 +1,7 @@
 [![Build Status](https://travis-ci.org/RadBuilder/EmojiChat.svg?branch=master)](https://travis-ci.org/RadBuilder/EmojiChat)
 [![GitHub last commit](https://img.shields.io/github/last-commit/RadBuilder/EmojiChat.svg)](https://github.com/RadBuilder/EmojiChat/commits/master)
 [![version](https://img.shields.io/github/release/RadBuilder/EmojiChat.svg?colorB=1565C0)](https://github.com/RadBuilder/EmojiChat/releases/latest)
+[![Discord](https://discordapp.com/api/guilds/394749667226943489/widget.png)](https://discord.gg/faUbQ6B)
 [![view on SpigotMC](https://img.shields.io/badge/view%20on-spigotmc-orange.svg)](https://www.spigotmc.org/resources/emojichat.50955/)
 [![wiki](https://img.shields.io/badge/go%20to-wiki-blue.svg)](https://github.com/RadBuilder/EmojiChat/wiki)
 ## EmojiChat
