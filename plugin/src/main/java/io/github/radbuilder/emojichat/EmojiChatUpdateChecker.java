@@ -1,6 +1,8 @@
 package io.github.radbuilder.emojichat;
 
-import com.google.gson.Gson;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -17,7 +19,7 @@ class EmojiChatUpdateChecker {
 	/**
 	 * The current version of EmojiChat.
 	 */
-	final String currentVersion;
+	final double currentVersion;
 	/**
 	 * If an update is available.
 	 */
@@ -25,7 +27,7 @@ class EmojiChatUpdateChecker {
 	/**
 	 * The latest version of EmojiChat.
 	 */
-	String latestVersion;
+	double latestVersion;
 	
 	/**
 	 * Creates the EmojiChat update checker class with the main class instance.
@@ -33,7 +35,7 @@ class EmojiChatUpdateChecker {
 	 * @param plugin The EmojiChat main class instance.
 	 */
 	EmojiChatUpdateChecker(EmojiChat plugin) {
-		currentVersion = plugin.getDescription().getVersion();
+		currentVersion = Double.parseDouble(plugin.getDescription().getVersion());
 	}
 	
 	/**
@@ -49,26 +51,13 @@ class EmojiChatUpdateChecker {
 			InputStream inputStream = connection.getInputStream();
 			InputStreamReader reader = new InputStreamReader(inputStream);
 			
-			Gson gson = new Gson();
-			Version[] version = gson.fromJson(reader, Version[].class);
-			latestVersion = version[0].name;
+			JSONArray value = (JSONArray) JSONValue.parseWithException(reader);
 			
-			updateAvailable = !currentVersion.equalsIgnoreCase(latestVersion);
+			latestVersion = Double.parseDouble(((JSONObject) value.get(value.size() - 1)).get("name").toString());
+			
+			updateAvailable = currentVersion < latestVersion;
 		} catch (Exception ignored) { // Something happened, not sure what (possibly no internet connection), so no updates available
 			updateAvailable = false;
 		}
 	}
-}
-
-/**
- * EmojiChat version class.
- *
- * @author RadBuilder
- * @since 1.3
- */
-class Version {
-	/**
-	 * The name of the version (e.g. 1.1).
-	 */
-	String name;
 }
