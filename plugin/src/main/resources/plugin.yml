@@ -5,6 +5,8 @@ author: RadBuilder
 website: "https://github.com/RadBuilder/EmojiChat/"
 main: io.github.radbuilder.emojichat.EmojiChat
 
+softdepend: [DiscordSRV]
+
 commands:
   emojichat:
     description: The main emojichat command

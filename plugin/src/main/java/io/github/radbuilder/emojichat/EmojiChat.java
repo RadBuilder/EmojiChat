@@ -1,10 +1,14 @@
 package io.github.radbuilder.emojichat;
 
 import com.google.common.io.BaseEncoding;
+import io.github.radbuilder.emojichat.hooks.DiscordSrvHook;
+import io.github.radbuilder.emojichat.hooks.EmojiChatHook;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * EmojiChat main class.
@@ -37,17 +41,24 @@ public class EmojiChat extends JavaPlugin {
 	 * The number of emojis used, sent for metrics.
 	 */
 	int emojisUsed;
+	/**
+	 * List of enabled EmojiChat hooks.
+	 */
+	List<EmojiChatHook> enabledHooks;
 	
 	@Override
 	public void onEnable() {
 		emojiMap = new HashMap<>();
+		enabledHooks = new ArrayList<>();
 		emojiChatGui = new EmojiChatGui(this);
 		updateChecker = new EmojiChatUpdateChecker(this);
 		emojisUsed = 0;
 		
 		PACK_SHA1 = BaseEncoding.base16().lowerCase().decode("446369bae955920c20c6c9441cb1f47f89338c19"); // Allows applying a cached version of the ResourcePack if available
 		
-		loadList();
+		loadHooks(); // Load plugin hooks
+		
+		loadList(); // Load the emoji list
 		
 		// Register the chat listener
 		Bukkit.getPluginManager().registerEvents(new EmojiChatListener(this), this);
@@ -71,6 +82,23 @@ public class EmojiChat extends JavaPlugin {
 			emojisUsed = 0; // Reset the number of emojis used when this is called
 			return temp;
 		}));
+	}
+	
+	/**
+	 * Hooks into available plugins.
+	 */
+	private void loadHooks() {
+		if (Bukkit.getPluginManager().isPluginEnabled("DiscordSRV")) { // Hook DiscordSRV if installed
+			enabledHooks.add(new DiscordSrvHook(this));
+		}
+	}
+	
+	/**
+	 * Gets the {@link #emojiMap}.
+	 * @return The {@link #emojiMap}.
+	 */
+	public HashMap<String, String> getEmojiMap() {
+		return emojiMap;
 	}
 	
 	/**

@@ -15,9 +15,23 @@
     </modules>
 
     <repositories>
+        <!-- Spigot -->
         <repository>
             <id>spigot-repo</id>
             <url>https://hub.spigotmc.org/nexus/content/groups/public/</url>
+        </repository>
+        <!-- DiscordSRV -->
+        <!--<repository>-->
+            <!--<id>Scarsz-Jenkins</id>-->
+            <!--<url>http://ci.scarsz.me/plugin/repository/everything/</url>-->
+            <!--<snapshots>-->
+                <!--<enabled>true</enabled>-->
+                <!--<updatePolicy>always</updatePolicy>-->
+            <!--</snapshots>-->
+        <!--</repository>-->
+        <repository>
+            <id>repo-androkai</id>
+            <url>https://repo.androkai.net/minecraft</url>
         </repository>
     </repositories>
 

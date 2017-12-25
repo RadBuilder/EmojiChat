@@ -61,5 +61,11 @@
             <version>1.12.2-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>github.scarsz.discordsrv</groupId>
+            <artifactId>DiscordSRV</artifactId>
+            <version>LATEST</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 </project>
