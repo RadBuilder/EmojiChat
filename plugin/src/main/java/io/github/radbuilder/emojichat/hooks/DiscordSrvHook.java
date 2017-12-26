@@ -6,6 +6,7 @@ import github.scarsz.discordsrv.api.Subscribe;
 import github.scarsz.discordsrv.api.events.DiscordGuildMessagePostProcessEvent;
 import github.scarsz.discordsrv.api.events.GameChatMessagePreProcessEvent;
 import io.github.radbuilder.emojichat.EmojiChat;
+import org.apache.commons.lang.StringUtils;
 
 /**
  * DiscordSRV hook.
@@ -36,7 +37,7 @@ public class DiscordSrvHook implements EmojiChatHook {
 	}
 	
 	@Subscribe(priority = ListenerPriority.MONITOR)
-	public void onChatMessageFromInGame(GameChatMessagePreProcessEvent event) {
+	public void onChatMessageFromInGame(GameChatMessagePreProcessEvent event) { // From in-game to Discord
 		if (!event.getPlayer().hasPermission("emojichat.use"))
 			return; // Don't do anything if they don't have permission
 		
@@ -44,6 +45,7 @@ public class DiscordSrvHook implements EmojiChatHook {
 		
 		// Replace emojis with shortcuts
 		for (String key : plugin.getEmojiMap().keySet()) {
+			// Don't count metrics as it's already counted in the normal chat listener
 			message = message.replace(plugin.getEmojiMap().get(key), key);
 		}
 		
@@ -51,12 +53,13 @@ public class DiscordSrvHook implements EmojiChatHook {
 	}
 	
 	@Subscribe(priority = ListenerPriority.MONITOR)
-	public void onChatMessageFromDiscord(DiscordGuildMessagePostProcessEvent event) {
+	public void onChatMessageFromDiscord(DiscordGuildMessagePostProcessEvent event) { // From Discord to in-game
 		// TODO: Add permission checking for Discord
 		String message = event.getProcessedMessage();
 		
 		// Replace shortcuts with emojis
 		for (String key : plugin.getEmojiMap().keySet()) {
+			plugin.emojisUsed += StringUtils.countMatches(message, key); // Count metrics
 			message = message.replace(key, plugin.getEmojiMap().get(key));
 		}
 		

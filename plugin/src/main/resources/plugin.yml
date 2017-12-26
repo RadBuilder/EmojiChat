@@ -5,7 +5,7 @@ author: RadBuilder
 website: "https://github.com/RadBuilder/EmojiChat/"
 main: io.github.radbuilder.emojichat.EmojiChat
 
-softdepend: [DiscordSRV]
+softdepend: [DiscordSRV, MVdWPlaceholderAPI, PlaceholderAPI]
 
 commands:
   emojichat:
@@ -21,6 +21,7 @@ permissions:
       emojichat.see: true
       emojichat.list: true
       emojichat.use: true
+      emojichat.updates: true
   emojichat.help:
     description: Allows you to open the emojichat help menu
     default: op
@@ -32,4 +33,7 @@ permissions:
     default: op
   emojichat.use:
     description: Allows you to use emojis in chat
+    default: op
+  emojichat.updates:
+    description: Allows you to recieve join notifications when an update is available for EmojiChat
     default: op

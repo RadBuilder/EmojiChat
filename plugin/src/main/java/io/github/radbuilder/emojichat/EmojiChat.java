@@ -11,6 +11,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * EmojiChat main class.
@@ -42,7 +43,7 @@ public class EmojiChat extends JavaPlugin {
 	/**
 	 * The number of emojis used, sent for metrics.
 	 */
-	int emojisUsed;
+	public int emojisUsed;
 	/**
 	 * List of enabled EmojiChat hooks.
 	 */
@@ -57,8 +58,6 @@ public class EmojiChat extends JavaPlugin {
 		emojisUsed = 0;
 		
 		PACK_SHA1 = BaseEncoding.base16().lowerCase().decode("446369bae955920c20c6c9441cb1f47f89338c19"); // Allows applying a cached version of the ResourcePack if available
-		
-		loadHooks(); // Load plugin hooks
 		
 		loadList(); // Load the emoji list
 		
@@ -84,6 +83,8 @@ public class EmojiChat extends JavaPlugin {
 			emojisUsed = 0; // Reset the number of emojis used when this is called
 			return temp;
 		}));
+		
+		loadHooks(metrics); // Load plugin hooks
 	}
 	
 	@Override
@@ -97,8 +98,10 @@ public class EmojiChat extends JavaPlugin {
 	
 	/**
 	 * Hooks into available plugins.
+	 *
+	 * @param metrics {@link io.github.radbuilder.emojichat.Metrics} to gather information on what hooks are being used.
 	 */
-	private void loadHooks() {
+	private void loadHooks(Metrics metrics) {
 		if (Bukkit.getPluginManager().isPluginEnabled("DiscordSRV")) { // Hook DiscordSRV if installed
 			enabledHooks.add(new DiscordSrvHook(this));
 		}
@@ -108,10 +111,23 @@ public class EmojiChat extends JavaPlugin {
 		if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
 			enabledHooks.add(new PlaceholderApiHook(this));
 		}
+		
+		metrics.addCustomChart(new Metrics.AdvancedPie("usedHooks", () -> {
+			Map<String, Integer> usedHooksMap = new HashMap<>();
+			if (enabledHooks.size() < 1) {
+				usedHooksMap.put("None", 1);
+			} else {
+				for (EmojiChatHook hook : enabledHooks) {
+					usedHooksMap.put(hook.getName(), 1);
+				}
+			}
+			return usedHooksMap;
+		}));
 	}
 	
 	/**
 	 * Gets the {@link #emojiMap}.
+	 *
 	 * @return The {@link #emojiMap}.
 	 */
 	public HashMap<String, String> getEmojiMap() {
