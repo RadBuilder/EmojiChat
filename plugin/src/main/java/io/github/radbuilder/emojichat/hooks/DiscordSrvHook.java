@@ -77,4 +77,10 @@ public class DiscordSrvHook implements EmojiChatHook {
 	public EmojiChatHookType getHookType() {
 		return EmojiChatHookType.DISCORDSRV;
 	}
+	
+	@Override
+	public void disable() {
+		enabled = false;
+		DiscordSRV.api.unsubscribe(this);
+	}
 }

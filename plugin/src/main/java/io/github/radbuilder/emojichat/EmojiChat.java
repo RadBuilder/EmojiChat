@@ -86,6 +86,15 @@ public class EmojiChat extends JavaPlugin {
 		}));
 	}
 	
+	@Override
+	public void onDisable() {
+		for (EmojiChatHook hook : enabledHooks) { // Disables enabled hooks, if any
+			hook.disable();
+		}
+		enabledHooks.clear();
+		emojiMap.clear();
+	}
+	
 	/**
 	 * Hooks into available plugins.
 	 */

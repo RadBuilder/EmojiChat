@@ -27,4 +27,9 @@ public interface EmojiChatHook {
 	 * @return The {@link io.github.radbuilder.emojichat.hooks.EmojiChatHookType}.
 	 */
 	EmojiChatHookType getHookType();
+	
+	/**
+	 * Disables/unhooks the hook.
+	 */
+	void disable();
 }

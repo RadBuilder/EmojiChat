@@ -3,6 +3,12 @@ package io.github.radbuilder.emojichat.hooks;
 import be.maximvdw.placeholderapi.PlaceholderAPI;
 import io.github.radbuilder.emojichat.EmojiChat;
 
+/**
+ * MVdWPlaceholderAPI hook.
+ *
+ * @author RadBuilder
+ * @since 1.4
+ */
 public class MVdWPlaceholderApiHook implements EmojiChatHook {
 	/**
 	 * If this hook is enabled.
@@ -37,5 +43,10 @@ public class MVdWPlaceholderApiHook implements EmojiChatHook {
 	@Override
 	public EmojiChatHookType getHookType() {
 		return EmojiChatHookType.MVDWPLACEHOLDERAPI;
+	}
+	
+	@Override
+	public void disable() {
+		enabled = false;
 	}
 }

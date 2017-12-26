@@ -5,7 +5,17 @@ import me.clip.placeholderapi.PlaceholderAPI;
 import me.clip.placeholderapi.PlaceholderHook;
 import org.bukkit.entity.Player;
 
+/**
+ * PlaceholderAPI hook.
+ *
+ * @author RadBuilder
+ * @since 1.4
+ */
 public class PlaceholderApiHook implements EmojiChatHook {
+	/**
+	 * EmojiChat main class instance.
+	 */
+	private final EmojiChat plugin;
 	/**
 	 * If this hook is enabled.
 	 */
@@ -17,6 +27,7 @@ public class PlaceholderApiHook implements EmojiChatHook {
 	 * @param plugin The EmojiChat main class instance.
 	 */
 	public PlaceholderApiHook(EmojiChat plugin) {
+		this.plugin = plugin;
 		PlaceholderAPI.registerPlaceholderHook(plugin, new PlaceholderHook() {
 			@Override
 			public String onPlaceholderRequest(Player player, String identifier) {
@@ -45,5 +56,11 @@ public class PlaceholderApiHook implements EmojiChatHook {
 	@Override
 	public EmojiChatHookType getHookType() {
 		return EmojiChatHookType.PLACEHOLDERAPI;
+	}
+	
+	@Override
+	public void disable() {
+		enabled = false;
+		PlaceholderAPI.unregisterPlaceholderHook(plugin);
 	}
 }
