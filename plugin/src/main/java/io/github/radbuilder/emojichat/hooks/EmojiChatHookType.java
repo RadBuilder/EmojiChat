@@ -14,5 +14,9 @@ public enum EmojiChatHookType {
 	/**
 	 * MVdWPlaceholderAPI plugin: https://www.spigotmc.org/resources/mvdwplaceholderapi.11182/
 	 */
-	MVDWPLACEHOLDERAPI;
+	MVDWPLACEHOLDERAPI,
+	/**
+	 * PlaceholderAPI plugin: https://www.spigotmc.org/resources/placeholderapi.6245/
+	 */
+	PLACEHOLDERAPI;
 }

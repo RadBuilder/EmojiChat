@@ -4,6 +4,7 @@ import com.google.common.io.BaseEncoding;
 import io.github.radbuilder.emojichat.hooks.DiscordSrvHook;
 import io.github.radbuilder.emojichat.hooks.EmojiChatHook;
 import io.github.radbuilder.emojichat.hooks.MVdWPlaceholderApiHook;
+import io.github.radbuilder.emojichat.hooks.PlaceholderApiHook;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -94,6 +95,9 @@ public class EmojiChat extends JavaPlugin {
 		}
 		if (Bukkit.getPluginManager().isPluginEnabled("MVdWPlaceholderAPI")) {
 			enabledHooks.add(new MVdWPlaceholderApiHook(this));
+		}
+		if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
+			enabledHooks.add(new PlaceholderApiHook(this));
 		}
 	}
 	

@@ -10,7 +10,7 @@ public class MVdWPlaceholderApiHook implements EmojiChatHook {
 	private boolean enabled;
 	
 	/**
-	 * Creates the DiscordSRV hook with the main class instance.
+	 * Creates the MVdWPlaceholderAPI hook with the main class instance.
 	 *
 	 * @param plugin The EmojiChat main class instance.
 	 */

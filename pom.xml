@@ -39,6 +39,11 @@
             <name>MVdW Public Repositories</name>
             <url>http://repo.mvdw-software.be/content/groups/public/</url>
         </repository>
+        <!-- PlaceholderAPI -->
+        <repository>
+            <id>placeholderapi</id>
+            <url>http://repo.extendedclip.com/content/repositories/placeholderapi/</url>
+        </repository>
     </repositories>
 
     <build>
