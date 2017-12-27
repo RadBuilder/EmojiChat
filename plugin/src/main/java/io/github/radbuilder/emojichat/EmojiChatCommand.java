@@ -67,8 +67,8 @@ class EmojiChatCommand implements CommandExecutor {
 				}
 				if (!(sender instanceof Player) || (args.length > 1 && args[1].equalsIgnoreCase("chat"))) { // Send chat version if not a player or specified
 					sender.sendMessage(ChatColor.AQUA + "---------- EmojiChat List ----------");
-					for (String key : plugin.emojiMap.keySet()) {
-						sender.sendMessage(ChatColor.AQUA + key + " " + ChatColor.RESET + plugin.emojiMap.get(key));
+					for (String key : plugin.getEmojiHandler().getEmojis().keySet()) {
+						sender.sendMessage(ChatColor.AQUA + key + " " + ChatColor.RESET + plugin.getEmojiHandler().getEmojis().get(key));
 					}
 				} else { // Send GUI version
 					((Player) sender).openInventory(plugin.emojiChatGui.getInventory(0));

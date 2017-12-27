@@ -44,9 +44,9 @@ public class DiscordSrvHook implements EmojiChatHook {
 		String message = event.getMessage();
 		
 		// Replace emojis with shortcuts
-		for (String key : plugin.getEmojiMap().keySet()) {
+		for (String key : plugin.getEmojiHandler().getEmojis().keySet()) {
 			// Don't count metrics as it's already counted in the normal chat listener
-			message = message.replace(plugin.getEmojiMap().get(key), key);
+			message = message.replace(plugin.getEmojiHandler().getEmojis().get(key), key);
 		}
 		
 		event.setMessage(message);
@@ -58,9 +58,9 @@ public class DiscordSrvHook implements EmojiChatHook {
 		String message = event.getProcessedMessage();
 		
 		// Replace shortcuts with emojis
-		for (String key : plugin.getEmojiMap().keySet()) {
+		for (String key : plugin.getEmojiHandler().getEmojis().keySet()) {
 			plugin.getMetricsHandler().addEmojiUsed(StringUtils.countMatches(message, key)); // Count metrics
-			message = message.replace(key, plugin.getEmojiMap().get(key));
+			message = message.replace(key, plugin.getEmojiHandler().getEmojis().get(key));
 		}
 		
 		event.setProcessedMessage(message);

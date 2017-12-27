@@ -40,7 +40,7 @@ class EmojiChatGui {
 	Inventory getInventory(int page) {
 		Inventory gui = Bukkit.createInventory(null, 54, ChatColor.DARK_AQUA + "Emoji List Page " + (page + 1));
 		Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
-			List<String> keyList = new ArrayList<>(plugin.emojiMap.keySet());
+			List<String> keyList = new ArrayList<>(plugin.getEmojiHandler().getEmojis().keySet());
 			for (int inventoryPosition = 0, emojiMapPosition = page * 54; inventoryPosition < 54 && emojiMapPosition < keyList.size(); inventoryPosition++, emojiMapPosition++) {
 				if (inventoryPosition == 45 && page != 0) { // Add a back button if they're not on the first page
 					addBackArrow(gui);
@@ -90,14 +90,14 @@ class EmojiChatGui {
 	 * Adds an EmojiList item to the gui specified.
 	 *
 	 * @param gui The gui {@link org.bukkit.inventory.Inventory}.
-	 * @param keyList The list of {@link io.github.radbuilder.emojichat.EmojiChat#emojiMap} keys.
-	 * @param emojiMapPosition The current position in the {@link io.github.radbuilder.emojichat.EmojiChat#emojiMap}.
+	 * @param keyList The list of {@link io.github.radbuilder.emojichat.EmojiHandler#emojis} keys.
+	 * @param emojiMapPosition The current position in the {@link io.github.radbuilder.emojichat.EmojiHandler#emojis}.
 	 */
 	private void addItem(Inventory gui, List<String> keyList, int emojiMapPosition) {
 		ItemStack stack = new ItemStack(Material.PAPER, 1);
 		ItemMeta meta = stack.getItemMeta();
 		String key = keyList.get(emojiMapPosition);
-		meta.setDisplayName(ChatColor.AQUA + key + ChatColor.RESET + " " + plugin.emojiMap.get(key));
+		meta.setDisplayName(ChatColor.AQUA + key + ChatColor.RESET + " " + plugin.getEmojiHandler().getEmojis().get(key));
 		stack.setItemMeta(meta);
 		gui.addItem(stack);
 	}

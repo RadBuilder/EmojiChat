@@ -62,10 +62,25 @@ class EmojiChatListener implements Listener {
 		
 		String message = event.getMessage();
 		
+		// Replaces shorthand ("shortcuts" in config) with correct emoji shortcuts
+		for (String key : plugin.getEmojiHandler().getShortcuts().keySet()) {
+			message = message.replace(key, plugin.getEmojiHandler().getShortcuts().get(key));
+		}
+		
 		// Replace shortcuts with emojis
-		for (String key : plugin.emojiMap.keySet()) {
+		for (String key : plugin.getEmojiHandler().getEmojis().keySet()) {
 			plugin.getMetricsHandler().addEmojiUsed(StringUtils.countMatches(message, key));
-			message = message.replace(key, plugin.emojiMap.get(key));
+			message = message.replace(key, (plugin.getEmojiHandler().fixColoring() ? ChatColor.RESET : "") + plugin.getEmojiHandler().getEmojis().get(key));
+		}
+		
+		if (plugin.getEmojiHandler().verifyDisabledList()) { // If the message should be checked for disabled characters
+			for (String disabledCharacter : plugin.getEmojiHandler().getDisabledCharacters()) {
+				if (message.contains(disabledCharacter)) { // Message contains a disabled character
+					event.setCancelled(true);
+					event.getPlayer().sendMessage(ChatColor.RED + "Oops! You can't use disabled emoji characters!");
+					return;
+				}
+			}
 		}
 		
 		event.setMessage(message);

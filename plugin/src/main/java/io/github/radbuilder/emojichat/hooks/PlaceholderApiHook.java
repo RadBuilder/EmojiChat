@@ -33,8 +33,8 @@ public class PlaceholderApiHook implements EmojiChatHook {
 			public String onPlaceholderRequest(Player player, String identifier) {
 				if (player != null && !player.hasPermission("emojichat.use")) // Make sure the player, if specified, has permission to use emojis
 					return "No Permission";
-				if (plugin.getEmojiMap().containsKey(identifier)) {
-					return plugin.getEmojiMap().get(identifier);
+				if (plugin.getEmojiHandler().getEmojis().containsKey(identifier)) {
+					return plugin.getEmojiHandler().getEmojis().get(identifier);
 				}
 				return null;
 			}

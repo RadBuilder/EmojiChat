@@ -1,0 +1,47 @@
+# Configuration file for EmojiChat by RadBuilder
+
+# The config version, used to be able to update your config when future versions come out.
+config-version: 1
+
+# If you're using chat color plugins, this will remove the coloring for emojis to be displayed correctly.
+fix-emoji-coloring: false
+
+# This prevents players from using the characters associated with disabled emojis.
+# Disabling this will still disable the emojis listed in 'disabled-emojis', but won't check
+# if the player is using it in chat.
+verify-disabled-list: true
+
+# Shortcuts will replace the items in the list with the correct emoji name.
+# For example, :) will be replaced with :grinning:, which then will turn it into the emoji.
+shortcuts:
+  grinning:
+  - ':)'
+  - '(:'
+  wink:
+  - ';)'
+  - '(;'
+  yum:
+  - ':P'
+  sunglasses:
+  - '8)'
+  neutral_face:
+  - ':|'
+  - '|:'
+  confused:
+  - ':\'
+  - ':/'
+  cry:
+  - ';('
+  - ');'
+  v:
+  - ':peace:'
+  - ':peace_hand:'
+
+# Emojis to disable. Remove them from the list to enable them.
+# By default, profane and potentially offensive emojis are disabled.
+disabled-emojis:
+- ':fu:'
+- ':lips:'
+- 'tongue:'
+- ':bikini:'
+- ':kiss:'
