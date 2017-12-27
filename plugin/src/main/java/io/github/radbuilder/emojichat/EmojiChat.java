@@ -5,13 +5,13 @@ import io.github.radbuilder.emojichat.hooks.DiscordSrvHook;
 import io.github.radbuilder.emojichat.hooks.EmojiChatHook;
 import io.github.radbuilder.emojichat.hooks.MVdWPlaceholderApiHook;
 import io.github.radbuilder.emojichat.hooks.PlaceholderApiHook;
+import io.github.radbuilder.emojichat.metrics.MetricsHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * EmojiChat main class.
@@ -41,13 +41,13 @@ public class EmojiChat extends JavaPlugin {
 	 */
 	byte[] PACK_SHA1;
 	/**
-	 * The number of emojis used, sent for metrics.
-	 */
-	public int emojisUsed;
-	/**
 	 * List of enabled EmojiChat hooks.
 	 */
-	List<EmojiChatHook> enabledHooks;
+	private List<EmojiChatHook> enabledHooks;
+	/**
+	 * The metrics data handler.
+	 */
+	private MetricsHandler metricsHandler;
 	
 	@Override
 	public void onEnable() {
@@ -55,11 +55,14 @@ public class EmojiChat extends JavaPlugin {
 		enabledHooks = new ArrayList<>();
 		emojiChatGui = new EmojiChatGui(this);
 		updateChecker = new EmojiChatUpdateChecker(this);
-		emojisUsed = 0;
-		
-		PACK_SHA1 = BaseEncoding.base16().lowerCase().decode("446369bae955920c20c6c9441cb1f47f89338c19"); // Allows applying a cached version of the ResourcePack if available
 		
 		loadList(); // Load the emoji list
+		
+		loadHooks(); // Load plugin hooks
+		
+		metricsHandler = new MetricsHandler(this); // Creates the metrics handler for metrics gathering
+		
+		PACK_SHA1 = BaseEncoding.base16().lowerCase().decode("446369bae955920c20c6c9441cb1f47f89338c19"); // Allows applying a cached version of the ResourcePack if available
 		
 		// Register the chat listener
 		Bukkit.getPluginManager().registerEvents(new EmojiChatListener(this), this);
@@ -69,6 +72,7 @@ public class EmojiChat extends JavaPlugin {
 		getCommand("emojichat").setExecutor(emojiChatCommand);
 		getCommand("ec").setExecutor(emojiChatCommand);
 		
+		// Check for updates
 		Bukkit.getScheduler().runTaskAsynchronously(this, () -> {
 			updateChecker.checkForUpdates();
 			if (updateChecker.updateAvailable) {
@@ -76,15 +80,6 @@ public class EmojiChat extends JavaPlugin {
 				getLogger().info("Current version: " + updateChecker.currentVersion + ". Latest version: " + updateChecker.latestVersion + ".");
 			}
 		});
-		
-		Metrics metrics = new Metrics(this); // Start Metrics
-		metrics.addCustomChart(new Metrics.SingleLineChart("emojisUsed", () -> {
-			int temp = emojisUsed;
-			emojisUsed = 0; // Reset the number of emojis used when this is called
-			return temp;
-		}));
-		
-		loadHooks(metrics); // Load plugin hooks
 	}
 	
 	@Override
@@ -98,31 +93,17 @@ public class EmojiChat extends JavaPlugin {
 	
 	/**
 	 * Hooks into available plugins.
-	 *
-	 * @param metrics {@link io.github.radbuilder.emojichat.Metrics} to gather information on what hooks are being used.
 	 */
-	private void loadHooks(Metrics metrics) {
+	private void loadHooks() {
 		if (Bukkit.getPluginManager().isPluginEnabled("DiscordSRV")) { // Hook DiscordSRV if installed
 			enabledHooks.add(new DiscordSrvHook(this));
 		}
-		if (Bukkit.getPluginManager().isPluginEnabled("MVdWPlaceholderAPI")) {
+		if (Bukkit.getPluginManager().isPluginEnabled("MVdWPlaceholderAPI")) { // Hook MVdWPlaceholderAPI if installed
 			enabledHooks.add(new MVdWPlaceholderApiHook(this));
 		}
-		if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
+		if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) { // Hook PlaceholderAPI if installed
 			enabledHooks.add(new PlaceholderApiHook(this));
 		}
-		
-		metrics.addCustomChart(new Metrics.AdvancedPie("usedHooks", () -> {
-			Map<String, Integer> usedHooksMap = new HashMap<>();
-			if (enabledHooks.size() < 1) {
-				usedHooksMap.put("None", 1);
-			} else {
-				for (EmojiChatHook hook : enabledHooks) {
-					usedHooksMap.put(hook.getName(), 1);
-				}
-			}
-			return usedHooksMap;
-		}));
 	}
 	
 	/**
@@ -132,6 +113,24 @@ public class EmojiChat extends JavaPlugin {
 	 */
 	public HashMap<String, String> getEmojiMap() {
 		return emojiMap;
+	}
+	
+	/**
+	 * Gets the list of enabled {@link io.github.radbuilder.emojichat.hooks.EmojiChatHook}.
+	 *
+	 * @return The list of enabled {@link io.github.radbuilder.emojichat.hooks.EmojiChatHook}.
+	 */
+	public List<EmojiChatHook> getEnabledHooks() {
+		return enabledHooks;
+	}
+	
+	/**
+	 * Gets the {@link #metricsHandler}.
+	 *
+	 * @return The {@link #metricsHandler}.
+	 */
+	public MetricsHandler getMetricsHandler() {
+		return metricsHandler;
 	}
 	
 	/**

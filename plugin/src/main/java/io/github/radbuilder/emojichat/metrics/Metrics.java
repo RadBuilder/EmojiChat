@@ -1,4 +1,4 @@
-package io.github.radbuilder.emojichat;
+package io.github.radbuilder.emojichat.metrics;
 
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;

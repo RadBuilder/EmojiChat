@@ -59,7 +59,7 @@ public class DiscordSrvHook implements EmojiChatHook {
 		
 		// Replace shortcuts with emojis
 		for (String key : plugin.getEmojiMap().keySet()) {
-			plugin.emojisUsed += StringUtils.countMatches(message, key); // Count metrics
+			plugin.getMetricsHandler().addEmojiUsed(StringUtils.countMatches(message, key)); // Count metrics
 			message = message.replace(key, plugin.getEmojiMap().get(key));
 		}
 		
