@@ -41,6 +41,13 @@
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <artifactSet>
+                        <includes>
+                            <include>io.github.radbuilder.emojichat</include>
+                        </includes>
+                    </artifactSet>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
