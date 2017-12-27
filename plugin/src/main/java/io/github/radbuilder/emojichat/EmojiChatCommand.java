@@ -30,7 +30,7 @@ class EmojiChatCommand implements CommandExecutor {
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
 		if (args.length < 1) {
-			sender.sendMessage(ChatColor.AQUA + "EmojiChat v1.3 by RadBuilder");
+			sender.sendMessage(ChatColor.AQUA + "EmojiChat v1.4 by RadBuilder");
 			sender.sendMessage(ChatColor.AQUA + "Use " + ChatColor.GREEN + "/emojichat help" + ChatColor.AQUA + " for help.");
 			return true;
 		}
@@ -62,10 +62,11 @@ class EmojiChatCommand implements CommandExecutor {
 				}
 				return true;
 			case "load":
-				if (!sender.hasPermission("emojichat.load")) {
-					sender.sendMessage(ChatColor.RED + "You need " + ChatColor.GOLD + "emojichat.load" + ChatColor.RED + " to use this command.");
+				if (!sender.hasPermission("emojichat.reload")) {
+					sender.sendMessage(ChatColor.RED + "You need " + ChatColor.GOLD + "emojichat.reload" + ChatColor.RED + " to use this command.");
 					return true;
 				}
+				
 				plugin.reloadConfig();
 				plugin.getEmojiHandler().load(plugin);
 				sender.sendMessage(ChatColor.GREEN + "EmojiChat config reloaded.");
