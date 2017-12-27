@@ -18,5 +18,9 @@ public enum EmojiChatHookType {
 	/**
 	 * PlaceholderAPI plugin: https://www.spigotmc.org/resources/placeholderapi.6245/
 	 */
-	PLACEHOLDERAPI;
+	PLACEHOLDERAPI,
+	/**
+	 * TelegramChat plugin: https://www.spigotmc.org/resources/telegramchat.16576/
+	 */
+	TELEGRAMCHAT;
 }
