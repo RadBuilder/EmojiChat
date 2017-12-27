@@ -39,6 +39,7 @@ public class PlaceholderApiHook implements EmojiChatHook {
 				return null;
 			}
 		});
+		
 		plugin.getLogger().info("Hooked " + getName());
 		enabled = true;
 	}

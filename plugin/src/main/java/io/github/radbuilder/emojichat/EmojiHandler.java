@@ -117,8 +117,12 @@ public class EmojiHandler {
 	 *
 	 * @param config The config to load disabled emojis from.
 	 */
-	private void loadDisabledEmojis(FileConfiguration config) {
+	private void loadDisabledEmojis(FileConfiguration config, EmojiChat plugin) {
 		for (String disabledEmoji : config.getStringList("disabled-emojis")) {
+			if (disabledEmoji == null) {
+				plugin.getLogger().warning("Invalid emoji specified in 'disabled-emojis': " + disabledEmoji + ". Skipping...");
+				continue;
+			}
 			disabledCharacters.add(emojis.remove(disabledEmoji)); // Remove disabled emojis from the emoji list
 		}
 	}
@@ -483,7 +487,7 @@ public class EmojiHandler {
 			plugin.getLogger().warning("If you're still running into issues after fixing your config, delete it and restart your server.");
 		} else { // Config is valid, load config data
 			loadShortcuts(plugin.getConfig()); // Loads all of the shortcuts specified in the config
-			loadDisabledEmojis(plugin.getConfig()); // Loads all of the disabled emojis specified in the config.
+			loadDisabledEmojis(plugin.getConfig(), plugin); // Loads all of the disabled emojis specified in the config.
 			fixColoring = plugin.getConfig().getBoolean("fix-emoji-coloring");
 			verifyDisabledList = plugin.getConfig().getBoolean("verify-disabled-list");
 			if (!verifyDisabledList) {

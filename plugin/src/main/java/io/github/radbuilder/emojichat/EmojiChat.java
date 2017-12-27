@@ -5,6 +5,7 @@ import io.github.radbuilder.emojichat.hooks.DiscordSrvHook;
 import io.github.radbuilder.emojichat.hooks.EmojiChatHook;
 import io.github.radbuilder.emojichat.hooks.MVdWPlaceholderApiHook;
 import io.github.radbuilder.emojichat.hooks.PlaceholderApiHook;
+//import io.github.radbuilder.emojichat.hooks.TelegramChatHook;
 import io.github.radbuilder.emojichat.metrics.MetricsHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -34,7 +35,7 @@ public class EmojiChat extends JavaPlugin {
 	/**
 	 * The ResourcePack URL.
 	 */
-	final String PACK_URL = "https://github.com/RadBuilder/EmojiChat/releases/download/v1.3/EmojiChat.ResourcePack.v1.3.zip";
+	final String PACK_URL = "https://github.com/RadBuilder/EmojiChat/releases/download/v1.0/EmojiChat.ResourcePack.v1.4.zip";
 	/**
 	 * The SHA1 sum of the ResourcePack as a byte array.
 	 */
@@ -50,6 +51,8 @@ public class EmojiChat extends JavaPlugin {
 	
 	@Override
 	public void onEnable() {
+		saveDefaultConfig();
+		
 		enabledHooks = new ArrayList<>();
 		emojiChatGui = new EmojiChatGui(this);
 		updateChecker = new EmojiChatUpdateChecker(this);
@@ -59,7 +62,7 @@ public class EmojiChat extends JavaPlugin {
 		
 		metricsHandler = new MetricsHandler(this); // Creates the metrics handler for metrics gathering
 		
-		PACK_SHA1 = BaseEncoding.base16().lowerCase().decode("446369bae955920c20c6c9441cb1f47f89338c19"); // Allows applying a cached version of the ResourcePack if available
+		PACK_SHA1 = BaseEncoding.base16().lowerCase().decode("ced8f7267286b19414d2500f03c0c38f38f13dcc"); // Allows applying a cached version of the ResourcePack if available
 		
 		// Register the chat listener
 		Bukkit.getPluginManager().registerEvents(new EmojiChatListener(this), this);
@@ -101,6 +104,9 @@ public class EmojiChat extends JavaPlugin {
 		if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) { // Hook PlaceholderAPI if installed
 			enabledHooks.add(new PlaceholderApiHook(this));
 		}
+//		if (Bukkit.getPluginManager().isPluginEnabled("TelegramChat")) { // Hook TelegramChat if installed
+//			enabledHooks.add(new TelegramChatHook(this));
+//		}
 	}
 	
 	/**
