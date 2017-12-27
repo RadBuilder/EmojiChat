@@ -30,9 +30,12 @@ shortcuts:
   confused:
   - ':\'
   - ':/'
-  cry:
+  sob:
   - ';('
   - ');'
+  cry:
+  - ':('
+  - '):'
   v:
   - ':peace:'
   - ':peace_hand:'
@@ -42,6 +45,6 @@ shortcuts:
 disabled-emojis:
 - ':fu:'
 - ':lips:'
-- 'tongue:'
+- ':tongue:'
 - ':bikini:'
 - ':kiss:'
