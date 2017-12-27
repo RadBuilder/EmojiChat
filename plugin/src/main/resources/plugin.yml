@@ -9,7 +9,7 @@ softdepend: [DiscordSRV, MVdWPlaceholderAPI, PlaceholderAPI]
 
 commands:
   emojichat:
-    description: The main emojichat command
+    description: The main EmojiChat command
     aliases: ec
     usage: /<command>
 
@@ -21,9 +21,10 @@ permissions:
       emojichat.see: true
       emojichat.list: true
       emojichat.use: true
+      emojichat.reload: true
       emojichat.updates: true
   emojichat.help:
-    description: Allows you to open the emojichat help menu
+    description: Allows you to open the EmojiChat help menu
     default: op
   emojichat.see:
     description: Allows you to see emojis
@@ -33,6 +34,9 @@ permissions:
     default: op
   emojichat.use:
     description: Allows you to use emojis in chat
+    default: op
+  emojichat.reload:
+    description: Allows you to reload the EmojiChat config
     default: op
   emojichat.updates:
     description: Allows you to recieve join notifications when an update is available for EmojiChat

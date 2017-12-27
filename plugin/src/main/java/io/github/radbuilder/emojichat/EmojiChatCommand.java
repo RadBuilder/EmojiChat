@@ -60,6 +60,15 @@ class EmojiChatCommand implements CommandExecutor {
 					sender.sendMessage(ChatColor.AQUA + "If you still can't see emojis, make sure the settings for this server (on the server list) have the resource pack option set to prompt or enabled.");
 				}
 				return true;
+			case "load":
+				if (!sender.hasPermission("emojichat.load")) {
+					sender.sendMessage(ChatColor.RED + "You need " + ChatColor.GOLD + "emojichat.load" + ChatColor.RED + " to use this command.");
+					return true;
+				}
+				plugin.reloadConfig();
+				plugin.getEmojiHandler().load(plugin);
+				sender.sendMessage(ChatColor.GREEN + "EmojiChat config reloaded.");
+				return true;
 			case "list":
 				if (!sender.hasPermission("emojichat.list")) {
 					sender.sendMessage(ChatColor.RED + "You need " + ChatColor.GOLD + "emojichat.list" + ChatColor.RED + " to use this command.");

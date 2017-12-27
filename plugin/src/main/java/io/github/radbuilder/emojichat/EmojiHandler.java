@@ -45,21 +45,7 @@ public class EmojiHandler {
 		shortcuts = new HashMap<>();
 		disabledCharacters = new ArrayList<>();
 		
-		loadEmojis(); // Loads ALL emojis
-		
-		if (!validateConfig(plugin.getConfig())) { // Make sure the config is valid
-			plugin.getLogger().warning("Your config is invalid. No configuation data was loaded.");
-			plugin.getLogger().warning("Fix your config, then use /emojichat reload");
-			plugin.getLogger().warning("If you're still running into issues after fixing your config, delete it and restart your server.");
-		} else { // Config is valid, load config data
-			loadShortcuts(plugin.getConfig()); // Loads all of the shortcuts specified in the config
-			loadDisabledEmojis(plugin.getConfig()); // Loads all of the disabled emojis specified in the config.
-			fixColoring = plugin.getConfig().getBoolean("fix-emoji-coloring");
-			verifyDisabledList = plugin.getConfig().getBoolean("verify-disabled-list");
-			if (!verifyDisabledList) {
-				disabledCharacters.clear();
-			}
-		}
+		load(plugin);
 	}
 	
 	/**
@@ -479,5 +465,30 @@ public class EmojiHandler {
 		emojis.clear();
 		shortcuts.clear();
 		disabledCharacters.clear();
+	}
+	
+	/**
+	 * Loads the emoji handler data.
+	 *
+	 * @param plugin The EmojiChat main class instance.
+	 */
+	void load(EmojiChat plugin) {
+		disable();
+		
+		loadEmojis(); // Loads ALL emojis
+		
+		if (!validateConfig(plugin.getConfig())) { // Make sure the config is valid
+			plugin.getLogger().warning("Your config is invalid. No configuation data was loaded.");
+			plugin.getLogger().warning("Fix your config, then use /emojichat load");
+			plugin.getLogger().warning("If you're still running into issues after fixing your config, delete it and restart your server.");
+		} else { // Config is valid, load config data
+			loadShortcuts(plugin.getConfig()); // Loads all of the shortcuts specified in the config
+			loadDisabledEmojis(plugin.getConfig()); // Loads all of the disabled emojis specified in the config.
+			fixColoring = plugin.getConfig().getBoolean("fix-emoji-coloring");
+			verifyDisabledList = plugin.getConfig().getBoolean("verify-disabled-list");
+			if (!verifyDisabledList) {
+				disabledCharacters.clear();
+			}
+		}
 	}
 }
