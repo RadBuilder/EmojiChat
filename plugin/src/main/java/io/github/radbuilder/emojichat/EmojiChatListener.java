@@ -64,6 +64,7 @@ class EmojiChatListener implements Listener {
 		
 		// Replaces shorthand ("shortcuts" in config) with correct emoji shortcuts
 		for (String key : plugin.getEmojiHandler().getShortcuts().keySet()) {
+			plugin.getMetricsHandler().addShortcutUsed(StringUtils.countMatches(message, key));
 			message = message.replace(key, plugin.getEmojiHandler().getShortcuts().get(key));
 		}
 		
