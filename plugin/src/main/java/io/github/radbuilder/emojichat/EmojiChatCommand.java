@@ -61,7 +61,7 @@ class EmojiChatCommand implements CommandExecutor {
 					sender.sendMessage(ChatColor.AQUA + "If you still can't see emojis, make sure the settings for this server (on the server list) have the resource pack option set to prompt or enabled.");
 				}
 				return true;
-			case "load":
+			case "reload":
 				if (!sender.hasPermission("emojichat.reload")) {
 					sender.sendMessage(ChatColor.RED + "You need " + ChatColor.GOLD + "emojichat.reload" + ChatColor.RED + " to use this command.");
 					return true;
