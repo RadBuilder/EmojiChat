@@ -71,15 +71,6 @@ public class EmojiChat extends JavaPlugin {
 		EmojiChatCommand emojiChatCommand = new EmojiChatCommand(this);
 		getCommand("emojichat").setExecutor(emojiChatCommand);
 		getCommand("ec").setExecutor(emojiChatCommand);
-		
-		// Check for updates
-		Bukkit.getScheduler().runTaskAsynchronously(this, () -> {
-			updateChecker.checkForUpdates();
-			if (updateChecker.updateAvailable) {
-				getLogger().info("An update for EmojiChat is available.");
-				getLogger().info("Current version: " + updateChecker.currentVersion + ". Latest version: " + updateChecker.latestVersion + ".");
-			}
-		});
 	}
 	
 	@Override
@@ -89,6 +80,7 @@ public class EmojiChat extends JavaPlugin {
 		}
 		enabledHooks.clear();
 		emojiHandler.disable();
+		updateChecker.cancelUpdateTask();
 	}
 	
 	/**
