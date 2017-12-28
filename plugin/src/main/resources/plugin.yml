@@ -20,6 +20,7 @@ permissions:
       emojichat.help: true
       emojichat.see: true
       emojichat.list: true
+      emojichat.toggle: true
       emojichat.use: true
       emojichat.reload: true
       emojichat.updates: true
@@ -31,6 +32,9 @@ permissions:
     default: op
   emojichat.list:
     description: Allows you to list all of the emojis
+    default: op
+  emojichat.toggle:
+    description: Allows you to toggle emoji shortcuts on or off
     default: op
   emojichat.use:
     description: Allows you to use emojis in chat

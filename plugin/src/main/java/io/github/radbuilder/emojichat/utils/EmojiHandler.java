@@ -2,11 +2,13 @@ package io.github.radbuilder.emojichat.utils;
 
 import io.github.radbuilder.emojichat.EmojiChat;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.TreeMap;
+import java.util.UUID;
 
 /**
  * Emoji handler class.
@@ -35,6 +37,10 @@ public class EmojiHandler {
 	 * If the characters associated with disabled emojis should be checked.
 	 */
 	private boolean verifyDisabledList;
+	/**
+	 * A list of users (by UUID) who turned shortcuts off.
+	 */
+	private List<UUID> shortcutsOff;
 	
 	/**
 	 * Creates the emoji handler with the main class instance.
@@ -45,6 +51,7 @@ public class EmojiHandler {
 		emojis = new TreeMap<>();
 		shortcuts = new HashMap<>();
 		disabledCharacters = new ArrayList<>();
+		shortcutsOff = new ArrayList<>();
 		
 		load(plugin);
 	}
@@ -74,6 +81,29 @@ public class EmojiHandler {
 	 */
 	public HashMap<String, String> getShortcuts() {
 		return shortcuts;
+	}
+	
+	/**
+	 * Checks if the specified player has emoji shortcuts off.
+	 *
+	 * @param player The player to check.
+	 * @return True if the player has shortcuts off, false otherwise.
+	 */
+	public boolean hasShortcutsOff(Player player) {
+		return shortcutsOff.contains(player.getUniqueId());
+	}
+	
+	/**
+	 * Toggles emoji shortcut use on/off for the specified player.
+	 *
+	 * @param player The player to toggle emoji shortcuts on/off for.
+	 */
+	public void toggleShortcutsOff(Player player) {
+		if (shortcutsOff.contains(player.getUniqueId())) {
+			shortcutsOff.remove(player.getUniqueId());
+		} else {
+			shortcutsOff.add(player.getUniqueId());
+		}
 	}
 	
 	/**
@@ -470,6 +500,7 @@ public class EmojiHandler {
 		emojis.clear();
 		shortcuts.clear();
 		disabledCharacters.clear();
+		shortcutsOff.clear();
 	}
 	
 	/**
