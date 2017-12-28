@@ -22,7 +22,7 @@ public class MVdWPlaceholderApiHook implements EmojiChatHook {
 	 */
 	public MVdWPlaceholderApiHook(EmojiChat plugin) {
 		for (String key : plugin.getEmojiHandler().getEmojis().keySet()) {
-			PlaceholderAPI.registerStaticPlaceholders(plugin, key, plugin.getEmojiHandler().getEmojis().get(key).replace(":", ""));
+			PlaceholderAPI.registerStaticPlaceholders(plugin, key.replace(":", ""), plugin.getEmojiHandler().getEmojis().get(key));
 		}
 		
 		plugin.getLogger().info("Hooked " + getName());
