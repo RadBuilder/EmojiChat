@@ -1,7 +1,7 @@
 # Configuration file for EmojiChat by RadBuilder
 
 # The config version, used to be able to update your config when future versions come out.
-config-version: 1
+config-version: 2
 
 # If you're using chat color plugins, this will remove the coloring for emojis to be displayed correctly.
 fix-emoji-coloring: false
@@ -10,6 +10,10 @@ fix-emoji-coloring: false
 # Disabling this will still disable the emojis listed in 'disabled-emojis', but won't check
 # if the player is using it in chat.
 verify-disabled-list: true
+
+# If EmojiChat should auto download the ResourcePack. If you'd rather have your players manually
+# download or use /emojichat resourcepack, set this to false.
+download-resourcepack: true
 
 # Shortcuts will replace the items in the list with the correct emoji name.
 # For example, :) will be replaced with :grinning:, which then will turn it into the emoji.

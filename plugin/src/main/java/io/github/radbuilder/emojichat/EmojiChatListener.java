@@ -21,7 +21,11 @@ class EmojiChatListener implements Listener {
 	/**
 	 * EmojiChat main class instance.
 	 */
-	private EmojiChat plugin;
+	private final EmojiChat plugin;
+	/**
+	 * If EmojiChat should automatically download the ResourcePack for the player.
+	 */
+	private final boolean autoDownloadResourcePack;
 	
 	/**
 	 * Creates the EmojiChat listener class with the main class instance.
@@ -30,6 +34,7 @@ class EmojiChatListener implements Listener {
 	 */
 	EmojiChatListener(EmojiChat plugin) {
 		this.plugin = plugin;
+		autoDownloadResourcePack = plugin.getConfig().getBoolean("download-resourcepack");
 	}
 	
 	@EventHandler
@@ -42,6 +47,9 @@ class EmojiChatListener implements Listener {
 			player.sendMessage(ChatColor.AQUA + "Current version: " + ChatColor.GOLD + plugin.updateChecker.currentVersion
 					+ ChatColor.AQUA + ". Latest version: " + ChatColor.GOLD + plugin.updateChecker.latestVersion + ChatColor.AQUA + ".");
 		}
+		
+		if (!autoDownloadResourcePack) // If auto downloading of the ResourcePack is disabled
+			return;
 		
 		// Send the player the resource pack
 		Bukkit.getScheduler().runTaskLater(plugin, () -> {

@@ -16,7 +16,7 @@ class EmojiChatCommand implements CommandExecutor {
 	/**
 	 * EmojiChat main class instance.
 	 */
-	private EmojiChat plugin;
+	private final EmojiChat plugin;
 	
 	/**
 	 * Creates the EmojiChat command class with the main class instance.

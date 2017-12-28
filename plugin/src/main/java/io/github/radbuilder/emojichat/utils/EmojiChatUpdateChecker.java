@@ -1,5 +1,6 @@
-package io.github.radbuilder.emojichat;
+package io.github.radbuilder.emojichat.utils;
 
+import io.github.radbuilder.emojichat.EmojiChat;
 import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitTask;
 import org.json.simple.JSONArray;
@@ -17,30 +18,30 @@ import java.net.URL;
  * @author RadBuilder
  * @since 1.3
  */
-class EmojiChatUpdateChecker {
+public class EmojiChatUpdateChecker {
 	/**
 	 * The current version of EmojiChat.
 	 */
-	final double currentVersion;
+	public final double currentVersion;
 	/**
 	 * If an update is available.
 	 */
-	boolean updateAvailable;
+	public boolean updateAvailable;
 	/**
 	 * The latest version of EmojiChat.
 	 */
-	double latestVersion;
+	public double latestVersion;
 	/**
 	 * The update checker {@link org.bukkit.scheduler.BukkitTask}, which runs every 4 hours after 10 seconds.
 	 */
-	private BukkitTask updateTask;
+	private final BukkitTask updateTask;
 	
 	/**
 	 * Creates the EmojiChat update checker class with the main class instance.
 	 *
 	 * @param plugin The EmojiChat main class instance.
 	 */
-	EmojiChatUpdateChecker(EmojiChat plugin) {
+	public EmojiChatUpdateChecker(EmojiChat plugin) {
 		currentVersion = Double.parseDouble(plugin.getDescription().getVersion());
 		
 		updateTask = Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, this::checkForUpdates, 20L * 10L, 20L * 60L * 60L * 4L); // Start checking for updates after 10 seconds, then every 4 hours
@@ -72,7 +73,7 @@ class EmojiChatUpdateChecker {
 	/**
 	 * Cancel the {@link #updateTask}.
 	 */
-	void cancelUpdateTask() {
+	public void cancelUpdateTask() {
 		updateTask.cancel();
 	}
 }

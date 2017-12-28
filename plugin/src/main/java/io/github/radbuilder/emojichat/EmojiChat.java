@@ -7,6 +7,9 @@ import io.github.radbuilder.emojichat.hooks.MVdWPlaceholderApiHook;
 import io.github.radbuilder.emojichat.hooks.PlaceholderApiHook;
 //import io.github.radbuilder.emojichat.hooks.TelegramChatHook;
 import io.github.radbuilder.emojichat.metrics.MetricsHandler;
+import io.github.radbuilder.emojichat.utils.EmojiChatConfigUpdater;
+import io.github.radbuilder.emojichat.utils.EmojiChatUpdateChecker;
+import io.github.radbuilder.emojichat.utils.EmojiHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -51,6 +54,8 @@ public class EmojiChat extends JavaPlugin {
 	
 	@Override
 	public void onEnable() {
+		new EmojiChatConfigUpdater(this);
+		
 		saveDefaultConfig();
 		
 		enabledHooks = new ArrayList<>();

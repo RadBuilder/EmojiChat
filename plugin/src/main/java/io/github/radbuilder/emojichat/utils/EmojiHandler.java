@@ -1,5 +1,6 @@
-package io.github.radbuilder.emojichat;
+package io.github.radbuilder.emojichat.utils;
 
+import io.github.radbuilder.emojichat.EmojiChat;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import java.util.ArrayList;
@@ -17,15 +18,15 @@ public class EmojiHandler {
 	/**
 	 * The emojis.
 	 */
-	private TreeMap<String, String> emojis;
+	private final TreeMap<String, String> emojis;
 	/**
 	 * Shortcuts for the emojis, if specified.
 	 */
-	private HashMap<String, String> shortcuts;
+	private final HashMap<String, String> shortcuts;
 	/**
 	 * Disabled emoji characters to prevent others from using them with the resource pack.
 	 */
-	private List<String> disabledCharacters;
+	private final List<String> disabledCharacters;
 	/**
 	 * If we should fix the emoji's color (colored chat removes emoji coloring)
 	 */
@@ -40,7 +41,7 @@ public class EmojiHandler {
 	 *
 	 * @param plugin The EmojiChat main class instance.
 	 */
-	EmojiHandler(EmojiChat plugin) {
+	public EmojiHandler(EmojiChat plugin) {
 		emojis = new TreeMap<>();
 		shortcuts = new HashMap<>();
 		disabledCharacters = new ArrayList<>();
@@ -132,7 +133,7 @@ public class EmojiHandler {
 	 *
 	 * @return True if emoji coloring should be fixed, false otherwise.
 	 */
-	boolean fixColoring() {
+	public boolean fixColoring() {
 		return fixColoring;
 	}
 	
@@ -465,7 +466,7 @@ public class EmojiHandler {
 	/**
 	 * Clears the {@link #emojis}, {@link #shortcuts}, and {@link #disabledCharacters} maps.
 	 */
-	void disable() {
+	public void disable() {
 		emojis.clear();
 		shortcuts.clear();
 		disabledCharacters.clear();
@@ -476,7 +477,7 @@ public class EmojiHandler {
 	 *
 	 * @param plugin The EmojiChat main class instance.
 	 */
-	void load(EmojiChat plugin) {
+	public void load(EmojiChat plugin) {
 		disable();
 		
 		loadEmojis(); // Loads ALL emojis
