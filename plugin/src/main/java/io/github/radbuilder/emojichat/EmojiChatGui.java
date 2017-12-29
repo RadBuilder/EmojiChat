@@ -16,6 +16,7 @@ import java.util.List;
  *
  * @author RadBuilder
  * @since 1.2
+ * @version 1.5
  */
 class EmojiChatGui {
 	/**

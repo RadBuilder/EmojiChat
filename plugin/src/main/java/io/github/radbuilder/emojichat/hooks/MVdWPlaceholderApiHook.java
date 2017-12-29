@@ -8,6 +8,7 @@ import io.github.radbuilder.emojichat.EmojiChat;
  *
  * @author RadBuilder
  * @since 1.4
+ * @version 1.4
  */
 public class MVdWPlaceholderApiHook implements EmojiChatHook {
 	/**

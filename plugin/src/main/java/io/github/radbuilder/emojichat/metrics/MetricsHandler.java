@@ -11,6 +11,7 @@ import java.util.Map;
  *
  * @author RadBuilder
  * @since 1.4
+ * @version 1.5
  */
 public class MetricsHandler {
 	/**

@@ -17,6 +17,7 @@ import java.util.List;
  *
  * @author RadBuilder
  * @since 1.5
+ * @version 1.5
  */
 public class EmojiChatConfigUpdater {
 	/**

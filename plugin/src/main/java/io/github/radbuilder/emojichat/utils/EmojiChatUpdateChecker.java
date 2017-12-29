@@ -17,6 +17,7 @@ import java.net.URL;
  *
  * @author RadBuilder
  * @since 1.3
+ * @version 1.5
  */
 public class EmojiChatUpdateChecker {
 	/**

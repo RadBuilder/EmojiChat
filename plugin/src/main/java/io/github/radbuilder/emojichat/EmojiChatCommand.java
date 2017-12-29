@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
  *
  * @author RadBuilder
  * @since 1.0
+ * @version 1.5
  */
 class EmojiChatCommand implements CommandExecutor {
 	/**

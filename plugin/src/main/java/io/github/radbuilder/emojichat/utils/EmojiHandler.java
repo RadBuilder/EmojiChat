@@ -15,6 +15,7 @@ import java.util.UUID;
  *
  * @author RadBuilder
  * @since 1.4
+ * @version 1.5
  */
 public class EmojiHandler {
 	/**
