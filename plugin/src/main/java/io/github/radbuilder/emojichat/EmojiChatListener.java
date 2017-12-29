@@ -6,6 +6,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
@@ -15,8 +16,8 @@ import org.bukkit.event.player.PlayerJoinEvent;
  * EmojiChat listener class.
  *
  * @author RadBuilder
- * @since 1.0
  * @version 1.5
+ * @since 1.0
  */
 class EmojiChatListener implements Listener {
 	/**
@@ -64,7 +65,7 @@ class EmojiChatListener implements Listener {
 		}, 20L); // Give time for the player to join
 	}
 	
-	@EventHandler
+	@EventHandler(priority = EventPriority.HIGH)
 	void onChat(AsyncPlayerChatEvent event) {
 		if (!event.getPlayer().hasPermission("emojichat.use"))
 			return; // Don't do anything if they don't have permission
@@ -78,9 +79,17 @@ class EmojiChatListener implements Listener {
 		}
 		
 		// Replace shortcuts with emojis
-		for (String key : plugin.getEmojiHandler().getEmojis().keySet()) {
-			plugin.getMetricsHandler().addEmojiUsed(StringUtils.countMatches(message, key));
-			message = message.replace(key, (plugin.getEmojiHandler().fixColoring() ? ChatColor.RESET : "") + plugin.getEmojiHandler().getEmojis().get(key));
+		if (!plugin.getEmojiHandler().fixColoring()) {
+			for (String key : plugin.getEmojiHandler().getEmojis().keySet()) {
+				plugin.getMetricsHandler().addEmojiUsed(StringUtils.countMatches(message, key));
+				message = message.replace(key, plugin.getEmojiHandler().getEmojis().get(key));
+			}
+		} else {
+			for (String key : plugin.getEmojiHandler().getEmojis().keySet()) {
+				plugin.getMetricsHandler().addEmojiUsed(StringUtils.countMatches(message, key));
+				String chatColor = message.substring(0, 2); // Gets the chat color of the message, i.e. §a
+				message = message.replace(key, ChatColor.WHITE + plugin.getEmojiHandler().getEmojis().get(key) + (chatColor.contains("§") ? chatColor : "")); // Sets the emoji color to white for correct coloring
+			}
 		}
 		
 		if (plugin.getEmojiHandler().verifyDisabledList()) { // If the message should be checked for disabled characters
