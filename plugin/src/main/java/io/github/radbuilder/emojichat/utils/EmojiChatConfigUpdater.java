@@ -92,6 +92,19 @@ public class EmojiChatConfigUpdater {
 		for (String disabledEmoji : disabledEmojis) {
 			configLines.add("- '" + disabledEmoji + "'");
 		}
+		configLines.add("- ':sweat_drops:'");
+		configLines.add("- ':banana:'");
+		configLines.add("- ':cherries:'");
+		configLines.add("- ':peach:'");
+		configLines.add("- ':tomato:'");
+		configLines.add("- ':eggplant:'");
+		configLines.add("- ':cucumber:'");
+		configLines.add("- ':beer:'");
+		configLines.add("- ':beers:'");
+		configLines.add("- ':clinking_glasses:'");
+		configLines.add("- ':wine_glass:'");
+		configLines.add("- ':tumbler_glass:'");
+		configLines.add("- ':cocktail:'");
 		
 		// Update the config
 		setConfig(plugin, configLines);
