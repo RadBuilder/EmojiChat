@@ -14,8 +14,8 @@ import java.util.UUID;
  * Emoji handler class.
  *
  * @author RadBuilder
- * @since 1.4
  * @version 1.5
+ * @since 1.4
  */
 public class EmojiHandler {
 	/**
@@ -575,6 +575,15 @@ public class EmojiHandler {
 		emojis.put(":sake:", "궐");
 		emojis.put(":tea:", "궑");
 		emojis.put(":coffee:", "궒");
+		emojis.put(":crazy_face:", "궓");
+		emojis.put(":face_with_monocle:", "궔");
+		emojis.put(":face_with_raised_eyebrow:", "궕");
+		emojis.put(":shushing_face:", "궖");
+		emojis.put(":face_with_hand_over_mouth:", "궗");
+		emojis.put(":face_with_symbols_over_mouth:", "궘");
+		emojis.put(":star_struck:", "궙");
+		emojis.put(":exploding_head:", "궚");
+		emojis.put(":face_vomiting:", "궛");
 	}
 	
 	/**

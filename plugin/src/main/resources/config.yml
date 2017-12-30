@@ -55,6 +55,12 @@ shortcuts:
   v:
   - ':peace:'
   - ':peace_hand:'
+  crazy_face:
+  - ':crazy:'
+  face_with_raised_eyebrow:
+  - ':hmm:'
+  shushing_face:
+  - ':shh:'
 
 # Emojis to disable. Remove them from the list to enable them.
 # By default, profane and potentially offensive emojis are disabled.
@@ -77,6 +83,8 @@ disabled-emojis:
 - ':wine_glass:'
 - ':tumbler_glass:'
 - ':cocktail:'
+- ':face_with_symbols_over_mouth:'
+- ':face_vomiting:'
 
 # The config version, used to be able to update your config when future versions come out.
 # Don't change this, or you'll experience issues with EmojiChat.

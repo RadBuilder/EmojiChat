@@ -98,6 +98,12 @@ public class EmojiChatConfigUpdater {
 				configLines.add("  - '" + shortcutListItem + "'");
 			}
 		}
+		configLines.add("  crazy_face:");
+		configLines.add("  - ':crazy:'");
+		configLines.add("  face_with_raised_eyebrow:");
+		configLines.add("  - ':hmm:'");
+		configLines.add("  shushing_face:");
+		configLines.add("  - ':shh:'");
 		configLines.add("");
 		configLines.add("# Emojis to disable. Remove them from the list to enable them.");
 		configLines.add("# By default, profane and potentially offensive emojis are disabled.");
@@ -118,6 +124,8 @@ public class EmojiChatConfigUpdater {
 		configLines.add("- ':wine_glass:'");
 		configLines.add("- ':tumbler_glass:'");
 		configLines.add("- ':cocktail:'");
+		configLines.add("- ':face_with_symbols_over_mouth:'");
+		configLines.add("- ':face_vomiting:'");
 		configLines.add("");
 		configLines.add("# The config version, used to be able to update your config when future versions come out.");
 		configLines.add("# Don't change this, or you'll experience issues with EmojiChat.");
