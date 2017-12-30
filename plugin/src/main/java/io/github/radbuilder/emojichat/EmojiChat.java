@@ -39,7 +39,7 @@ public class EmojiChat extends JavaPlugin {
 	/**
 	 * The ResourcePack URL.
 	 */
-	final String PACK_URL = "https://github.com/RadBuilder/EmojiChat/releases/download/v1.4/EmojiChat.ResourcePack.v1.4.zip";
+	final String PACK_URL = "https://github.com/RadBuilder/EmojiChat/releases/download/v1.5/EmojiChat.ResourcePack.v1.5.zip";
 	/**
 	 * The SHA1 sum of the ResourcePack as a byte array.
 	 */
@@ -68,7 +68,7 @@ public class EmojiChat extends JavaPlugin {
 		
 		metricsHandler = new MetricsHandler(this); // Creates the metrics handler for metrics gathering
 		
-		PACK_SHA1 = BaseEncoding.base16().lowerCase().decode("c0143b56fb568ec4787320ea1e6af245d8a8140c"); // Allows applying a cached version of the ResourcePack if available
+		PACK_SHA1 = BaseEncoding.base16().lowerCase().decode("787dc51caa5b01ced40517bd3d1fcf0f0873ab4e"); // Allows applying a cached version of the ResourcePack if available
 		
 		// Register the chat listener
 		Bukkit.getPluginManager().registerEvents(new EmojiChatListener(this), this);
