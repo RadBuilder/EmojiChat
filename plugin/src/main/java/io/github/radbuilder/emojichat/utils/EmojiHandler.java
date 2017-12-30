@@ -1,31 +1,35 @@
-package io.github.radbuilder.emojichat;
+package io.github.radbuilder.emojichat.utils;
 
+import io.github.radbuilder.emojichat.EmojiChat;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.TreeMap;
+import java.util.UUID;
 
 /**
  * Emoji handler class.
  *
  * @author RadBuilder
+ * @version 1.5
  * @since 1.4
  */
 public class EmojiHandler {
 	/**
 	 * The emojis.
 	 */
-	private TreeMap<String, String> emojis;
+	private final TreeMap<String, String> emojis;
 	/**
 	 * Shortcuts for the emojis, if specified.
 	 */
-	private HashMap<String, String> shortcuts;
+	private final HashMap<String, String> shortcuts;
 	/**
 	 * Disabled emoji characters to prevent others from using them with the resource pack.
 	 */
-	private List<String> disabledCharacters;
+	private final List<String> disabledCharacters;
 	/**
 	 * If we should fix the emoji's color (colored chat removes emoji coloring)
 	 */
@@ -34,16 +38,21 @@ public class EmojiHandler {
 	 * If the characters associated with disabled emojis should be checked.
 	 */
 	private boolean verifyDisabledList;
+	/**
+	 * A list of users (by UUID) who turned shortcuts off.
+	 */
+	private List<UUID> shortcutsOff;
 	
 	/**
 	 * Creates the emoji handler with the main class instance.
 	 *
 	 * @param plugin The EmojiChat main class instance.
 	 */
-	EmojiHandler(EmojiChat plugin) {
+	public EmojiHandler(EmojiChat plugin) {
 		emojis = new TreeMap<>();
 		shortcuts = new HashMap<>();
 		disabledCharacters = new ArrayList<>();
+		shortcutsOff = new ArrayList<>();
 		
 		load(plugin);
 	}
@@ -73,6 +82,29 @@ public class EmojiHandler {
 	 */
 	public HashMap<String, String> getShortcuts() {
 		return shortcuts;
+	}
+	
+	/**
+	 * Checks if the specified player has emoji shortcuts off.
+	 *
+	 * @param player The player to check.
+	 * @return True if the player has shortcuts off, false otherwise.
+	 */
+	public boolean hasShortcutsOff(Player player) {
+		return shortcutsOff.contains(player.getUniqueId());
+	}
+	
+	/**
+	 * Toggles emoji shortcut use on/off for the specified player.
+	 *
+	 * @param player The player to toggle emoji shortcuts on/off for.
+	 */
+	public void toggleShortcutsOff(Player player) {
+		if (shortcutsOff.contains(player.getUniqueId())) {
+			shortcutsOff.remove(player.getUniqueId());
+		} else {
+			shortcutsOff.add(player.getUniqueId());
+		}
 	}
 	
 	/**
@@ -132,7 +164,7 @@ public class EmojiHandler {
 	 *
 	 * @return True if emoji coloring should be fixed, false otherwise.
 	 */
-	boolean fixColoring() {
+	public boolean fixColoring() {
 		return fixColoring;
 	}
 	
@@ -460,15 +492,108 @@ public class EmojiHandler {
 		emojis.put(":open_umbrella:", "괽");
 		emojis.put(":umbrella:", "괾");
 		emojis.put(":droplet:", "괿");
+		emojis.put(":sweat_drops:", "굀");
+		emojis.put(":ocean:", "굁");
+		emojis.put(":green_apple:", "굂");
+		emojis.put(":apple:", "굃");
+		emojis.put(":pear:", "굄");
+		emojis.put(":tangerine:", "굅");
+		emojis.put(":lemon:", "굆");
+		emojis.put(":banana:", "굇");
+		emojis.put(":watermelon:", "굈");
+		emojis.put(":grapes:", "굉");
+		emojis.put(":strawberry:", "굊");
+		emojis.put(":melon:", "굋");
+		emojis.put(":cherries:", "굌");
+		emojis.put(":peach:", "굍");
+		emojis.put(":pineapple:", "굎");
+		emojis.put(":kiwi_fruit:", "굏");
+		emojis.put(":avocado:", "교");
+		emojis.put(":tomato:", "굑");
+		emojis.put(":eggplant:", "굒");
+		emojis.put(":cucumber:", "굓");
+		emojis.put(":carrot:", "굔");
+		emojis.put(":hot_pepper:", "굕");
+		emojis.put(":potato:", "굖");
+		emojis.put(":corn:", "굗");
+		emojis.put(":sweet_potato:", "굘");
+		emojis.put(":peanuts:", "굙");
+		emojis.put(":honey_pot:", "굚");
+		emojis.put(":croissant:", "굛");
+		emojis.put(":bread:", "굜");
+		emojis.put(":baguette_bread:", "굝");
+		emojis.put(":cheese:", "굞");
+		emojis.put(":egg:", "굟");
+		emojis.put(":bacon:", "굠");
+		emojis.put(":pancakes:", "굡");
+		emojis.put(":poultry_leg:", "굢");
+		emojis.put(":meat_on_bone:", "굣");
+		emojis.put(":fried_shrimp:", "굤");
+		emojis.put(":fried_egg:", "굥");
+		emojis.put(":hamburger:", "굦");
+		emojis.put(":fries:", "굧");
+		emojis.put(":stuffed_flatbread:", "굨");
+		emojis.put(":hotdog:", "굩");
+		emojis.put(":pizza:", "굪");
+		emojis.put(":spaghetti:", "굫");
+		emojis.put(":taco:", "구");
+		emojis.put(":burrito:", "국");
+		emojis.put(":green_salad:", "굮");
+		emojis.put(":shallow_pan_of_food:", "굯");
+		emojis.put(":ramen:", "군");
+		emojis.put(":stew:", "굱");
+		emojis.put(":fish_cake:", "굲");
+		emojis.put(":sushi:", "굳");
+		emojis.put(":bento:", "굴");
+		emojis.put(":curry:", "굵");
+		emojis.put(":rice_ball:", "굶");
+		emojis.put(":rice:", "굷");
+		emojis.put(":rice_cracker:", "굸");
+		emojis.put(":oden:", "굹");
+		emojis.put(":dango:", "굺");
+		emojis.put(":shaved_ice:", "굻");
+		emojis.put(":ice_cream:", "굼");
+		emojis.put(":icecream:", "굽");
+		emojis.put(":cake:", "굾");
+		emojis.put(":birthday:", "굿");
+		emojis.put(":custard:", "궀");
+		emojis.put(":candy:", "궁");
+		emojis.put(":lollipop:", "궂");
+		emojis.put(":chocolate_bar:", "궃");
+		emojis.put(":popcorn:", "궄");
+		emojis.put(":doughnut:", "궅");
+		emojis.put(":cookie:", "궆");
+		emojis.put(":milk_glass:", "궇");
+		emojis.put(":beer:", "궈");
+		emojis.put(":beers:", "궉");
+		emojis.put(":clinking_glasses:", "궊");
+		emojis.put(":wine_glass:", "궋");
+		emojis.put(":tumbler_glass:", "권");
+		emojis.put(":cocktail:", "궍");
+		emojis.put(":tropical_drink:", "궎");
+		emojis.put(":champagne:", "궏");
+		emojis.put(":sake:", "궐");
+		emojis.put(":tea:", "궑");
+		emojis.put(":coffee:", "궒");
+		emojis.put(":crazy_face:", "궓");
+		emojis.put(":face_with_monocle:", "궔");
+		emojis.put(":face_with_raised_eyebrow:", "궕");
+		emojis.put(":shushing_face:", "궖");
+		emojis.put(":face_with_hand_over_mouth:", "궗");
+		emojis.put(":face_with_symbols_over_mouth:", "궘");
+		emojis.put(":star_struck:", "궙");
+		emojis.put(":exploding_head:", "궚");
+		emojis.put(":face_vomiting:", "궛");
 	}
 	
 	/**
 	 * Clears the {@link #emojis}, {@link #shortcuts}, and {@link #disabledCharacters} maps.
 	 */
-	void disable() {
+	public void disable() {
 		emojis.clear();
 		shortcuts.clear();
 		disabledCharacters.clear();
+		shortcutsOff.clear();
 	}
 	
 	/**
@@ -476,7 +601,7 @@ public class EmojiHandler {
 	 *
 	 * @param plugin The EmojiChat main class instance.
 	 */
-	void load(EmojiChat plugin) {
+	public void load(EmojiChat plugin) {
 		disable();
 		
 		loadEmojis(); // Loads ALL emojis

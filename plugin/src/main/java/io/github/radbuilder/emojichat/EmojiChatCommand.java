@@ -11,12 +11,13 @@ import org.bukkit.entity.Player;
  *
  * @author RadBuilder
  * @since 1.0
+ * @version 1.5
  */
 class EmojiChatCommand implements CommandExecutor {
 	/**
 	 * EmojiChat main class instance.
 	 */
-	private EmojiChat plugin;
+	private final EmojiChat plugin;
 	
 	/**
 	 * Creates the EmojiChat command class with the main class instance.
@@ -30,7 +31,7 @@ class EmojiChatCommand implements CommandExecutor {
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
 		if (args.length < 1) {
-			sender.sendMessage(ChatColor.AQUA + "EmojiChat v1.4 by RadBuilder");
+			sender.sendMessage(ChatColor.AQUA + "EmojiChat v1.5 by RadBuilder");
 			sender.sendMessage(ChatColor.AQUA + "Use " + ChatColor.GREEN + "/emojichat help" + ChatColor.AQUA + " for help.");
 			return true;
 		}
@@ -47,6 +48,7 @@ class EmojiChatCommand implements CommandExecutor {
 				sender.sendMessage(ChatColor.GREEN + "/emojichat help: " + ChatColor.AQUA + "Opens up this help menu.");
 				sender.sendMessage(ChatColor.GREEN + "/emojichat resourcepack: " + ChatColor.AQUA + "Re-sends the resourcepack.");
 				sender.sendMessage(ChatColor.GREEN + "/emojichat reload: " + ChatColor.AQUA + "Reloads the EmojiChat config.");
+				sender.sendMessage(ChatColor.GREEN + "/emojichat toggle: " + ChatColor.AQUA + "Toggles emoji shortcuts on or off.");
 				sender.sendMessage(ChatColor.GREEN + "/emojichat list: " + ChatColor.AQUA + "Lists all of the emojis configured.");
 				return true;
 			case "resourcepack":
@@ -70,6 +72,19 @@ class EmojiChatCommand implements CommandExecutor {
 				plugin.reloadConfig();
 				plugin.getEmojiHandler().load(plugin);
 				sender.sendMessage(ChatColor.GREEN + "EmojiChat config reloaded.");
+				return true;
+			case "toggle":
+				if (!sender.hasPermission("emojichat.toggle")) {
+					sender.sendMessage(ChatColor.RED + "You need " + ChatColor.GOLD + "emojichat.toggle" + ChatColor.RED + " to use this command.");
+					return true;
+				}
+				
+				if (sender instanceof Player) {
+					plugin.getEmojiHandler().toggleShortcutsOff((Player) sender);
+					sender.sendMessage(ChatColor.AQUA + "Emoji shortcuts are now " + (plugin.getEmojiHandler().hasShortcutsOff((Player) sender) ? ChatColor.RED + "disabled" : ChatColor.GREEN + "enabled") + ChatColor.AQUA + ".");
+				} else {
+					sender.sendMessage(ChatColor.RED + "Oops, you have to be a player to toggle shortcuts.");
+				}
 				return true;
 			case "list":
 				if (!sender.hasPermission("emojichat.list")) {

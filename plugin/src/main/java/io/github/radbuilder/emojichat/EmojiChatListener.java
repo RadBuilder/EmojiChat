@@ -6,6 +6,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
@@ -15,13 +16,18 @@ import org.bukkit.event.player.PlayerJoinEvent;
  * EmojiChat listener class.
  *
  * @author RadBuilder
+ * @version 1.5
  * @since 1.0
  */
 class EmojiChatListener implements Listener {
 	/**
 	 * EmojiChat main class instance.
 	 */
-	private EmojiChat plugin;
+	private final EmojiChat plugin;
+	/**
+	 * If EmojiChat should automatically download the ResourcePack for the player.
+	 */
+	private final boolean autoDownloadResourcePack;
 	
 	/**
 	 * Creates the EmojiChat listener class with the main class instance.
@@ -30,6 +36,7 @@ class EmojiChatListener implements Listener {
 	 */
 	EmojiChatListener(EmojiChat plugin) {
 		this.plugin = plugin;
+		autoDownloadResourcePack = plugin.getConfig().getBoolean("download-resourcepack");
 	}
 	
 	@EventHandler
@@ -43,6 +50,9 @@ class EmojiChatListener implements Listener {
 					+ ChatColor.AQUA + ". Latest version: " + ChatColor.GOLD + plugin.updateChecker.latestVersion + ChatColor.AQUA + ".");
 		}
 		
+		if (!autoDownloadResourcePack) // If auto downloading of the ResourcePack is disabled
+			return;
+		
 		// Send the player the resource pack
 		Bukkit.getScheduler().runTaskLater(plugin, () -> {
 			if (player.hasPermission("emojichat.see")) { // If the player can see emojis
@@ -55,23 +65,34 @@ class EmojiChatListener implements Listener {
 		}, 20L); // Give time for the player to join
 	}
 	
-	@EventHandler
+	@EventHandler(priority = EventPriority.HIGH)
 	void onChat(AsyncPlayerChatEvent event) {
 		if (!event.getPlayer().hasPermission("emojichat.use"))
 			return; // Don't do anything if they don't have permission
 		
 		String message = event.getMessage();
 		
-		// Replaces shorthand ("shortcuts" in config) with correct emoji shortcuts
-		for (String key : plugin.getEmojiHandler().getShortcuts().keySet()) {
-			plugin.getMetricsHandler().addShortcutUsed(StringUtils.countMatches(message, key));
-			message = message.replace(key, plugin.getEmojiHandler().getShortcuts().get(key));
+		// Checks if the user disabled shortcuts via /emojichat toggle
+		if (!plugin.getEmojiHandler().hasShortcutsOff(event.getPlayer())) {
+			// Replaces shorthand ("shortcuts" in config) with correct emoji shortcuts
+			for (String key : plugin.getEmojiHandler().getShortcuts().keySet()) {
+				plugin.getMetricsHandler().addShortcutUsed(StringUtils.countMatches(message, key));
+				message = message.replace(key, plugin.getEmojiHandler().getShortcuts().get(key));
+			}
 		}
 		
 		// Replace shortcuts with emojis
-		for (String key : plugin.getEmojiHandler().getEmojis().keySet()) {
-			plugin.getMetricsHandler().addEmojiUsed(StringUtils.countMatches(message, key));
-			message = message.replace(key, (plugin.getEmojiHandler().fixColoring() ? ChatColor.RESET : "") + plugin.getEmojiHandler().getEmojis().get(key));
+		if (!plugin.getEmojiHandler().fixColoring()) {
+			for (String key : plugin.getEmojiHandler().getEmojis().keySet()) {
+				plugin.getMetricsHandler().addEmojiUsed(StringUtils.countMatches(message, key));
+				message = message.replace(key, plugin.getEmojiHandler().getEmojis().get(key));
+			}
+		} else {
+			for (String key : plugin.getEmojiHandler().getEmojis().keySet()) {
+				plugin.getMetricsHandler().addEmojiUsed(StringUtils.countMatches(message, key));
+				String chatColor = message.substring(0, 2); // Gets the chat color of the message, i.e. §a
+				message = message.replace(key, ChatColor.WHITE + plugin.getEmojiHandler().getEmojis().get(key) + (chatColor.contains("§") ? chatColor : "")); // Sets the emoji color to white for correct coloring
+			}
 		}
 		
 		if (plugin.getEmojiHandler().verifyDisabledList()) { // If the message should be checked for disabled characters

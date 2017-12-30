@@ -7,6 +7,9 @@ import io.github.radbuilder.emojichat.hooks.MVdWPlaceholderApiHook;
 import io.github.radbuilder.emojichat.hooks.PlaceholderApiHook;
 //import io.github.radbuilder.emojichat.hooks.TelegramChatHook;
 import io.github.radbuilder.emojichat.metrics.MetricsHandler;
+import io.github.radbuilder.emojichat.utils.EmojiChatConfigUpdater;
+import io.github.radbuilder.emojichat.utils.EmojiChatUpdateChecker;
+import io.github.radbuilder.emojichat.utils.EmojiHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -18,6 +21,7 @@ import java.util.List;
  *
  * @author RadBuilder
  * @since 1.0
+ * @version 1.5
  */
 public class EmojiChat extends JavaPlugin {
 	/**
@@ -35,7 +39,7 @@ public class EmojiChat extends JavaPlugin {
 	/**
 	 * The ResourcePack URL.
 	 */
-	final String PACK_URL = "https://github.com/RadBuilder/EmojiChat/releases/download/v1.4/EmojiChat.ResourcePack.v1.4.zip";
+	final String PACK_URL = "https://github.com/RadBuilder/EmojiChat/releases/download/v1.5/EmojiChat.ResourcePack.v1.5.zip";
 	/**
 	 * The SHA1 sum of the ResourcePack as a byte array.
 	 */
@@ -51,6 +55,8 @@ public class EmojiChat extends JavaPlugin {
 	
 	@Override
 	public void onEnable() {
+		new EmojiChatConfigUpdater(this);
+		
 		saveDefaultConfig();
 		
 		enabledHooks = new ArrayList<>();
@@ -62,7 +68,7 @@ public class EmojiChat extends JavaPlugin {
 		
 		metricsHandler = new MetricsHandler(this); // Creates the metrics handler for metrics gathering
 		
-		PACK_SHA1 = BaseEncoding.base16().lowerCase().decode("c0143b56fb568ec4787320ea1e6af245d8a8140c"); // Allows applying a cached version of the ResourcePack if available
+		PACK_SHA1 = BaseEncoding.base16().lowerCase().decode("787dc51caa5b01ced40517bd3d1fcf0f0873ab4e"); // Allows applying a cached version of the ResourcePack if available
 		
 		// Register the chat listener
 		Bukkit.getPluginManager().registerEvents(new EmojiChatListener(this), this);
@@ -71,15 +77,6 @@ public class EmojiChat extends JavaPlugin {
 		EmojiChatCommand emojiChatCommand = new EmojiChatCommand(this);
 		getCommand("emojichat").setExecutor(emojiChatCommand);
 		getCommand("ec").setExecutor(emojiChatCommand);
-		
-		// Check for updates
-		Bukkit.getScheduler().runTaskAsynchronously(this, () -> {
-			updateChecker.checkForUpdates();
-			if (updateChecker.updateAvailable) {
-				getLogger().info("An update for EmojiChat is available.");
-				getLogger().info("Current version: " + updateChecker.currentVersion + ". Latest version: " + updateChecker.latestVersion + ".");
-			}
-		});
 	}
 	
 	@Override
@@ -89,6 +86,7 @@ public class EmojiChat extends JavaPlugin {
 		}
 		enabledHooks.clear();
 		emojiHandler.disable();
+		updateChecker.cancelUpdateTask();
 	}
 	
 	/**

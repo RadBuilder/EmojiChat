@@ -1,7 +1,19 @@
 # Configuration file for EmojiChat by RadBuilder
 
-# The config version, used to be able to update your config when future versions come out.
-config-version: 1
+# EmojiChat collects metrics in order to get a better understanding of what configurations are used.
+# Statistics include how many servers it's being used on and what version of Bukkit/Spigot they're using,
+# how many players are using it, server information such as Java version, how many emojis are used,
+# and how many servers are using each feature. This data is anonymous, and is submitted to understand what
+# types of server configurations are being used to build a better plugin (i.e. MC/Java versions to continue supporting,
+# features to keep/remove). Data collection has very little/no impact on server performance. I'd appreciate if you
+# keep this set to FULL, but I completely understand if you want to send less data or opt out.
+#
+# 'FULL'  collects what 'SOME' collects, and data on what config options you're using.
+# 'SOME'  collects what 'BASIC' collects, and what hooks you're using.
+# 'BASIC' collects data on what Java version you're using, Bukkit/Spigot version you're using, other general server
+#         information like player count, how many emojis you've used, and shortcuts you've used.
+# 'OFF'   collects NO DATA, however, I would appreciate it if you send at least basic data.
+metrics-collection: 'FULL'
 
 # If you're using chat color plugins, this will remove the coloring for emojis to be displayed correctly.
 fix-emoji-coloring: false
@@ -10,6 +22,10 @@ fix-emoji-coloring: false
 # Disabling this will still disable the emojis listed in 'disabled-emojis', but won't check
 # if the player is using it in chat.
 verify-disabled-list: true
+
+# If EmojiChat should auto download the ResourcePack. If you'd rather have your players manually
+# download or use /emojichat resourcepack, set this to false.
+download-resourcepack: true
 
 # Shortcuts will replace the items in the list with the correct emoji name.
 # For example, :) will be replaced with :grinning:, which then will turn it into the emoji.
@@ -39,6 +55,12 @@ shortcuts:
   v:
   - ':peace:'
   - ':peace_hand:'
+  crazy_face:
+  - ':crazy:'
+  face_with_raised_eyebrow:
+  - ':hmm:'
+  shushing_face:
+  - ':shh:'
 
 # Emojis to disable. Remove them from the list to enable them.
 # By default, profane and potentially offensive emojis are disabled.
@@ -48,3 +70,22 @@ disabled-emojis:
 - ':tongue:'
 - ':bikini:'
 - ':kiss:'
+- ':sweat_drops:'
+- ':banana:'
+- ':cherries:'
+- ':peach:'
+- ':tomato:'
+- ':eggplant:'
+- ':cucumber:'
+- ':beer:'
+- ':beers:'
+- ':clinking_glasses:'
+- ':wine_glass:'
+- ':tumbler_glass:'
+- ':cocktail:'
+- ':face_with_symbols_over_mouth:'
+- ':face_vomiting:'
+
+# The config version, used to be able to update your config when future versions come out.
+# Don't change this, or you'll experience issues with EmojiChat.
+config-version: 2

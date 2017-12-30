@@ -1,5 +1,6 @@
 package io.github.radbuilder.emojichat;
 
+import io.github.radbuilder.emojichat.utils.EmojiHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -15,12 +16,13 @@ import java.util.List;
  *
  * @author RadBuilder
  * @since 1.2
+ * @version 1.5
  */
 class EmojiChatGui {
 	/**
 	 * EmojiChat main class instance.
 	 */
-	private EmojiChat plugin;
+	private final EmojiChat plugin;
 	
 	/**
 	 * Creates the EmojiChat gui class with the main class instance.
@@ -90,8 +92,8 @@ class EmojiChatGui {
 	 * Adds an EmojiList item to the gui specified.
 	 *
 	 * @param gui The gui {@link org.bukkit.inventory.Inventory}.
-	 * @param keyList The list of {@link io.github.radbuilder.emojichat.EmojiHandler#emojis} keys.
-	 * @param emojiMapPosition The current position in the {@link io.github.radbuilder.emojichat.EmojiHandler#emojis}.
+	 * @param keyList The list of {@link EmojiHandler#emojis} keys.
+	 * @param emojiMapPosition The current position in the {@link EmojiHandler#emojis}.
 	 */
 	private void addItem(Inventory gui, List<String> keyList, int emojiMapPosition) {
 		ItemStack stack = new ItemStack(Material.PAPER, 1);

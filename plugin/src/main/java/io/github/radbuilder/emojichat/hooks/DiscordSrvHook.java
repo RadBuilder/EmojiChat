@@ -13,6 +13,7 @@ import org.apache.commons.lang.StringUtils;
  *
  * @author RadBuilder
  * @since 1.4
+ * @version 1.5
  */
 public class DiscordSrvHook implements EmojiChatHook {
 	/**

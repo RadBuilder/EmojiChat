@@ -1,5 +1,8 @@
-package io.github.radbuilder.emojichat;
+package io.github.radbuilder.emojichat.utils;
 
+import io.github.radbuilder.emojichat.EmojiChat;
+import org.bukkit.Bukkit;
+import org.bukkit.scheduler.BukkitTask;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
@@ -14,34 +17,41 @@ import java.net.URL;
  *
  * @author RadBuilder
  * @since 1.3
+ * @version 1.5
  */
-class EmojiChatUpdateChecker {
+public class EmojiChatUpdateChecker {
 	/**
 	 * The current version of EmojiChat.
 	 */
-	final double currentVersion;
+	public final double currentVersion;
 	/**
 	 * If an update is available.
 	 */
-	boolean updateAvailable;
+	public boolean updateAvailable;
 	/**
 	 * The latest version of EmojiChat.
 	 */
-	double latestVersion;
+	public double latestVersion;
+	/**
+	 * The update checker {@link org.bukkit.scheduler.BukkitTask}, which runs every 4 hours after 10 seconds.
+	 */
+	private final BukkitTask updateTask;
 	
 	/**
 	 * Creates the EmojiChat update checker class with the main class instance.
 	 *
 	 * @param plugin The EmojiChat main class instance.
 	 */
-	EmojiChatUpdateChecker(EmojiChat plugin) {
+	public EmojiChatUpdateChecker(EmojiChat plugin) {
 		currentVersion = Double.parseDouble(plugin.getDescription().getVersion());
+		
+		updateTask = Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, this::checkForUpdates, 20L * 10L, 20L * 60L * 60L * 4L); // Start checking for updates after 10 seconds, then every 4 hours
 	}
 	
 	/**
 	 * Checks if updates are available.
 	 */
-	void checkForUpdates() {
+	private void checkForUpdates() {
 		try {
 			URL url = new URL("https://api.spiget.org/v2/resources/50955/versions?size=1&sort=-id");
 			
@@ -59,5 +69,12 @@ class EmojiChatUpdateChecker {
 		} catch (Exception ignored) { // Something happened, not sure what (possibly no internet connection), so no updates available
 			updateAvailable = false;
 		}
+	}
+	
+	/**
+	 * Cancel the {@link #updateTask}.
+	 */
+	public void cancelUpdateTask() {
+		updateTask.cancel();
 	}
 }
