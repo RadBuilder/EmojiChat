@@ -16,8 +16,8 @@ import java.util.List;
  * EmojiChat config updater.
  *
  * @author RadBuilder
- * @since 1.5
  * @version 1.5
+ * @since 1.5
  */
 public class EmojiChatConfigUpdater {
 	/**
@@ -62,8 +62,20 @@ public class EmojiChatConfigUpdater {
 		List<String> configLines = new ArrayList<>();
 		configLines.add("# Configuration file for EmojiChat by RadBuilder");
 		configLines.add("");
-		configLines.add("# The config version, used to be able to update your config when future versions come out.");
-		configLines.add("config-version: 2");
+		configLines.add("# EmojiChat collects metrics in order to get a better understanding of what configurations are used.");
+		configLines.add("# Statistics include how many servers it's being used on and what version of Bukkit/Spigot they're using,");
+		configLines.add("# how many players are using it, server information such as Java version, how many emojis are used,");
+		configLines.add("# and how many servers are using each feature. This data is anonymous, and is submitted to understand what");
+		configLines.add("# types of server configurations are being used to build a better plugin (i.e. MC/Java versions to continue supporting,");
+		configLines.add("# features to keep/remove). Data collection has very little/no impact on server performance. I'd appreciate if you");
+		configLines.add("# keep this set to FULL, but I completely understand if you want to send less data or opt out.");
+		configLines.add("#");
+		configLines.add("# 'FULL'  collects what 'SOME' collects, and data on what config options you're using.");
+		configLines.add("# 'SOME'  collects what 'BASIC' collects, and what hooks you're using.");
+		configLines.add("# 'BASIC' collects data on what Java version you're using, Bukkit/Spigot version you're using, other general server");
+		configLines.add("#         information like player count, how many emojis you've used, and shortcuts you've used.");
+		configLines.add("# 'OFF'   collects NO DATA, however, I would appreciate it if you send at least basic data.");
+		configLines.add("metrics-collection: 'FULL'");
 		configLines.add("");
 		configLines.add("# If you're using chat color plugins, this will remove the coloring for emojis to be displayed correctly.");
 		configLines.add("fix-emoji-coloring: " + fixEmojiColoring);
@@ -106,6 +118,10 @@ public class EmojiChatConfigUpdater {
 		configLines.add("- ':wine_glass:'");
 		configLines.add("- ':tumbler_glass:'");
 		configLines.add("- ':cocktail:'");
+		configLines.add("");
+		configLines.add("# The config version, used to be able to update your config when future versions come out.");
+		configLines.add("# Don't change this, or you'll experience issues with EmojiChat.");
+		configLines.add("config-version: 2");
 		
 		// Update the config
 		setConfig(plugin, configLines);
