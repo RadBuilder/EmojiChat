@@ -148,6 +148,7 @@ public class EmojiHandler {
 	 * Loads the disabled emojis from the config.
 	 *
 	 * @param config The config to load disabled emojis from.
+	 * @param plugin The EmojiChat main class instance.
 	 */
 	private void loadDisabledEmojis(FileConfiguration config, EmojiChat plugin) {
 		for (String disabledEmoji : config.getStringList("disabled-emojis")) {
