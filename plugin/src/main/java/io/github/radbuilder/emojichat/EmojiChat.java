@@ -5,7 +5,7 @@ import io.github.radbuilder.emojichat.hooks.DiscordSrvHook;
 import io.github.radbuilder.emojichat.hooks.EmojiChatHook;
 import io.github.radbuilder.emojichat.hooks.MVdWPlaceholderApiHook;
 import io.github.radbuilder.emojichat.hooks.PlaceholderApiHook;
-//import io.github.radbuilder.emojichat.hooks.TelegramChatHook;
+import io.github.radbuilder.emojichat.hooks.TelegramChatHook;
 import io.github.radbuilder.emojichat.metrics.MetricsHandler;
 import io.github.radbuilder.emojichat.utils.EmojiChatConfigUpdater;
 import io.github.radbuilder.emojichat.utils.EmojiChatUpdateChecker;
@@ -21,7 +21,7 @@ import java.util.List;
  * EmojiChat main class.
  *
  * @author RadBuilder
- * @version 1.6
+ * @version 1.7
  * @since 1.0
  */
 public class EmojiChat extends JavaPlugin {
@@ -105,9 +105,9 @@ public class EmojiChat extends JavaPlugin {
 		if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) { // Hook PlaceholderAPI if installed
 			enabledHooks.add(new PlaceholderApiHook(this));
 		}
-//		if (Bukkit.getPluginManager().isPluginEnabled("TelegramChat")) { // Hook TelegramChat if installed
-//			enabledHooks.add(new TelegramChatHook(this));
-//		}
+		if (Bukkit.getPluginManager().isPluginEnabled("TelegramChat")) { // Hook TelegramChat if installed
+			enabledHooks.add(new TelegramChatHook(this));
+		}
 	}
 	
 	/**
