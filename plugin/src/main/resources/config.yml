@@ -61,6 +61,15 @@ shortcuts:
   - ':hmm:'
   shushing_face:
   - ':shh:'
+  1st_place_medal:
+  - ':first:'
+  - ':1st:'
+  2nd_place_medal:
+  - ':second:'
+  - ':2nd:'
+  3rd_place_medal:
+  - ':third:'
+  - ':3rd:'
 
 # Emojis to disable. Remove them from the list to enable them.
 # By default, profane and potentially offensive emojis are disabled.
@@ -88,4 +97,4 @@ disabled-emojis:
 
 # The config version, used to be able to update your config when future versions come out.
 # Don't change this, or you'll experience issues with EmojiChat.
-config-version: 2
+config-version: 3

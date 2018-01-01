@@ -13,6 +13,7 @@ import io.github.radbuilder.emojichat.utils.EmojiHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,9 +56,11 @@ public class EmojiChat extends JavaPlugin {
 	
 	@Override
 	public void onEnable() {
-		new EmojiChatConfigUpdater(this);
-		
-		saveDefaultConfig();
+		if (!new File(getDataFolder(), "config.yml").exists()) { // If there's not a config, make one
+			saveDefaultConfig();
+		} else {
+			new EmojiChatConfigUpdater(this); // If there is a config, see if it can be updated
+		}
 		
 		enabledHooks = new ArrayList<>();
 		emojiChatGui = new EmojiChatGui(this);
