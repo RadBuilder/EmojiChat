@@ -14,7 +14,7 @@ import java.util.UUID;
  * Emoji handler class.
  *
  * @author RadBuilder
- * @version 1.5
+ * @version 1.6
  * @since 1.4
  */
 public class EmojiHandler {
@@ -585,6 +585,31 @@ public class EmojiHandler {
 		emojis.put(":star_struck:", "궙");
 		emojis.put(":exploding_head:", "궚");
 		emojis.put(":face_vomiting:", "궛");
+		emojis.put(":soccer:", "궜");
+		emojis.put(":basketball:", "궝");
+		emojis.put(":football:", "궞");
+		emojis.put(":baseball:", "궟");
+		emojis.put(":tennis:", "궠");
+		emojis.put(":volleyball:", "궡");
+		emojis.put(":rugby_football:", "궢");
+		emojis.put(":8ball:", "궣");
+		emojis.put(":golf:", "궤");
+		emojis.put(":ping_pong:", "궥");
+		emojis.put(":badminton:", "궦");
+		emojis.put(":goal_net:", "궧");
+		emojis.put(":ice_hockey:", "궨");
+		emojis.put(":field_hockey:", "궩");
+		emojis.put(":cricket:", "궪");
+		emojis.put(":ice_skate:", "궫");
+		emojis.put(":bow_and_arrow:", "궬");
+		emojis.put(":boxing_glove:", "궭");
+		emojis.put(":martial_arts_uniform:", "궮");
+		emojis.put(":trophy:", "궯");
+		emojis.put(":medal_sports:", "궰");
+		emojis.put(":medal_military:", "궱");
+		emojis.put(":1st_place_medal:", "궲");
+		emojis.put(":2nd_place_medal:", "궳");
+		emojis.put(":3rd_place_medal:", "궴");
 	}
 	
 	/**

@@ -20,8 +20,8 @@ import java.util.List;
  * EmojiChat main class.
  *
  * @author RadBuilder
+ * @version 1.6
  * @since 1.0
- * @version 1.5
  */
 public class EmojiChat extends JavaPlugin {
 	/**
