@@ -13,6 +13,7 @@ import io.github.radbuilder.emojichat.utils.EmojiHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,8 +21,8 @@ import java.util.List;
  * EmojiChat main class.
  *
  * @author RadBuilder
+ * @version 1.6
  * @since 1.0
- * @version 1.5
  */
 public class EmojiChat extends JavaPlugin {
 	/**
@@ -39,7 +40,7 @@ public class EmojiChat extends JavaPlugin {
 	/**
 	 * The ResourcePack URL.
 	 */
-	final String PACK_URL = "https://github.com/RadBuilder/EmojiChat/releases/download/v1.5/EmojiChat.ResourcePack.v1.5.zip";
+	final String PACK_URL = "https://github.com/RadBuilder/EmojiChat/releases/download/v1.6/EmojiChat.ResourcePack.v1.6.zip";
 	/**
 	 * The SHA1 sum of the ResourcePack as a byte array.
 	 */
@@ -55,9 +56,11 @@ public class EmojiChat extends JavaPlugin {
 	
 	@Override
 	public void onEnable() {
-		new EmojiChatConfigUpdater(this);
-		
-		saveDefaultConfig();
+		if (!new File(getDataFolder(), "config.yml").exists()) { // If there's not a config, make one
+			saveDefaultConfig();
+		} else {
+			new EmojiChatConfigUpdater(this); // If there is a config, see if it can be updated
+		}
 		
 		enabledHooks = new ArrayList<>();
 		emojiChatGui = new EmojiChatGui(this);
@@ -68,7 +71,7 @@ public class EmojiChat extends JavaPlugin {
 		
 		metricsHandler = new MetricsHandler(this); // Creates the metrics handler for metrics gathering
 		
-		PACK_SHA1 = BaseEncoding.base16().lowerCase().decode("787dc51caa5b01ced40517bd3d1fcf0f0873ab4e"); // Allows applying a cached version of the ResourcePack if available
+		PACK_SHA1 = BaseEncoding.base16().lowerCase().decode("45bd1b12a2007f8121b0ac041a0dbb3b6e934180"); // Allows applying a cached version of the ResourcePack if available
 		
 		// Register the chat listener
 		Bukkit.getPluginManager().registerEvents(new EmojiChatListener(this), this);

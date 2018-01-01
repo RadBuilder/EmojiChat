@@ -16,14 +16,14 @@ import java.util.List;
  * EmojiChat config updater.
  *
  * @author RadBuilder
- * @version 1.5
+ * @version 1.6
  * @since 1.5
  */
 public class EmojiChatConfigUpdater {
 	/**
 	 * The current config version number.
 	 */
-	private final int CONFIG_VERSION = 2;
+	private final int CONFIG_VERSION = 3;
 	
 	/**
 	 * Creates the EmojiChat config updater with the main class instance.
@@ -33,12 +33,9 @@ public class EmojiChatConfigUpdater {
 	public EmojiChatConfigUpdater(EmojiChat plugin) {
 		int configVersion = plugin.getConfig().getInt("config-version");
 		
-		if (configVersion + 1 == CONFIG_VERSION) {
-			plugin.getLogger().info("Updating your config now...");
-			updateConfig(plugin, plugin.getConfig());
-		} else if (configVersion + 1 < CONFIG_VERSION) {
-			plugin.getLogger().info("Your config is too old to update...");
-			plugin.getLogger().info("Your config has been renamed to 'config_old.yml' and a new one has been generated.");
+		if (configVersion < CONFIG_VERSION) {
+			plugin.getLogger().info("Updating your config now (old: " + configVersion + ", new: " + CONFIG_VERSION + ")...");
+			updateConfig(plugin, plugin.getConfig(), configVersion);
 		}
 	}
 	
@@ -47,15 +44,24 @@ public class EmojiChatConfigUpdater {
 	 *
 	 * @param plugin The EmojiChat main class instance.
 	 * @param config The EmojiChat config.
+	 * @param configVersion The current config version number.
 	 */
-	private void updateConfig(EmojiChat plugin, FileConfiguration config) {
-		// Old config values
+	private void updateConfig(EmojiChat plugin, FileConfiguration config, int configVersion) {
+		// Config v1 & v2 values
 		boolean fixEmojiColoring = config.getBoolean("fix-emoji-coloring");
 		boolean verifyDisabledList = config.getBoolean("verify-disabled-list");
 		List<String> disabledEmojis = config.getStringList("disabled-emojis");
 		LinkedHashMap<String, List<String>> shortcuts = new LinkedHashMap<>();
 		for (String key : config.getConfigurationSection("shortcuts").getKeys(false)) { // Gets all of the headers/keys in the shortcuts section
 			shortcuts.put(key, config.getStringList("shortcuts." + key));
+		}
+		
+		// Config v2 values
+		String metricsCollection = "FULL";
+		boolean downloadResourcePack = true;
+		if (configVersion == 2) {
+			metricsCollection = config.getString("metrics-collection");
+			downloadResourcePack = config.getBoolean("download-resourcepack");
 		}
 		
 		// Config lines
@@ -75,7 +81,7 @@ public class EmojiChatConfigUpdater {
 		configLines.add("# 'BASIC' collects data on what Java version you're using, Bukkit/Spigot version you're using, other general server");
 		configLines.add("#         information like player count, how many emojis you've used, and shortcuts you've used.");
 		configLines.add("# 'OFF'   collects NO DATA, however, I would appreciate it if you send at least basic data.");
-		configLines.add("metrics-collection: 'FULL'");
+		configLines.add("metrics-collection: '" + metricsCollection + "'");
 		configLines.add("");
 		configLines.add("# If you're using chat color plugins, this will remove the coloring for emojis to be displayed correctly.");
 		configLines.add("fix-emoji-coloring: " + fixEmojiColoring);
@@ -87,7 +93,7 @@ public class EmojiChatConfigUpdater {
 		configLines.add("");
 		configLines.add("# If EmojiChat should auto download the ResourcePack. If you'd rather have your players manually");
 		configLines.add("# download or use /emojichat resourcepack, set this to false.");
-		configLines.add("download-resourcepack: true");
+		configLines.add("download-resourcepack: " + downloadResourcePack);
 		configLines.add("");
 		configLines.add("# Shortcuts will replace the items in the list with the correct emoji name.");
 		configLines.add("# For example, :) will be replaced with :grinning:, which then will turn it into the emoji.");
@@ -98,12 +104,23 @@ public class EmojiChatConfigUpdater {
 				configLines.add("  - '" + shortcutListItem + "'");
 			}
 		}
-		configLines.add("  crazy_face:");
-		configLines.add("  - ':crazy:'");
-		configLines.add("  face_with_raised_eyebrow:");
-		configLines.add("  - ':hmm:'");
-		configLines.add("  shushing_face:");
-		configLines.add("  - ':shh:'");
+		if (configVersion == 1) {
+			configLines.add("  crazy_face:");
+			configLines.add("  - ':crazy:'");
+			configLines.add("  face_with_raised_eyebrow:");
+			configLines.add("  - ':hmm:'");
+			configLines.add("  shushing_face:");
+			configLines.add("  - ':shh:'");
+		}
+		configLines.add("  1st_place_medal:");
+		configLines.add("  - ':first:'");
+		configLines.add("  - ':1st:'");
+		configLines.add("  2nd_place_medal:");
+		configLines.add("  - ':second:'");
+		configLines.add("  - ':2nd:'");
+		configLines.add("  3rd_place_medal:");
+		configLines.add("  - ':third:'");
+		configLines.add("  - ':3rd:'");
 		configLines.add("");
 		configLines.add("# Emojis to disable. Remove them from the list to enable them.");
 		configLines.add("# By default, profane and potentially offensive emojis are disabled.");
@@ -111,25 +128,27 @@ public class EmojiChatConfigUpdater {
 		for (String disabledEmoji : disabledEmojis) {
 			configLines.add("- '" + disabledEmoji + "'");
 		}
-		configLines.add("- ':sweat_drops:'");
-		configLines.add("- ':banana:'");
-		configLines.add("- ':cherries:'");
-		configLines.add("- ':peach:'");
-		configLines.add("- ':tomato:'");
-		configLines.add("- ':eggplant:'");
-		configLines.add("- ':cucumber:'");
-		configLines.add("- ':beer:'");
-		configLines.add("- ':beers:'");
-		configLines.add("- ':clinking_glasses:'");
-		configLines.add("- ':wine_glass:'");
-		configLines.add("- ':tumbler_glass:'");
-		configLines.add("- ':cocktail:'");
-		configLines.add("- ':face_with_symbols_over_mouth:'");
-		configLines.add("- ':face_vomiting:'");
+		if (configVersion == 1) {
+			configLines.add("- ':sweat_drops:'");
+			configLines.add("- ':banana:'");
+			configLines.add("- ':cherries:'");
+			configLines.add("- ':peach:'");
+			configLines.add("- ':tomato:'");
+			configLines.add("- ':eggplant:'");
+			configLines.add("- ':cucumber:'");
+			configLines.add("- ':beer:'");
+			configLines.add("- ':beers:'");
+			configLines.add("- ':clinking_glasses:'");
+			configLines.add("- ':wine_glass:'");
+			configLines.add("- ':tumbler_glass:'");
+			configLines.add("- ':cocktail:'");
+			configLines.add("- ':face_with_symbols_over_mouth:'");
+			configLines.add("- ':face_vomiting:'");
+		}
 		configLines.add("");
 		configLines.add("# The config version, used to be able to update your config when future versions come out.");
 		configLines.add("# Don't change this, or you'll experience issues with EmojiChat.");
-		configLines.add("config-version: 2");
+		configLines.add("config-version: " + CONFIG_VERSION);
 		
 		// Update the config
 		setConfig(plugin, configLines);

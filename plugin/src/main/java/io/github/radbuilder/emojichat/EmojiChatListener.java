@@ -16,7 +16,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
  * EmojiChat listener class.
  *
  * @author RadBuilder
- * @version 1.5
+ * @version 1.6
  * @since 1.0
  */
 class EmojiChatListener implements Listener {
@@ -82,16 +82,18 @@ class EmojiChatListener implements Listener {
 		}
 		
 		// Replace shortcuts with emojis
-		if (!plugin.getEmojiHandler().fixColoring()) {
+		// If we're not fixing the coloring, or the message is too small to have coloring
+		if (!plugin.getEmojiHandler().fixColoring() || message.length() < 3) {
 			for (String key : plugin.getEmojiHandler().getEmojis().keySet()) {
 				plugin.getMetricsHandler().addEmojiUsed(StringUtils.countMatches(message, key));
 				message = message.replace(key, plugin.getEmojiHandler().getEmojis().get(key));
 			}
 		} else {
+			String chatColor = message.substring(0, 2); // Gets the chat color of the message, i.e. §a
+			boolean hasColor = chatColor.contains("§");
 			for (String key : plugin.getEmojiHandler().getEmojis().keySet()) {
 				plugin.getMetricsHandler().addEmojiUsed(StringUtils.countMatches(message, key));
-				String chatColor = message.substring(0, 2); // Gets the chat color of the message, i.e. §a
-				message = message.replace(key, ChatColor.WHITE + plugin.getEmojiHandler().getEmojis().get(key) + (chatColor.contains("§") ? chatColor : "")); // Sets the emoji color to white for correct coloring
+				message = message.replace(key, ChatColor.WHITE + plugin.getEmojiHandler().getEmojis().get(key) + (hasColor ? chatColor : "")); // Sets the emoji color to white for correct coloring
 			}
 		}
 		
