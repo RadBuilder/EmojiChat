@@ -9,6 +9,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 /**
@@ -87,6 +88,30 @@ class EmojiChatListener implements Listener {
 		}
 		
 		event.setMessage(message);
+	}
+	
+	
+	@EventHandler
+	void onCommandPreProcess(PlayerCommandPreprocessEvent event) {
+		// TODO: Add config option to choose enabled commands
+		String command = event.getMessage();
+		
+		// Checks if the user disabled shortcuts via /emojichat toggle
+		if (!plugin.getEmojiHandler().hasShortcutsOff(event.getPlayer())) {
+			command = plugin.getEmojiHandler().translateShorthand(command);
+		}
+		
+		// Replace shortcuts with emojis
+		command = plugin.getEmojiHandler().toEmoji(command);
+		
+		// If checking for disabled characters is enabled, and the message contains a disabled character
+		if (plugin.getEmojiHandler().containsDisabledCharacter(command)) {
+			event.setCancelled(true);
+			event.getPlayer().sendMessage(ChatColor.RED + "Oops! You can't use disabled emoji characters!");
+			return;
+		}
+		
+		event.setMessage(command);
 	}
 	
 	@EventHandler
