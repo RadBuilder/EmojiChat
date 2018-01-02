@@ -1,6 +1,5 @@
 package io.github.radbuilder.emojichat;
 
-import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -16,7 +15,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
  * EmojiChat listener class.
  *
  * @author RadBuilder
- * @version 1.6
+ * @version 1.7
  * @since 1.0
  */
 class EmojiChatListener implements Listener {
@@ -74,37 +73,17 @@ class EmojiChatListener implements Listener {
 		
 		// Checks if the user disabled shortcuts via /emojichat toggle
 		if (!plugin.getEmojiHandler().hasShortcutsOff(event.getPlayer())) {
-			// Replaces shorthand ("shortcuts" in config) with correct emoji shortcuts
-			for (String key : plugin.getEmojiHandler().getShortcuts().keySet()) {
-				plugin.getMetricsHandler().addShortcutUsed(StringUtils.countMatches(message, key));
-				message = message.replace(key, plugin.getEmojiHandler().getShortcuts().get(key));
-			}
+			message = plugin.getEmojiHandler().translateShorthand(message);
 		}
 		
 		// Replace shortcuts with emojis
-		// If we're not fixing the coloring, or the message is too small to have coloring
-		if (!plugin.getEmojiHandler().fixColoring() || message.length() < 3) {
-			for (String key : plugin.getEmojiHandler().getEmojis().keySet()) {
-				plugin.getMetricsHandler().addEmojiUsed(StringUtils.countMatches(message, key));
-				message = message.replace(key, plugin.getEmojiHandler().getEmojis().get(key));
-			}
-		} else {
-			String chatColor = message.substring(0, 2); // Gets the chat color of the message, i.e. §a
-			boolean hasColor = chatColor.contains("§");
-			for (String key : plugin.getEmojiHandler().getEmojis().keySet()) {
-				plugin.getMetricsHandler().addEmojiUsed(StringUtils.countMatches(message, key));
-				message = message.replace(key, ChatColor.WHITE + plugin.getEmojiHandler().getEmojis().get(key) + (hasColor ? chatColor : "")); // Sets the emoji color to white for correct coloring
-			}
-		}
+		message = plugin.getEmojiHandler().toEmojiFromChat(message);
 		
-		if (plugin.getEmojiHandler().verifyDisabledList()) { // If the message should be checked for disabled characters
-			for (String disabledCharacter : plugin.getEmojiHandler().getDisabledCharacters()) {
-				if (message.contains(disabledCharacter)) { // Message contains a disabled character
-					event.setCancelled(true);
-					event.getPlayer().sendMessage(ChatColor.RED + "Oops! You can't use disabled emoji characters!");
-					return;
-				}
-			}
+		// If checking for disabled characters is enabled, and the message contains a disabled character
+		if (plugin.getEmojiHandler().containsDisabledCharacter(message)) {
+			event.setCancelled(true);
+			event.getPlayer().sendMessage(ChatColor.RED + "Oops! You can't use disabled emoji characters!");
+			return;
 		}
 		
 		event.setMessage(message);

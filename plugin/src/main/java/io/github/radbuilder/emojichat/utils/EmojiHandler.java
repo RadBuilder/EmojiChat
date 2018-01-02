@@ -1,6 +1,8 @@
 package io.github.radbuilder.emojichat.utils;
 
 import io.github.radbuilder.emojichat.EmojiChat;
+import org.apache.commons.lang.StringUtils;
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
@@ -14,7 +16,7 @@ import java.util.UUID;
  * Emoji handler class.
  *
  * @author RadBuilder
- * @version 1.6
+ * @version 1.7
  * @since 1.4
  */
 public class EmojiHandler {
@@ -42,6 +44,10 @@ public class EmojiHandler {
 	 * A list of users (by UUID) who turned shortcuts off.
 	 */
 	private List<UUID> shortcutsOff;
+	/**
+	 * EmojiChat main class instance.
+	 */
+	private final EmojiChat plugin;
 	
 	/**
 	 * Creates the emoji handler with the main class instance.
@@ -49,6 +55,8 @@ public class EmojiHandler {
 	 * @param plugin The EmojiChat main class instance.
 	 */
 	public EmojiHandler(EmojiChat plugin) {
+		this.plugin = plugin;
+		
 		emojis = new TreeMap<>();
 		shortcuts = new HashMap<>();
 		disabledCharacters = new ArrayList<>();
@@ -645,5 +653,70 @@ public class EmojiHandler {
 				disabledCharacters.clear();
 			}
 		}
+	}
+	
+	/**
+	 * Converts the specified message's shortcuts (i.e. :100:) to emoji.
+	 *
+	 * @param message The message to convert.
+	 * @return The converted message.
+	 */
+	public String toEmoji(String message) {
+		for (String key : emojis.keySet()) {
+			plugin.getMetricsHandler().addEmojiUsed(StringUtils.countMatches(message, key));
+			message = message.replace(key, plugin.getEmojiHandler().getEmojis().get(key));
+		}
+		return message;
+	}
+	
+	/**
+	 * Converts the specified message's shortcuts (i.e. :100:) to emoji from chat.
+	 *
+	 * @param message The message to convert from chat.
+	 * @return The converted message from chat.
+	 */
+	public String toEmojiFromChat(String message) {
+		// If we're not fixing the coloring, or the message is too small to have coloring
+		if (!fixColoring || message.length() < 3) {
+			message = toEmoji(message);
+		} else {
+			String chatColor = message.substring(0, 2); // Gets the chat color of the message, i.e. §a
+			boolean hasColor = chatColor.contains("§");
+			for (String key : emojis.keySet()) {
+				plugin.getMetricsHandler().addEmojiUsed(StringUtils.countMatches(message, key));
+				message = message.replace(key, ChatColor.WHITE + emojis.get(key) + (hasColor ? chatColor : "")); // Sets the emoji color to white for correct coloring
+			}
+		}
+		return message;
+	}
+	
+	/**
+	 * Replaces shorthand ("shortcuts" in config) with correct emoji shortcuts.
+	 *
+	 * @param message The original message.
+	 * @return The message with correct emoji shortcuts.
+	 */
+	public String translateShorthand(String message) {
+		for (String key : plugin.getEmojiHandler().getShortcuts().keySet()) {
+			plugin.getMetricsHandler().addShortcutUsed(StringUtils.countMatches(message, key));
+			message = message.replace(key, plugin.getEmojiHandler().getShortcuts().get(key));
+		}
+		return message;
+	}
+	
+	/**
+	 * Checks if the specified message contains a disabled character, if enabled.
+	 * @param message The message to check.
+	 * @return True if verify-disabled-list is enabled, and the message contains a disabled character. False otherwise.
+	 */
+	public boolean containsDisabledCharacter(String message) {
+		if (verifyDisabledList) { // If the message should be checked for disabled characters
+			for (String disabledCharacter : disabledCharacters) {
+				if (message.contains(disabledCharacter)) { // Message contains a disabled character
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 }
