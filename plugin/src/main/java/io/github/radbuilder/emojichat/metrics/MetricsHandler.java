@@ -22,6 +22,10 @@ public class MetricsHandler {
 	 * The number of shortcuts used.
 	 */
 	private int shortcutsUsed;
+	/**
+	 * The {@link MetricsLevel} being used.
+	 */
+	private MetricsLevel metricsLevel;
 	
 	/**
 	 * Creates the metrics handler class with the main class instance.
@@ -32,9 +36,14 @@ public class MetricsHandler {
 		emojisUsed = 0;
 		shortcutsUsed = 0;
 		
-		MetricsLevel metricsLevel = MetricsLevel.valueOf(plugin.getConfig().getString("metrics-collection"));
+		try {
+			metricsLevel = MetricsLevel.valueOf(plugin.getConfig().getString("metrics-collection"));
+		} catch (Exception e) { // If metrics-collection is invalid, set to the default option
+			metricsLevel = MetricsLevel.FULL;
+		}
+		
 		if (metricsLevel == MetricsLevel.OFF) {
-			return;
+			return; // Don't start metrics if off
 		}
 		
 		Metrics metrics = new Metrics(plugin); // Start Metrics
