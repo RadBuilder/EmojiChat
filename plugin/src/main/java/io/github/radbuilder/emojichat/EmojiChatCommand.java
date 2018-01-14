@@ -10,7 +10,7 @@ import org.bukkit.entity.Player;
  * EmojiChat command class.
  *
  * @author RadBuilder
- * @version 1.6
+ * @version 1.7
  * @since 1.0
  */
 class EmojiChatCommand implements CommandExecutor {
@@ -31,7 +31,7 @@ class EmojiChatCommand implements CommandExecutor {
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
 		if (args.length < 1) {
-			sender.sendMessage(ChatColor.AQUA + "EmojiChat v1.6 by RadBuilder");
+			sender.sendMessage(ChatColor.AQUA + "EmojiChat v1.7 by RadBuilder");
 			sender.sendMessage(ChatColor.AQUA + "Use " + ChatColor.GREEN + "/emojichat help" + ChatColor.AQUA + " for help.");
 			return true;
 		}
@@ -91,7 +91,7 @@ class EmojiChatCommand implements CommandExecutor {
 					sender.sendMessage(ChatColor.RED + "You need " + ChatColor.GOLD + "emojichat.list" + ChatColor.RED + " to use this command.");
 					return true;
 				}
-				if (!(sender instanceof Player) || (args.length > 1 && args[1].equalsIgnoreCase("chat"))) { // Send chat version if not a player or specified
+				if (!(sender instanceof Player)) { // Send chat version if the sender isn't a player
 					sender.sendMessage(ChatColor.AQUA + "---------- EmojiChat List ----------");
 					for (String key : plugin.getEmojiHandler().getEmojis().keySet()) {
 						sender.sendMessage(ChatColor.AQUA + key + " " + ChatColor.RESET + plugin.getEmojiHandler().getEmojis().get(key));
