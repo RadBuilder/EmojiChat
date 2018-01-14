@@ -84,6 +84,31 @@ shortcuts:
   - '<3'
   broken_heart:
   - '</3'
+  zero:
+  - ':0:'
+  one:
+  - ':1:'
+  two:
+  - ':2:'
+  three:
+  - ':3:'
+  four:
+  - ':4:'
+  five:
+  - ':5:'
+  six:
+  - ':6:'
+  seven:
+  - ':7:'
+  eight:
+  - ':8:'
+  nine:
+  - ':9:'
+  keycap_ten:
+  - ':ten:'
+  - ':10:'
+  asterisk:
+  - ':*:'
 
 # If certain emojis should be disabled or not.
 # If true, it will disable all of the emojis specified in 'disabled-emojis'
