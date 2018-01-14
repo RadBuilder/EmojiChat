@@ -154,6 +154,9 @@ public class EmojiChatConfigUpdater {
 		
 		// Update the config
 		setConfig(plugin, configLines);
+		// Clear non-used lists
+		disabledEmojis.clear();
+		shortcuts.clear();
 	}
 	
 	/**
@@ -165,7 +168,9 @@ public class EmojiChatConfigUpdater {
 	private void setConfig(EmojiChat plugin, List<String> configLines) {
 		try {
 			File configFile = new File(plugin.getDataFolder() + "/config.yml");
-			configFile.delete(); // Delete the old config
+			if (!configFile.delete()) { // Delete the old config
+				plugin.getLogger().warning("Failed to delete the old config. If this continues: back up your config, manually delete it, then restart.");
+			}
 			
 			// Create the new config
 			configFile = new File(plugin.getDataFolder() + "/config.yml");
