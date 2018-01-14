@@ -53,8 +53,8 @@ public class MetricsHandler {
 				// If fix-emoji-coloring is being used
 				metrics.addCustomChart(new Metrics.SimplePie("usingFixEmojiColoring", () -> Boolean.toString(plugin.getConfig().getBoolean("fix-emoji-coloring"))));
 				
-				// If verify-disabled-list is being used
-				metrics.addCustomChart(new Metrics.SimplePie("usingVerifyDisabledList", () -> Boolean.toString(plugin.getConfig().getBoolean("verify-disabled-list"))));
+				// If disable-emojis is being used
+				metrics.addCustomChart(new Metrics.SimplePie("usingVerifyDisabledList", () -> Boolean.toString(plugin.getConfig().getBoolean("disable-emojis"))));
 				
 				// If download-resourcepack is being used
 				metrics.addCustomChart(new Metrics.SimplePie("usingDownloadResourcePack", () -> Boolean.toString(plugin.getConfig().getBoolean("download-resourcepack"))));

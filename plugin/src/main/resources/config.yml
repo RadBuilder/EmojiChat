@@ -18,11 +18,6 @@ metrics-collection: 'FULL'
 # If you're using chat color plugins, this will remove the coloring for emojis to be displayed correctly.
 fix-emoji-coloring: false
 
-# This prevents players from using the characters associated with disabled emojis.
-# Disabling this will still disable the emojis listed in 'disabled-emojis', but won't check
-# if the player is using it in chat.
-verify-disabled-list: true
-
 # If EmojiChat should auto download the ResourcePack. If you'd rather have your players manually
 # download or use /emojichat resourcepack, set this to false.
 download-resourcepack: true
@@ -71,6 +66,11 @@ shortcuts:
   - ':third:'
   - ':3rd:'
 
+# If certain emojis should be disabled or not.
+# If true, it will disable all of the emojis specified in 'disabled-emojis'
+# If false, emojis specified in 'disabled-emojis' will be ignored.
+disable-emojis: true
+
 # Emojis to disable. Remove them from the list to enable them.
 # By default, profane and potentially offensive emojis are disabled.
 disabled-emojis:
@@ -97,4 +97,4 @@ disabled-emojis:
 
 # The config version, used to be able to update your config when future versions come out.
 # Don't change this, or you'll experience issues with EmojiChat.
-config-version: 3
+config-version: 4

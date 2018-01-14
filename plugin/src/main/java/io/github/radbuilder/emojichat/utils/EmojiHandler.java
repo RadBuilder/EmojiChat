@@ -37,10 +37,6 @@ public class EmojiHandler {
 	 */
 	private boolean fixColoring;
 	/**
-	 * If the characters associated with disabled emojis should be checked.
-	 */
-	private boolean verifyDisabledList;
-	/**
 	 * A list of users (by UUID) who turned shortcuts off.
 	 */
 	private List<UUID> shortcutsOff;
@@ -116,15 +112,6 @@ public class EmojiHandler {
 	}
 	
 	/**
-	 * If the list of disabled emojis specified in the config should be verified.
-	 *
-	 * @return True if the disabled list should be verified, false otherwise.
-	 */
-	public boolean verifyDisabledList() {
-		return verifyDisabledList;
-	}
-	
-	/**
 	 * Validates the config.
 	 *
 	 * @param config The config to validate.
@@ -133,7 +120,7 @@ public class EmojiHandler {
 	private boolean validateConfig(FileConfiguration config) {
 		try {
 			return config.get("shortcuts") != null && config.get("disabled-emojis") != null
-					&& config.get("fix-emoji-coloring") != null && config.get("verify-disabled-list") != null;
+					&& config.get("fix-emoji-coloring") != null && config.get("disable-emojis") != null;
 		} catch (Exception e) {
 			return false;
 		}
@@ -159,12 +146,14 @@ public class EmojiHandler {
 	 * @param plugin The EmojiChat main class instance.
 	 */
 	private void loadDisabledEmojis(FileConfiguration config, EmojiChat plugin) {
-		for (String disabledEmoji : config.getStringList("disabled-emojis")) {
-			if (disabledEmoji == null || !emojis.containsKey(disabledEmoji)) {
-				plugin.getLogger().warning("Invalid emoji specified in 'disabled-emojis': '" + disabledEmoji + "'. Skipping...");
-				continue;
+		if (config.getBoolean("disable-emojis")) {
+			for (String disabledEmoji : config.getStringList("disabled-emojis")) {
+				if (disabledEmoji == null || !emojis.containsKey(disabledEmoji)) {
+					plugin.getLogger().warning("Invalid emoji specified in 'disabled-emojis': '" + disabledEmoji + "'. Skipping...");
+					continue;
+				}
+				disabledCharacters.add(emojis.remove(disabledEmoji)); // Remove disabled emojis from the emoji list
 			}
-			disabledCharacters.add(emojis.remove(disabledEmoji)); // Remove disabled emojis from the emoji list
 		}
 	}
 	
@@ -648,10 +637,6 @@ public class EmojiHandler {
 			loadShortcuts(plugin.getConfig()); // Loads all of the shortcuts specified in the config
 			loadDisabledEmojis(plugin.getConfig(), plugin); // Loads all of the disabled emojis specified in the config.
 			fixColoring = plugin.getConfig().getBoolean("fix-emoji-coloring");
-			verifyDisabledList = plugin.getConfig().getBoolean("verify-disabled-list");
-			if (!verifyDisabledList) {
-				disabledCharacters.clear();
-			}
 		}
 	}
 	
@@ -706,15 +691,14 @@ public class EmojiHandler {
 	
 	/**
 	 * Checks if the specified message contains a disabled character, if enabled.
+	 *
 	 * @param message The message to check.
-	 * @return True if verify-disabled-list is enabled, and the message contains a disabled character. False otherwise.
+	 * @return True if the message contains a disabled character, false otherwise.
 	 */
 	public boolean containsDisabledCharacter(String message) {
-		if (verifyDisabledList) { // If the message should be checked for disabled characters
-			for (String disabledCharacter : disabledCharacters) {
-				if (message.contains(disabledCharacter)) { // Message contains a disabled character
-					return true;
-				}
+		for (String disabledCharacter : disabledCharacters) {
+			if (message.contains(disabledCharacter)) { // Message contains a disabled character
+				return true;
 			}
 		}
 		return false;

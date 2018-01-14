@@ -16,14 +16,14 @@ import java.util.List;
  * EmojiChat config updater.
  *
  * @author RadBuilder
- * @version 1.6
+ * @version 1.7
  * @since 1.5
  */
 public class EmojiChatConfigUpdater {
 	/**
 	 * The current config version number.
 	 */
-	private final int CONFIG_VERSION = 3;
+	private final int CONFIG_VERSION = 4;
 	
 	/**
 	 * Creates the EmojiChat config updater with the main class instance.
@@ -49,7 +49,6 @@ public class EmojiChatConfigUpdater {
 	private void updateConfig(EmojiChat plugin, FileConfiguration config, int configVersion) {
 		// Config v1 & v2 values
 		boolean fixEmojiColoring = config.getBoolean("fix-emoji-coloring");
-		boolean verifyDisabledList = config.getBoolean("verify-disabled-list");
 		List<String> disabledEmojis = config.getStringList("disabled-emojis");
 		LinkedHashMap<String, List<String>> shortcuts = new LinkedHashMap<>();
 		for (String key : config.getConfigurationSection("shortcuts").getKeys(false)) { // Gets all of the headers/keys in the shortcuts section
@@ -59,7 +58,7 @@ public class EmojiChatConfigUpdater {
 		// Config v2 values
 		String metricsCollection = "FULL";
 		boolean downloadResourcePack = true;
-		if (configVersion == 2) {
+		if (configVersion > 1) {
 			metricsCollection = config.getString("metrics-collection");
 			downloadResourcePack = config.getBoolean("download-resourcepack");
 		}
@@ -86,10 +85,6 @@ public class EmojiChatConfigUpdater {
 		configLines.add("# If you're using chat color plugins, this will remove the coloring for emojis to be displayed correctly.");
 		configLines.add("fix-emoji-coloring: " + fixEmojiColoring);
 		configLines.add("");
-		configLines.add("# This prevents players from using the characters associated with disabled emojis.");
-		configLines.add("# Disabling this will still disable the emojis listed in 'disabled-emojis', but won't check");
-		configLines.add("# if the player is using it in chat.");
-		configLines.add("verify-disabled-list: " + verifyDisabledList);
 		configLines.add("");
 		configLines.add("# If EmojiChat should auto download the ResourcePack. If you'd rather have your players manually");
 		configLines.add("# download or use /emojichat resourcepack, set this to false.");
@@ -112,15 +107,22 @@ public class EmojiChatConfigUpdater {
 			configLines.add("  shushing_face:");
 			configLines.add("  - ':shh:'");
 		}
-		configLines.add("  1st_place_medal:");
-		configLines.add("  - ':first:'");
-		configLines.add("  - ':1st:'");
-		configLines.add("  2nd_place_medal:");
-		configLines.add("  - ':second:'");
-		configLines.add("  - ':2nd:'");
-		configLines.add("  3rd_place_medal:");
-		configLines.add("  - ':third:'");
-		configLines.add("  - ':3rd:'");
+		if (configVersion < 3) {
+			configLines.add("  1st_place_medal:");
+			configLines.add("  - ':first:'");
+			configLines.add("  - ':1st:'");
+			configLines.add("  2nd_place_medal:");
+			configLines.add("  - ':second:'");
+			configLines.add("  - ':2nd:'");
+			configLines.add("  3rd_place_medal:");
+			configLines.add("  - ':third:'");
+			configLines.add("  - ':3rd:'");
+		}
+		configLines.add("");
+		configLines.add("# If certain emojis should be disabled or not.");
+		configLines.add("# If true, it will disable all of the emojis specified in 'disabled-emojis'");
+		configLines.add("# If false, emojis specified in 'disabled-emojis' will be ignored.");
+		configLines.add("disable-emojis: true");
 		configLines.add("");
 		configLines.add("# Emojis to disable. Remove them from the list to enable them.");
 		configLines.add("# By default, profane and potentially offensive emojis are disabled.");
