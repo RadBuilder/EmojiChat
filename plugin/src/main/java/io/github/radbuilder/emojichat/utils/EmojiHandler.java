@@ -607,6 +607,31 @@ public class EmojiHandler {
 		emojis.put(":1st_place_medal:", "궲");
 		emojis.put(":2nd_place_medal:", "궳");
 		emojis.put(":3rd_place_medal:", "궴");
+		emojis.put(":reminder_ribbon:", "궵");
+		emojis.put(":rosette:", "궶");
+		emojis.put(":ticket:", "궷");
+		emojis.put(":tickets:", "궸");
+		emojis.put(":performing_arts:", "궹");
+		emojis.put(":art:", "궺");
+		emojis.put(":circus_tent:", "궻");
+		emojis.put(":microphone:", "궼");
+		emojis.put(":headphones:", "궽");
+		emojis.put(":musical_score:", "궾");
+		emojis.put(":musical_keyboard:", "궿");
+		emojis.put(":drum:", "귀");
+		emojis.put(":saxophone:", "귁");
+		emojis.put(":trumpet:", "귂");
+		emojis.put(":guitar:", "귃");
+		emojis.put(":violin:", "귄");
+		emojis.put(":clapper:", "귅");
+		emojis.put(":video_game:", "귆");
+		emojis.put(":space_invader:", "귇");
+		emojis.put(":dart:", "귈");
+		emojis.put(":game_die:", "귉");
+		emojis.put(":slot_machine:", "귊");
+		emojis.put(":bowling:", "귋");
+		emojis.put(":heart:", "귌");
+		emojis.put(":broken_heart:", "귍");
 	}
 	
 	/**

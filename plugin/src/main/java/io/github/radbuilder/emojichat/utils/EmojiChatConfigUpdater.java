@@ -118,6 +118,21 @@ public class EmojiChatConfigUpdater {
 			configLines.add("  - ':third:'");
 			configLines.add("  - ':3rd:'");
 		}
+		configLines.add("  microphone:");
+		configLines.add("  - ':mic:'");
+		configLines.add("  musical_keyboard:");
+		configLines.add("  - ':piano:'");
+		configLines.add("  video_game:");
+		configLines.add("  - ':controller:'");
+		configLines.add("  dart:");
+		configLines.add("  - ':target:'");
+		configLines.add("  game_die:");
+		configLines.add("  - ':dice:'");
+		configLines.add("  - ':die:'");
+		configLines.add("  heart:");
+		configLines.add("  - '<3'");
+		configLines.add("  broken_heart:");
+		configLines.add("  - '</3'");
 		configLines.add("");
 		configLines.add("# If certain emojis should be disabled or not.");
 		configLines.add("# If true, it will disable all of the emojis specified in 'disabled-emojis'");

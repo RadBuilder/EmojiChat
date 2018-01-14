@@ -65,6 +65,21 @@ shortcuts:
   3rd_place_medal:
   - ':third:'
   - ':3rd:'
+  microphone:
+  - ':mic:'
+  musical_keyboard:
+  - ':piano:'
+  video_game:
+  - ':controller:'
+  dart:
+  - ':target:'
+  game_die:
+  - ':dice:'
+  - ':die:'
+  heart:
+  - '<3'
+  broken_heart:
+  - '</3'
 
 # If certain emojis should be disabled or not.
 # If true, it will disable all of the emojis specified in 'disabled-emojis'
