@@ -10,7 +10,7 @@ import java.util.Map;
  * Metrics handler class.
  *
  * @author RadBuilder
- * @version 1.5
+ * @version 1.7
  * @since 1.4
  */
 public class MetricsHandler {
@@ -63,6 +63,9 @@ public class MetricsHandler {
 				metrics.addCustomChart(new Metrics.AdvancedPie("disabledEmojis", () -> {
 					Map<String, Integer> disabledEmojis = new HashMap<>();
 					plugin.getConfig().getStringList("disabled-emojis").forEach(s -> disabledEmojis.put(s, 1));
+					if (disabledEmojis.isEmpty()) { // If there aren't any disabled emojis, add "None"
+						disabledEmojis.put("None", 1);
+					}
 					return disabledEmojis;
 				}));
 			case SOME:
