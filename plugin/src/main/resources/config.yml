@@ -18,10 +18,21 @@ metrics-collection: 'FULL'
 # If you're using chat color plugins, this will remove the coloring for emojis to be displayed correctly.
 fix-emoji-coloring: false
 
+# If emojis should be displayed on signs (shortcuts and full names supported).
+emojis-on-signs: false
+
+# If commands should have emojis (shortcuts and full names supported).
+emojis-in-commands: false
+# If emojis should ONLY work with commands in 'command-list'.
+only-command-list: false
+# If 'only-command-list' is true, the commands here will be the only commands where emojis are allowed.
+command-list:
+- 'msg'
+- 'tell'
+
 # If EmojiChat should auto download the ResourcePack. If you'd rather have your players manually
 # download or use /emojichat resourcepack, set this to false.
 download-resourcepack: true
-
 # The resource pack variant to use.
 # 1 (recommended) replaces Korean characters with emojis, and 2 replaces Chinese characters with emojis.
 pack-variant: 1
@@ -114,7 +125,6 @@ shortcuts:
 # If true, it will disable all of the emojis specified in 'disabled-emojis'
 # If false, emojis specified in 'disabled-emojis' will be ignored.
 disable-emojis: true
-
 # Emojis to disable. Remove them from the list to enable them.
 # By default, profane and potentially offensive emojis are disabled.
 disabled-emojis:

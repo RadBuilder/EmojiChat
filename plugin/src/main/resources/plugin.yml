@@ -37,7 +37,20 @@ permissions:
     description: Allows you to toggle emoji shortcuts on or off
     default: op
   emojichat.use:
+    description: Allows you to use emojis in chat, in commands, and on signs
+    default: op
+    children:
+      emojichat.use.chat: true
+      emojichat.use.command: true
+      emojichat.use.sign: true
+  emojichat.use.chat:
     description: Allows you to use emojis in chat
+    default: op
+  emojichat.use.command:
+    description: Allows you to use emojis in commands
+    default: op
+  emojichat.use.sign:
+    description: Allows you to use emojis on signs
     default: op
   emojichat.reload:
     description: Allows you to reload the EmojiChat config

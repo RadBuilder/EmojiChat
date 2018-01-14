@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
@@ -67,7 +68,7 @@ class EmojiChatListener implements Listener {
 	
 	@EventHandler(priority = EventPriority.HIGH)
 	void onChat(AsyncPlayerChatEvent event) {
-		if (!event.getPlayer().hasPermission("emojichat.use"))
+		if (!event.getPlayer().hasPermission("emojichat.use") || !event.getPlayer().hasPermission("emojichat.use.chat"))
 			return; // Don't do anything if they don't have permission
 		
 		String message = event.getMessage();
@@ -80,7 +81,7 @@ class EmojiChatListener implements Listener {
 		// Replace shortcuts with emojis
 		message = plugin.getEmojiHandler().toEmojiFromChat(message);
 		
-		// If checking for disabled characters is enabled, and the message contains a disabled character
+		// If the message contains a disabled character
 		if (plugin.getEmojiHandler().containsDisabledCharacter(message)) {
 			event.setCancelled(true);
 			event.getPlayer().sendMessage(ChatColor.RED + "Oops! You can't use disabled emoji characters!");
@@ -90,11 +91,50 @@ class EmojiChatListener implements Listener {
 		event.setMessage(message);
 	}
 	
+	@EventHandler(priority = EventPriority.HIGH)
+	void onSignChange(SignChangeEvent event) {
+		if (!event.getPlayer().hasPermission("emojichat.use") || !event.getPlayer().hasPermission("emojichat.use.sign"))
+			return; // Don't do anything if they don't have permission
+		
+		if (!plugin.getConfig().getBoolean("emojis-on-signs")) // Feature is disabled
+			return;
+		
+		for (int i = 0; i < event.getLines().length; i++) {
+			String line = event.getLine(i);
+			
+			// Checks if the user disabled shortcuts via /emojichat toggle
+			if (!plugin.getEmojiHandler().hasShortcutsOff(event.getPlayer())) {
+				line = plugin.getEmojiHandler().translateShorthand(line);
+			}
+			
+			// Replace shortcuts with emojis
+			line = plugin.getEmojiHandler().toEmoji(line);
+			
+			// If the message contains a disabled character
+			if (plugin.getEmojiHandler().containsDisabledCharacter(line)) {
+				event.setCancelled(true);
+				event.getPlayer().sendMessage(ChatColor.RED + "Oops! You can't use disabled emoji characters!");
+				return;
+			}
+			
+			event.setLine(i, line);
+		}
+	}
 	
-	@EventHandler
+	@EventHandler(priority = EventPriority.HIGH)
 	void onCommandPreProcess(PlayerCommandPreprocessEvent event) {
-		// TODO: Add config option to choose enabled commands
+		if (!event.getPlayer().hasPermission("emojichat.use") || !event.getPlayer().hasPermission("emojichat.use.command"))
+			return; // Don't do anything if they don't have permission
+		
+		if (!plugin.getConfig().getBoolean("emojis-in-commands")) // Feature is disabled
+			return;
+		
 		String command = event.getMessage();
+		
+		// only-command-list is enabled and the command-list doesn't contain the command being ran
+		if (plugin.getConfig().getBoolean("only-command-list") && !plugin.getConfig().getStringList("command-list").contains(command.split(" ")[0].toLowerCase())) {
+			return;
+		}
 		
 		// Checks if the user disabled shortcuts via /emojichat toggle
 		if (!plugin.getEmojiHandler().hasShortcutsOff(event.getPlayer())) {
@@ -104,7 +144,7 @@ class EmojiChatListener implements Listener {
 		// Replace shortcuts with emojis
 		command = plugin.getEmojiHandler().toEmoji(command);
 		
-		// If checking for disabled characters is enabled, and the message contains a disabled character
+		// If the message contains a disabled character
 		if (plugin.getEmojiHandler().containsDisabledCharacter(command)) {
 			event.setCancelled(true);
 			event.getPlayer().sendMessage(ChatColor.RED + "Oops! You can't use disabled emoji characters!");
