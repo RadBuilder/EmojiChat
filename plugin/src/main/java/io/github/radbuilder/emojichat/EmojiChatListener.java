@@ -108,7 +108,7 @@ class EmojiChatListener implements Listener {
 			}
 			
 			// Replace shortcuts with emojis
-			line = plugin.getEmojiHandler().toEmoji(line);
+			line = plugin.getEmojiHandler().toEmojiFromSign(line);
 			
 			// If the message contains a disabled character
 			if (plugin.getEmojiHandler().containsDisabledCharacter(line)) {

@@ -255,6 +255,20 @@ public class EmojiHandler {
 	}
 	
 	/**
+	 * Converts the specified line's shortcuts (i.e. :100:) to emoji from sign.
+	 *
+	 * @param line The line to convert from sign.
+	 * @return The converted line from sign.
+	 */
+	public String toEmojiFromSign(String line) {
+		for (String key : emojis.keySet()) {
+			plugin.getMetricsHandler().addEmojiUsed(StringUtils.countMatches(line, key));
+			line = line.replace(key, ChatColor.WHITE + "" + emojis.get(key) + ChatColor.BLACK); // Sets the emoji color to white for correct coloring
+		}
+		return line;
+	}
+	
+	/**
 	 * Converts the specified message's shortcuts (i.e. :100:) to emoji from chat.
 	 *
 	 * @param message The message to convert from chat.
