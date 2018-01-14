@@ -32,6 +32,7 @@
 :kissing_closed_eyes:
 :stuck_out_tongue_winking_eye:
 :stuck_out_tongue_closed_eyes:
+:stuck_out_tongue:
 :money_mouth_face:
 :nerd_face:
 :sunglasses:
@@ -125,6 +126,7 @@
 :point_down:
 :point_left:
 :point_right:
+:fu:
 :raised_hand_with_fingers_splayed:
 :metal:
 :crossed_fingers:
@@ -132,6 +134,8 @@
 :writing_hand:
 :selfie:
 # v1.3
+:lips:
+:tongue:
 :ear:
 :nose:
 :eye:
@@ -141,8 +145,10 @@
 :jeans:
 :necktie:
 :dress:
+:bikini:
 :kimono:
 :lipstick:
+:kiss:
 :footprints:
 :high_heel:
 :sandal:
@@ -323,11 +329,6 @@
 :open_umbrella:
 :umbrella:
 :droplet:
-:fu:
-:lips:
-:tongue:
-:bikini:
-:kiss:
 # v1.5
 :sweat_drops:
 :ocean:

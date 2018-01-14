@@ -99,7 +99,7 @@ class EmojiChatListener implements Listener {
 		if (!plugin.getConfig().getBoolean("emojis-on-signs")) // Feature is disabled
 			return;
 		
-		for (int i = 0; i < event.getLines().length; i++) {
+		for (int i = 0; i < 4; i++) {
 			String line = event.getLine(i);
 			
 			// Checks if the user disabled shortcuts via /emojichat toggle
