@@ -34,7 +34,7 @@ public class TelegramChatHook implements EmojiChatHook {
 				// Replace emojis with shortcuts
 				for (String key : plugin.getEmojiHandler().getEmojis().keySet()) {
 					// Don't count metrics as it's already counted in the normal chat listener
-					chat.text = chat.text.replace(plugin.getEmojiHandler().getEmojis().get(key), key);
+					chat.text = chat.text.replace(plugin.getEmojiHandler().getEmojis().get(key).toString(), key);
 				}
 			}
 			
@@ -45,7 +45,7 @@ public class TelegramChatHook implements EmojiChatHook {
 				// Replace shortcuts with emojis
 				for (String key : plugin.getEmojiHandler().getEmojis().keySet()) {
 					plugin.getMetricsHandler().addEmojiUsed(StringUtils.countMatches(message, key)); // Count metrics
-					message = message.replace(key, plugin.getEmojiHandler().getEmojis().get(key));
+					message = message.replace(key, plugin.getEmojiHandler().getEmojis().get(key).toString());
 				}
 				
 				chatMessageToMc.setContent(message);

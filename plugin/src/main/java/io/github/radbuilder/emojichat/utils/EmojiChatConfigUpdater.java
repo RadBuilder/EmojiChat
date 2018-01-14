@@ -85,10 +85,13 @@ public class EmojiChatConfigUpdater {
 		configLines.add("# If you're using chat color plugins, this will remove the coloring for emojis to be displayed correctly.");
 		configLines.add("fix-emoji-coloring: " + fixEmojiColoring);
 		configLines.add("");
-		configLines.add("");
 		configLines.add("# If EmojiChat should auto download the ResourcePack. If you'd rather have your players manually");
 		configLines.add("# download or use /emojichat resourcepack, set this to false.");
 		configLines.add("download-resourcepack: " + downloadResourcePack);
+		configLines.add("");
+		configLines.add("# The resource pack variant to use.");
+		configLines.add("# 1 (recommended) replaces Korean characters with emojis, and 2 replaces Chinese characters with emojis.");
+		configLines.add("pack-variant: 1");
 		configLines.add("");
 		configLines.add("# Shortcuts will replace the items in the list with the correct emoji name.");
 		configLines.add("# For example, :) will be replaced with :grinning:, which then will turn it into the emoji.");

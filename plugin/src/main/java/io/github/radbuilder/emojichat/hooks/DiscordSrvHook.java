@@ -12,8 +12,8 @@ import org.apache.commons.lang.StringUtils;
  * DiscordSRV hook.
  *
  * @author RadBuilder
+ * @version 1.7
  * @since 1.4
- * @version 1.5
  */
 public class DiscordSrvHook implements EmojiChatHook {
 	/**
@@ -47,7 +47,7 @@ public class DiscordSrvHook implements EmojiChatHook {
 		// Replace emojis with shortcuts
 		for (String key : plugin.getEmojiHandler().getEmojis().keySet()) {
 			// Don't count metrics as it's already counted in the normal chat listener
-			message = message.replace(plugin.getEmojiHandler().getEmojis().get(key), key);
+			message = message.replace(plugin.getEmojiHandler().getEmojis().get(key).toString(), key);
 		}
 		
 		event.setMessage(message);
@@ -61,7 +61,7 @@ public class DiscordSrvHook implements EmojiChatHook {
 		// Replace shortcuts with emojis
 		for (String key : plugin.getEmojiHandler().getEmojis().keySet()) {
 			plugin.getMetricsHandler().addEmojiUsed(StringUtils.countMatches(message, key)); // Count metrics
-			message = message.replace(key, plugin.getEmojiHandler().getEmojis().get(key));
+			message = message.replace(key, plugin.getEmojiHandler().getEmojis().get(key).toString());
 		}
 		
 		event.setProcessedMessage(message);

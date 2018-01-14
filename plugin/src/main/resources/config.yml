@@ -22,6 +22,10 @@ fix-emoji-coloring: false
 # download or use /emojichat resourcepack, set this to false.
 download-resourcepack: true
 
+# The resource pack variant to use.
+# 1 (recommended) replaces Korean characters with emojis, and 2 replaces Chinese characters with emojis.
+pack-variant: 1
+
 # Shortcuts will replace the items in the list with the correct emoji name.
 # For example, :) will be replaced with :grinning:, which then will turn it into the emoji.
 shortcuts:
