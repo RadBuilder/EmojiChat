@@ -11,8 +11,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.TreeMap;
 import java.util.UUID;
 
 /**
@@ -26,7 +26,7 @@ public class EmojiHandler {
 	/**
 	 * The emojis.
 	 */
-	private final TreeMap<String, Character> emojis;
+	private final LinkedHashMap<String, Character> emojis;
 	/**
 	 * Shortcuts for the emojis, if specified.
 	 */
@@ -60,7 +60,7 @@ public class EmojiHandler {
 	public EmojiHandler(EmojiChat plugin) {
 		this.plugin = plugin;
 		
-		emojis = new TreeMap<>();
+		emojis = new LinkedHashMap<>();
 		shortcuts = new HashMap<>();
 		disabledCharacters = new ArrayList<>();
 		shortcutsOff = new ArrayList<>();
@@ -73,7 +73,7 @@ public class EmojiHandler {
 	 *
 	 * @return {@link #emojis}.
 	 */
-	public TreeMap<String, Character> getEmojis() {
+	public LinkedHashMap<String, Character> getEmojis() {
 		return emojis;
 	}
 	
@@ -188,8 +188,6 @@ public class EmojiHandler {
 				break;
 		}
 		
-		emojiChar--; // Back up one so we can start with the next one.
-		
 		try {
 			InputStream listInput = getClass().getResourceAsStream("/list.txt");
 			BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(listInput));
@@ -198,7 +196,7 @@ public class EmojiHandler {
 				if (line.startsWith("#")) { // Ignored lines
 					continue;
 				}
-				emojis.put(line, emojiChar++); // Associate the next emoji with the next unicode character
+				emojis.put(line, emojiChar++); // Add the emoji we're currently on and switch it to the next char
 			}
 			bufferedReader.close();
 			listInput.close();
