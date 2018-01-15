@@ -1,6 +1,5 @@
 package io.github.radbuilder.emojichat;
 
-import com.google.common.io.BaseEncoding;
 import io.github.radbuilder.emojichat.hooks.DiscordSrvHook;
 import io.github.radbuilder.emojichat.hooks.EmojiChatHook;
 import io.github.radbuilder.emojichat.hooks.MVdWPlaceholderApiHook;

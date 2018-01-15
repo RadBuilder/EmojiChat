@@ -5,7 +5,7 @@
 [![view on SpigotMC](https://img.shields.io/badge/view%20on-spigotmc-orange.svg)](https://www.spigotmc.org/resources/emojichat.50955/)
 [![wiki](https://img.shields.io/badge/go%20to-wiki-blue.svg)](https://github.com/RadBuilder/EmojiChat/wiki)
 ## EmojiChat
-EmojiChat is a simple opensource plugin that adds emojis to your chat!
+EmojiChat is a simple, configurable, opensource plugin that adds emojis to your chat, signs, and more!
 
 [![ChatExample](https://i.imgur.com/wa0LeVd.png)](https://i.imgur.com/zJUVyst.png)  
 

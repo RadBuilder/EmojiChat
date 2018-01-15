@@ -24,15 +24,15 @@ public enum EmojiPackVariant {
 	/**
 	 * The variant id.
 	 */
-	private int id;
+	private final int id;
 	/**
 	 * The pack variant's SHA1 hash.
 	 */
-	private byte[] hash;
+	private final byte[] hash;
 	/**
 	 * The pack variant's URL.
 	 */
-	private String url;
+	private final String url;
 	
 	/**
 	 * Creates a new emoji pack variant with the specified id.
