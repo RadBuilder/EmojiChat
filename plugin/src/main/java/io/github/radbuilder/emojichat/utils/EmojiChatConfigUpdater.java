@@ -94,8 +94,8 @@ public class EmojiChatConfigUpdater {
 		configLines.add("only-command-list: false");
 		configLines.add("# If 'only-command-list' is true, the commands here will be the only commands where emojis are allowed.");
 		configLines.add("command-list:");
-		configLines.add("- 'msg'");
-		configLines.add("- 'tell'");
+		configLines.add("- '/msg'");
+		configLines.add("- '/tell'");
 		configLines.add("");
 		configLines.add("# If EmojiChat should auto download the ResourcePack. If you'd rather have your players manually");
 		configLines.add("# download or use /emojichat resourcepack, set this to false.");

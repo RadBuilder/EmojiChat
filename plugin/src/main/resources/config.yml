@@ -27,8 +27,8 @@ emojis-in-commands: false
 only-command-list: false
 # If 'only-command-list' is true, the commands here will be the only commands where emojis are allowed.
 command-list:
-- 'msg'
-- 'tell'
+- '/msg'
+- '/tell'
 
 # If EmojiChat should auto download the ResourcePack. If you'd rather have your players manually
 # download or use /emojichat resourcepack, set this to false.
