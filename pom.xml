@@ -7,7 +7,7 @@
     <groupId>io.github.radbuilder</groupId>
     <name>EmojiChat Parent</name>
     <artifactId>emojichat-parent</artifactId>
-    <version>1.6</version>
+    <version>1.7</version>
     <packaging>pom</packaging>
 
     <modules>
@@ -40,6 +40,11 @@
         <repository>
             <id>placeholderapi</id>
             <url>http://repo.extendedclip.com/content/repositories/placeholderapi/</url>
+        </repository>
+        <!-- TelegramChat -->
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
         </repository>
     </repositories>
 

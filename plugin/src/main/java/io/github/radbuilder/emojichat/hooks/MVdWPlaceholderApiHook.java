@@ -7,8 +7,8 @@ import io.github.radbuilder.emojichat.EmojiChat;
  * MVdWPlaceholderAPI hook.
  *
  * @author RadBuilder
+ * @version 1.7
  * @since 1.4
- * @version 1.4
  */
 public class MVdWPlaceholderApiHook implements EmojiChatHook {
 	/**
@@ -23,7 +23,7 @@ public class MVdWPlaceholderApiHook implements EmojiChatHook {
 	 */
 	public MVdWPlaceholderApiHook(EmojiChat plugin) {
 		for (String key : plugin.getEmojiHandler().getEmojis().keySet()) {
-			PlaceholderAPI.registerStaticPlaceholders(plugin, key.replace(":", ""), plugin.getEmojiHandler().getEmojis().get(key));
+			PlaceholderAPI.registerStaticPlaceholders(plugin, key.replace(":", ""), plugin.getEmojiHandler().getEmojis().get(key).toString());
 		}
 		
 		plugin.getLogger().info("Hooked " + getName());

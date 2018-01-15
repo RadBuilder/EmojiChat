@@ -16,14 +16,14 @@ import java.util.List;
  * EmojiChat config updater.
  *
  * @author RadBuilder
- * @version 1.6
+ * @version 1.7
  * @since 1.5
  */
 public class EmojiChatConfigUpdater {
 	/**
 	 * The current config version number.
 	 */
-	private final int CONFIG_VERSION = 3;
+	private final int CONFIG_VERSION = 4;
 	
 	/**
 	 * Creates the EmojiChat config updater with the main class instance.
@@ -49,7 +49,6 @@ public class EmojiChatConfigUpdater {
 	private void updateConfig(EmojiChat plugin, FileConfiguration config, int configVersion) {
 		// Config v1 & v2 values
 		boolean fixEmojiColoring = config.getBoolean("fix-emoji-coloring");
-		boolean verifyDisabledList = config.getBoolean("verify-disabled-list");
 		List<String> disabledEmojis = config.getStringList("disabled-emojis");
 		LinkedHashMap<String, List<String>> shortcuts = new LinkedHashMap<>();
 		for (String key : config.getConfigurationSection("shortcuts").getKeys(false)) { // Gets all of the headers/keys in the shortcuts section
@@ -59,7 +58,7 @@ public class EmojiChatConfigUpdater {
 		// Config v2 values
 		String metricsCollection = "FULL";
 		boolean downloadResourcePack = true;
-		if (configVersion == 2) {
+		if (configVersion > 1) {
 			metricsCollection = config.getString("metrics-collection");
 			downloadResourcePack = config.getBoolean("download-resourcepack");
 		}
@@ -86,14 +85,26 @@ public class EmojiChatConfigUpdater {
 		configLines.add("# If you're using chat color plugins, this will remove the coloring for emojis to be displayed correctly.");
 		configLines.add("fix-emoji-coloring: " + fixEmojiColoring);
 		configLines.add("");
-		configLines.add("# This prevents players from using the characters associated with disabled emojis.");
-		configLines.add("# Disabling this will still disable the emojis listed in 'disabled-emojis', but won't check");
-		configLines.add("# if the player is using it in chat.");
-		configLines.add("verify-disabled-list: " + verifyDisabledList);
+		configLines.add("# If emojis should be displayed on signs (shortcuts and full names supported).");
+		configLines.add("emojis-on-signs: false");
+		configLines.add("");
+		configLines.add("# If commands should have emojis (shortcuts and full names supported).");
+		configLines.add("emojis-in-commands: false");
+		configLines.add("# If emojis should ONLY work with commands in 'command-list'.");
+		configLines.add("only-command-list: false");
+		configLines.add("# If 'only-command-list' is true, the commands here will be the only commands where emojis are allowed.");
+		configLines.add("command-list:");
+		configLines.add("- 'msg'");
+		configLines.add("- 'tell'");
 		configLines.add("");
 		configLines.add("# If EmojiChat should auto download the ResourcePack. If you'd rather have your players manually");
 		configLines.add("# download or use /emojichat resourcepack, set this to false.");
 		configLines.add("download-resourcepack: " + downloadResourcePack);
+		configLines.add("# The resource pack variant to use.");
+		configLines.add("# 1 (recommended) replaces Korean characters with emojis, and 2 replaces Chinese characters with emojis.");
+		configLines.add("# WARNING: Changing this will ruin things like signs that already have the other language's characters!");
+		configLines.add("# Don't change this unless your normal language is being overwritten by emojis.");
+		configLines.add("pack-variant: 1");
 		configLines.add("");
 		configLines.add("# Shortcuts will replace the items in the list with the correct emoji name.");
 		configLines.add("# For example, :) will be replaced with :grinning:, which then will turn it into the emoji.");
@@ -112,16 +123,62 @@ public class EmojiChatConfigUpdater {
 			configLines.add("  shushing_face:");
 			configLines.add("  - ':shh:'");
 		}
-		configLines.add("  1st_place_medal:");
-		configLines.add("  - ':first:'");
-		configLines.add("  - ':1st:'");
-		configLines.add("  2nd_place_medal:");
-		configLines.add("  - ':second:'");
-		configLines.add("  - ':2nd:'");
-		configLines.add("  3rd_place_medal:");
-		configLines.add("  - ':third:'");
-		configLines.add("  - ':3rd:'");
+		if (configVersion < 3) {
+			configLines.add("  1st_place_medal:");
+			configLines.add("  - ':first:'");
+			configLines.add("  - ':1st:'");
+			configLines.add("  2nd_place_medal:");
+			configLines.add("  - ':second:'");
+			configLines.add("  - ':2nd:'");
+			configLines.add("  3rd_place_medal:");
+			configLines.add("  - ':third:'");
+			configLines.add("  - ':3rd:'");
+		}
+		configLines.add("  microphone:");
+		configLines.add("  - ':mic:'");
+		configLines.add("  musical_keyboard:");
+		configLines.add("  - ':piano:'");
+		configLines.add("  video_game:");
+		configLines.add("  - ':controller:'");
+		configLines.add("  dart:");
+		configLines.add("  - ':target:'");
+		configLines.add("  game_die:");
+		configLines.add("  - ':dice:'");
+		configLines.add("  - ':die:'");
+		configLines.add("  heart:");
+		configLines.add("  - '<3'");
+		configLines.add("  broken_heart:");
+		configLines.add("  - '</3'");
+		configLines.add("  zero:");
+		configLines.add("  - ':0:'");
+		configLines.add("  one:");
+		configLines.add("  - ':1:'");
+		configLines.add("  two:");
+		configLines.add("  - ':2:'");
+		configLines.add("  three:");
+		configLines.add("  - ':3:'");
+		configLines.add("  four:");
+		configLines.add("  - ':4:'");
+		configLines.add("  five:");
+		configLines.add("  - ':5:'");
+		configLines.add("  six:");
+		configLines.add("  - ':6:'");
+		configLines.add("  seven:");
+		configLines.add("  - ':7:'");
+		configLines.add("  eight:");
+		configLines.add("  - ':8:'");
+		configLines.add("  nine:");
+		configLines.add("  - ':9:'");
+		configLines.add("  keycap_ten:");
+		configLines.add("  - ':ten:'");
+		configLines.add("  - ':10:'");
+		configLines.add("  asterisk:");
+		configLines.add("  - ':*:'");
 		configLines.add("");
+		configLines.add("# If certain emojis should be disabled or not.");
+		configLines.add("# If true, it will disable all of the emojis specified in 'disabled-emojis'");
+		configLines.add("# If false, emojis specified in 'disabled-emojis' will be ignored.");
+		configLines.add("disable-emojis: true");
 		configLines.add("# Emojis to disable. Remove them from the list to enable them.");
 		configLines.add("# By default, profane and potentially offensive emojis are disabled.");
 		configLines.add("disabled-emojis:");
@@ -152,6 +209,9 @@ public class EmojiChatConfigUpdater {
 		
 		// Update the config
 		setConfig(plugin, configLines);
+		// Clear non-used lists
+		disabledEmojis.clear();
+		shortcuts.clear();
 	}
 	
 	/**
@@ -163,7 +223,9 @@ public class EmojiChatConfigUpdater {
 	private void setConfig(EmojiChat plugin, List<String> configLines) {
 		try {
 			File configFile = new File(plugin.getDataFolder() + "/config.yml");
-			configFile.delete(); // Delete the old config
+			if (!configFile.delete()) { // Delete the old config
+				plugin.getLogger().warning("Failed to delete the old config. If this continues: back up your config, manually delete it, then restart.");
+			}
 			
 			// Create the new config
 			configFile = new File(plugin.getDataFolder() + "/config.yml");

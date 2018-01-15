@@ -10,7 +10,7 @@ import org.bukkit.entity.Player;
  * EmojiChat command class.
  *
  * @author RadBuilder
- * @version 1.6
+ * @version 1.7
  * @since 1.0
  */
 class EmojiChatCommand implements CommandExecutor {
@@ -31,7 +31,7 @@ class EmojiChatCommand implements CommandExecutor {
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
 		if (args.length < 1) {
-			sender.sendMessage(ChatColor.AQUA + "EmojiChat v1.6 by RadBuilder");
+			sender.sendMessage(ChatColor.AQUA + "EmojiChat v1.7 by RadBuilder");
 			sender.sendMessage(ChatColor.AQUA + "Use " + ChatColor.GREEN + "/emojichat help" + ChatColor.AQUA + " for help.");
 			return true;
 		}
@@ -49,7 +49,7 @@ class EmojiChatCommand implements CommandExecutor {
 				sender.sendMessage(ChatColor.GREEN + "/emojichat resourcepack: " + ChatColor.AQUA + "Re-sends the resourcepack.");
 				sender.sendMessage(ChatColor.GREEN + "/emojichat reload: " + ChatColor.AQUA + "Reloads the EmojiChat config.");
 				sender.sendMessage(ChatColor.GREEN + "/emojichat toggle: " + ChatColor.AQUA + "Toggles emoji shortcuts on or off.");
-				sender.sendMessage(ChatColor.GREEN + "/emojichat list: " + ChatColor.AQUA + "Lists all of the emojis configured.");
+				sender.sendMessage(ChatColor.GREEN + "/emojichat list: " + ChatColor.AQUA + "Lists all of the enabled emojis.");
 				return true;
 			case "resourcepack":
 				if (!sender.hasPermission("emojichat.see")) {
@@ -58,8 +58,8 @@ class EmojiChatCommand implements CommandExecutor {
 				}
 				
 				if (sender instanceof Player) {
-					((Player) sender).setResourcePack(plugin.PACK_URL);
-					sender.sendMessage(ChatColor.GREEN + "Sent EmojiChat ResourcePack.");
+					((Player) sender).setResourcePack(plugin.getEmojiHandler().getPackVariant().getUrl());
+					sender.sendMessage(ChatColor.GREEN + "Sent the EmojiChat ResourcePack.");
 					sender.sendMessage(ChatColor.AQUA + "If you still can't see emojis, make sure the settings for this server (on the server list) have the resource pack option set to prompt or enabled.");
 				}
 				return true;
@@ -91,7 +91,7 @@ class EmojiChatCommand implements CommandExecutor {
 					sender.sendMessage(ChatColor.RED + "You need " + ChatColor.GOLD + "emojichat.list" + ChatColor.RED + " to use this command.");
 					return true;
 				}
-				if (!(sender instanceof Player) || (args.length > 1 && args[1].equalsIgnoreCase("chat"))) { // Send chat version if not a player or specified
+				if (!(sender instanceof Player)) { // Send chat version if the sender isn't a player
 					sender.sendMessage(ChatColor.AQUA + "---------- EmojiChat List ----------");
 					for (String key : plugin.getEmojiHandler().getEmojis().keySet()) {
 						sender.sendMessage(ChatColor.AQUA + key + " " + ChatColor.RESET + plugin.getEmojiHandler().getEmojis().get(key));
@@ -101,7 +101,7 @@ class EmojiChatCommand implements CommandExecutor {
 				}
 				return true;
 			default:
-				sender.sendMessage(ChatColor.RED + "Unknown sub-command. Use " + ChatColor.GOLD + "/emojichat help" + ChatColor.RED + " for help.");
+				sender.sendMessage(ChatColor.RED + "Unknown sub-command '" + args[0] + "'. Use " + ChatColor.GOLD + "/emojichat help" + ChatColor.RED + " for help.");
 				return true;
 		}
 	}

@@ -1,11 +1,10 @@
 package io.github.radbuilder.emojichat;
 
-import com.google.common.io.BaseEncoding;
 import io.github.radbuilder.emojichat.hooks.DiscordSrvHook;
 import io.github.radbuilder.emojichat.hooks.EmojiChatHook;
 import io.github.radbuilder.emojichat.hooks.MVdWPlaceholderApiHook;
 import io.github.radbuilder.emojichat.hooks.PlaceholderApiHook;
-//import io.github.radbuilder.emojichat.hooks.TelegramChatHook;
+import io.github.radbuilder.emojichat.hooks.TelegramChatHook;
 import io.github.radbuilder.emojichat.metrics.MetricsHandler;
 import io.github.radbuilder.emojichat.utils.EmojiChatConfigUpdater;
 import io.github.radbuilder.emojichat.utils.EmojiChatUpdateChecker;
@@ -21,7 +20,7 @@ import java.util.List;
  * EmojiChat main class.
  *
  * @author RadBuilder
- * @version 1.6
+ * @version 1.7
  * @since 1.0
  */
 public class EmojiChat extends JavaPlugin {
@@ -37,14 +36,6 @@ public class EmojiChat extends JavaPlugin {
 	 * The EmojiChat update checker.
 	 */
 	EmojiChatUpdateChecker updateChecker;
-	/**
-	 * The ResourcePack URL.
-	 */
-	final String PACK_URL = "https://github.com/RadBuilder/EmojiChat/releases/download/v1.6/EmojiChat.ResourcePack.v1.6.zip";
-	/**
-	 * The SHA1 sum of the ResourcePack as a byte array.
-	 */
-	byte[] PACK_SHA1;
 	/**
 	 * List of enabled EmojiChat hooks.
 	 */
@@ -71,15 +62,16 @@ public class EmojiChat extends JavaPlugin {
 		
 		metricsHandler = new MetricsHandler(this); // Creates the metrics handler for metrics gathering
 		
-		PACK_SHA1 = BaseEncoding.base16().lowerCase().decode("45bd1b12a2007f8121b0ac041a0dbb3b6e934180"); // Allows applying a cached version of the ResourcePack if available
-		
 		// Register the chat listener
 		Bukkit.getPluginManager().registerEvents(new EmojiChatListener(this), this);
 		
 		// Register the "emojichat" and "ec" commands
 		EmojiChatCommand emojiChatCommand = new EmojiChatCommand(this);
+		EmojiChatTabComplete emojiChatTabComplete = new EmojiChatTabComplete();
 		getCommand("emojichat").setExecutor(emojiChatCommand);
+		getCommand("emojichat").setTabCompleter(emojiChatTabComplete);
 		getCommand("ec").setExecutor(emojiChatCommand);
+		getCommand("ec").setTabCompleter(emojiChatTabComplete);
 	}
 	
 	@Override
@@ -105,9 +97,9 @@ public class EmojiChat extends JavaPlugin {
 		if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) { // Hook PlaceholderAPI if installed
 			enabledHooks.add(new PlaceholderApiHook(this));
 		}
-//		if (Bukkit.getPluginManager().isPluginEnabled("TelegramChat")) { // Hook TelegramChat if installed
-//			enabledHooks.add(new TelegramChatHook(this));
-//		}
+		if (Bukkit.getPluginManager().isPluginEnabled("TelegramChat")) { // Hook TelegramChat if installed
+			enabledHooks.add(new TelegramChatHook(this));
+		}
 	}
 	
 	/**

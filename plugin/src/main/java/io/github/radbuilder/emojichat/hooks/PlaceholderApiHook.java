@@ -9,8 +9,8 @@ import org.bukkit.entity.Player;
  * PlaceholderAPI hook.
  *
  * @author RadBuilder
+ * @version 1.7
  * @since 1.4
- * @version 1.4
  */
 public class PlaceholderApiHook implements EmojiChatHook {
 	/**
@@ -35,7 +35,7 @@ public class PlaceholderApiHook implements EmojiChatHook {
 				if (player != null && !player.hasPermission("emojichat.use")) // Make sure the player, if specified, has permission to use emojis
 					return "No Permission";
 				if (plugin.getEmojiHandler().getEmojis().containsKey(":" + identifier + ":")) {
-					return plugin.getEmojiHandler().getEmojis().get(":" + identifier + ":");
+					return plugin.getEmojiHandler().getEmojis().get(":" + identifier + ":").toString();
 				}
 				return null;
 			}

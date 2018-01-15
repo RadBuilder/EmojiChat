@@ -1,11 +1,11 @@
 name: EmojiChat
-version: 1.6
+version: 1.7
 description: Adds emojis to your chat
 author: RadBuilder
 website: "https://github.com/RadBuilder/EmojiChat/"
 main: io.github.radbuilder.emojichat.EmojiChat
 
-softdepend: [DiscordSRV, MVdWPlaceholderAPI, PlaceholderAPI]
+softdepend: [DiscordSRV, MVdWPlaceholderAPI, PlaceholderAPI, TelegramChat]
 
 commands:
   emojichat:
@@ -37,7 +37,20 @@ permissions:
     description: Allows you to toggle emoji shortcuts on or off
     default: op
   emojichat.use:
+    description: Allows you to use emojis in chat, in commands, and on signs
+    default: op
+    children:
+      emojichat.use.chat: true
+      emojichat.use.command: true
+      emojichat.use.sign: true
+  emojichat.use.chat:
     description: Allows you to use emojis in chat
+    default: op
+  emojichat.use.command:
+    description: Allows you to use emojis in commands
+    default: op
+  emojichat.use.sign:
+    description: Allows you to use emojis on signs
     default: op
   emojichat.reload:
     description: Allows you to reload the EmojiChat config
