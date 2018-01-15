@@ -59,12 +59,34 @@ public class MetricsHandler {
 				// If download-resourcepack is being used
 				metrics.addCustomChart(new Metrics.SimplePie("usingDownloadResourcePack", () -> Boolean.toString(plugin.getConfig().getBoolean("download-resourcepack"))));
 				
-				// What emojis are listed under disabled-emojis
+				// If emojis-on-signs is being used
+				metrics.addCustomChart(new Metrics.SimplePie("usingEmojisOnSigns", () -> Boolean.toString(plugin.getConfig().getBoolean("emojis-on-signs"))));
+				
+				// If emojis-in-commands is being used
+				metrics.addCustomChart(new Metrics.SimplePie("usingEmojisInCommands", () -> Boolean.toString(plugin.getConfig().getBoolean("emojis-in-commands"))));
+				
+				// If only-command-list is being used
+				metrics.addCustomChart(new Metrics.SimplePie("usingOnlyCommandList", () -> Boolean.toString(plugin.getConfig().getBoolean("only-command-list"))));
+				
+				// What commands are listed under command-list, if any
+				metrics.addCustomChart(new Metrics.AdvancedPie("commandList", () -> {
+					Map<String, Integer> commandList = new HashMap<>();
+					for (String command : plugin.getConfig().getStringList("command-list")) {
+						commandList.put(command.toLowerCase(), 1);
+					}
+					if (commandList.isEmpty()) {
+						commandList.put("None", 1);
+					}
+					return commandList;
+				}));
+				
+				// What emojis are listed under disabled-emojis, if any
 				metrics.addCustomChart(new Metrics.AdvancedPie("disabledEmojis", () -> {
 					Map<String, Integer> disabledEmojis = new HashMap<>();
-					plugin.getConfig().getStringList("disabled-emojis").forEach(s -> disabledEmojis.put(s, 1));
-					if (disabledEmojis.isEmpty()) { // If there aren't any disabled emojis, add "None"
+					if (!plugin.getConfig().getBoolean("disable-emojis") || disabledEmojis.isEmpty()) { // If there aren't any disabled emojis, add "None"
 						disabledEmojis.put("None", 1);
+					} else {
+						plugin.getConfig().getStringList("disabled-emojis").forEach(s -> disabledEmojis.put(s, 1));
 					}
 					return disabledEmojis;
 				}));
@@ -95,6 +117,9 @@ public class MetricsHandler {
 					shortcutsUsed = 0; // Reset the number of shortcuts used when this is called
 					return temp;
 				}));
+				
+				// Which pack variant is being used
+				metrics.addCustomChart(new Metrics.SimplePie("packVariant", () -> String.valueOf(plugin.getConfig().getInt("pack-variant"))));
 			default:
 				metrics.addCustomChart(new Metrics.SimplePie("metricsCollection", () -> metricsLevel.name().toLowerCase()));
 				break;
