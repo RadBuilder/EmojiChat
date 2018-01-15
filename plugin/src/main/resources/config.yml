@@ -35,6 +35,8 @@ command-list:
 download-resourcepack: true
 # The resource pack variant to use.
 # 1 (recommended) replaces Korean characters with emojis, and 2 replaces Chinese characters with emojis.
+# WARNING: Changing this will ruin things like signs that already have the other language's characters!
+# Don't change this unless your normal language is being overwritten by emojis.
 pack-variant: 1
 
 # Shortcuts will replace the items in the list with the correct emoji name.

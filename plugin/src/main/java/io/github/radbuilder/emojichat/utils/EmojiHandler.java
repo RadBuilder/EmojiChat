@@ -317,51 +317,13 @@ public class EmojiHandler {
 		}
 		return false;
 	}
-}
-
-/**
- * The emoji replacement variant.
- *
- * @author RadBuilder
- * @version 1.7
- * @since 1.7
- */
-enum EmojiPackVariant {
-	/**
-	 * Replaces Korean unicode characters with emojis (the original, default variant).
-	 */
-	KOREAN(1),
-	/**
-	 * Replaces Chinese unicode characters with emojis.
-	 */
-	CHINESE(2);
 	
 	/**
-	 * The variant id.
-	 */
-	int id;
-	
-	/**
-	 * Creates a new emoji pack variant with the specified id.
+	 * Gets the {@link EmojiPackVariant} being used.
 	 *
-	 * @param id The id associated with the emoji pack variant.
+	 * @return The {@link EmojiPackVariant} being used.
 	 */
-	EmojiPackVariant(int id) {
-		this.id = id;
-	}
-	
-	/**
-	 * Gets the {@link EmojiPackVariant} based on the id specified.
-	 *
-	 * @param id The id.
-	 * @return The {@link EmojiPackVariant} with the specified id, or null if there isn't one.
-	 */
-	static EmojiPackVariant getVariantbyId(int id) {
-		for (EmojiPackVariant variant : values()) {
-			if (variant.id == id) { // ID given matches a variant
-				return variant;
-			}
-		}
-		return null; // ID given doesn't match a variant
+	public EmojiPackVariant getPackVariant() {
+		return packVariant;
 	}
 }

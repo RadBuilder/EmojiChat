@@ -27,6 +27,7 @@
                     <include>plugin.yml</include>
                     <include>config.yml</include>
                     <include>list.txt</include>
+                    <include>hash.txt</include>
                 </includes>
             </resource>
         </resources>

@@ -102,6 +102,8 @@ public class EmojiChatConfigUpdater {
 		configLines.add("download-resourcepack: " + downloadResourcePack);
 		configLines.add("# The resource pack variant to use.");
 		configLines.add("# 1 (recommended) replaces Korean characters with emojis, and 2 replaces Chinese characters with emojis.");
+		configLines.add("# WARNING: Changing this will ruin things like signs that already have the other language's characters!");
+		configLines.add("# Don't change this unless your normal language is being overwritten by emojis.");
 		configLines.add("pack-variant: 1");
 		configLines.add("");
 		configLines.add("# Shortcuts will replace the items in the list with the correct emoji name.");
