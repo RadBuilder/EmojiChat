@@ -49,7 +49,7 @@ class EmojiChatCommand implements CommandExecutor {
 				sender.sendMessage(ChatColor.GREEN + "/emojichat resourcepack: " + ChatColor.AQUA + "Re-sends the resourcepack.");
 				sender.sendMessage(ChatColor.GREEN + "/emojichat reload: " + ChatColor.AQUA + "Reloads the EmojiChat config.");
 				sender.sendMessage(ChatColor.GREEN + "/emojichat toggle: " + ChatColor.AQUA + "Toggles emoji shortcuts on or off.");
-				sender.sendMessage(ChatColor.GREEN + "/emojichat list: " + ChatColor.AQUA + "Lists all of the emojis configured.");
+				sender.sendMessage(ChatColor.GREEN + "/emojichat list: " + ChatColor.AQUA + "Lists all of the enabled emojis.");
 				return true;
 			case "resourcepack":
 				if (!sender.hasPermission("emojichat.see")) {
@@ -59,7 +59,7 @@ class EmojiChatCommand implements CommandExecutor {
 				
 				if (sender instanceof Player) {
 					((Player) sender).setResourcePack(plugin.getEmojiHandler().getPackVariant().getUrl());
-					sender.sendMessage(ChatColor.GREEN + "Sent EmojiChat ResourcePack.");
+					sender.sendMessage(ChatColor.GREEN + "Sent the EmojiChat ResourcePack.");
 					sender.sendMessage(ChatColor.AQUA + "If you still can't see emojis, make sure the settings for this server (on the server list) have the resource pack option set to prompt or enabled.");
 				}
 				return true;
@@ -101,7 +101,7 @@ class EmojiChatCommand implements CommandExecutor {
 				}
 				return true;
 			default:
-				sender.sendMessage(ChatColor.RED + "Unknown sub-command. Use " + ChatColor.GOLD + "/emojichat help" + ChatColor.RED + " for help.");
+				sender.sendMessage(ChatColor.RED + "Unknown sub-command '" + args[0] + "'. Use " + ChatColor.GOLD + "/emojichat help" + ChatColor.RED + " for help.");
 				return true;
 		}
 	}

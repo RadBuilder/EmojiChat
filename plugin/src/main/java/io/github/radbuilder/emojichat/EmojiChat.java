@@ -68,8 +68,11 @@ public class EmojiChat extends JavaPlugin {
 		
 		// Register the "emojichat" and "ec" commands
 		EmojiChatCommand emojiChatCommand = new EmojiChatCommand(this);
+		EmojiChatTabComplete emojiChatTabComplete = new EmojiChatTabComplete();
 		getCommand("emojichat").setExecutor(emojiChatCommand);
+		getCommand("emojichat").setTabCompleter(emojiChatTabComplete);
 		getCommand("ec").setExecutor(emojiChatCommand);
+		getCommand("ec").setTabCompleter(emojiChatTabComplete);
 	}
 	
 	@Override
