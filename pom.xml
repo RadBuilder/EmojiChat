@@ -21,15 +21,15 @@
             <url>https://hub.spigotmc.org/nexus/content/groups/public/</url>
         </repository>
         <!-- DiscordSRV -->
-        <repository>
-            <id>Scarsz-Jenkins</id>
-            <url>http://ci.scarsz.me/plugin/repository/everything/</url>
-        </repository>
-        <!-- DiscordSRV Backup Repo -->
         <!--<repository>-->
-            <!--<id>repo-androkai</id>-->
-            <!--<url>https://repo.androkai.net/minecraft</url>-->
+            <!--<id>Scarsz-Jenkins</id>-->
+            <!--<url>https://ci.scarsz.me/plugin/repository/everything/?guest=1</url>-->
         <!--</repository>-->
+        <!-- DiscordSRV Backup Repo -->
+        <repository>
+            <id>repo-androkai</id>
+            <url>https://repo.androkai.net/minecraft</url>
+        </repository>
         <!-- MVdWPlaceholderAPI -->
         <repository>
             <id>mvdw-software</id>
