@@ -10,7 +10,7 @@ import org.bukkit.entity.Player;
  * EmojiChat command class.
  *
  * @author RadBuilder
- * @version 1.7
+ * @version 1.8
  * @since 1.0
  */
 class EmojiChatCommand implements CommandExecutor {
@@ -58,7 +58,7 @@ class EmojiChatCommand implements CommandExecutor {
 				}
 				
 				if (sender instanceof Player) {
-					((Player) sender).setResourcePack(plugin.getEmojiHandler().getPackVariant().getUrl());
+					((Player) sender).setResourcePack(plugin.getEmojiHandler().getPackVariant().getUrl(plugin.getConfig().getString("pack-quality")));
 					sender.sendMessage(ChatColor.GREEN + "Sent the EmojiChat ResourcePack.");
 					sender.sendMessage(ChatColor.AQUA + "If you still can't see emojis, make sure the settings for this server (on the server list) have the resource pack option set to prompt or enabled.");
 				}

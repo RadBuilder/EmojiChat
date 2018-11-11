@@ -8,7 +8,7 @@ import java.io.InputStreamReader;
  * The emoji replacement variant.
  *
  * @author RadBuilder
- * @version 1.7
+ * @version 1.8
  * @since 1.7
  */
 public enum EmojiPackVariant {
@@ -42,7 +42,7 @@ public enum EmojiPackVariant {
 	EmojiPackVariant(int id) {
 		this.id = id;
 		this.hash = byteHash(id);
-		this.url = "https://github.com/RadBuilder/EmojiChat/releases/download/v1.7/EmojiChat." + id + ".ResourcePack.v1.7.zip";
+		this.url = "https://github.com/RadBuilder/EmojiChat/releases/download/v1.7/EmojiChat." + id + ".{HD or SD}.ResourcePack.v1.7.zip";
 	}
 	
 	/**
@@ -66,10 +66,15 @@ public enum EmojiPackVariant {
 	/**
 	 * Gets the variant's url.
 	 *
+	 * @param quality The quality of the pack (hd or sd).
 	 * @return The variant's url.
 	 */
-	public String getUrl() {
-		return url;
+	public String getUrl(String quality) {
+		quality = quality.toLowerCase(); // Ensure quality is lowercase for a valid URL
+		if (!quality.equals("hd") && !quality.equals("sd")) {
+			quality = "sd"; // Handle invalid config options by giving them the sd version
+		}
+		return url.replace("{HD or SD}", quality);
 	}
 	
 	/**

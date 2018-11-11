@@ -17,7 +17,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
  * EmojiChat listener class.
  *
  * @author RadBuilder
- * @version 1.7
+ * @version 1.8
  * @since 1.0
  */
 class EmojiChatListener implements Listener {
@@ -58,9 +58,9 @@ class EmojiChatListener implements Listener {
 		Bukkit.getScheduler().runTaskLater(plugin, () -> {
 			if (player.hasPermission("emojichat.see")) { // If the player can see emojis
 				try {
-					player.setResourcePack(plugin.getEmojiHandler().getPackVariant().getUrl(), plugin.getEmojiHandler().getPackVariant().getHash()); // If the Spigot version supports loading cached versions
+					player.setResourcePack(plugin.getEmojiHandler().getPackVariant().getUrl(plugin.getConfig().getString("pack-quality")), plugin.getEmojiHandler().getPackVariant().getHash()); // If the Spigot version supports loading cached versions
 				} catch (Exception | NoSuchMethodError e) {
-					player.setResourcePack(plugin.getEmojiHandler().getPackVariant().getUrl()); // If the Spigot version doesn't support loading cached versions
+					player.setResourcePack(plugin.getEmojiHandler().getPackVariant().getUrl(plugin.getConfig().getString("pack-quality"))); // If the Spigot version doesn't support loading cached versions
 				}
 			}
 		}, 20L); // Give time for the player to join

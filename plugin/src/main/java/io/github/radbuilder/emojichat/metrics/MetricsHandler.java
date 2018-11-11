@@ -120,6 +120,9 @@ public class MetricsHandler {
 				
 				// Which pack variant is being used
 				metrics.addCustomChart(new Metrics.SimplePie("packVariant", () -> String.valueOf(plugin.getConfig().getInt("pack-variant"))));
+				
+				// Which pack quality is being used
+				metrics.addCustomChart(new Metrics.SimplePie("packQuality", () -> plugin.getConfig().getString("pack-quality")));
 			default:
 				metrics.addCustomChart(new Metrics.SimplePie("metricsCollection", () -> metricsLevel.name().toLowerCase()));
 				break;
