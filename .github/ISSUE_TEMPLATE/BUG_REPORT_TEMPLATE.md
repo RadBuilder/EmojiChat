@@ -7,9 +7,9 @@
 
 ### What happened instead? 
 
-### What Spigot version are you using? Paste the output of /version below.  
+### What Spigot version are you using? Paste the full output of /version below.  
 
-### What plugins do you have installed? Paste the output of /plugins below.  
+### What plugins do you have installed? Paste the full output of /plugins below.  
 
 ### Are any errors related to EmojiChat in your console or logs? If so, paste below.  
 ```
