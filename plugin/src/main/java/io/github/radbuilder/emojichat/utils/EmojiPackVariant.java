@@ -70,9 +70,9 @@ public enum EmojiPackVariant {
 	 * @return The variant's url.
 	 */
 	public String getUrl(String quality) {
-		quality = quality.toLowerCase(); // Ensure quality is lowercase for a valid URL
-		if (!quality.equals("hd") && !quality.equals("sd")) {
-			quality = "sd"; // Handle invalid config options by giving them the sd version
+		quality = quality.toUpperCase(); // Ensure quality is uppercase for a valid URL
+		if (!quality.equals("HD") && !quality.equals("SD")) {
+			quality = "SD"; // Handle invalid config options by giving them the sd version
 		}
 		return url.replace("{HD or SD}", quality);
 	}
