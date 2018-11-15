@@ -58,7 +58,7 @@ class EmojiChatListener implements Listener {
 		Bukkit.getScheduler().runTaskLater(plugin, () -> {
 			if (player.hasPermission("emojichat.see")) { // If the player can see emojis
 				try {
-					player.setResourcePack(plugin.getEmojiHandler().getPackVariant().getUrl(plugin.getConfig().getString("pack-quality")), plugin.getEmojiHandler().getPackVariant().getHash()); // If the Spigot version supports loading cached versions
+					player.setResourcePack(plugin.getEmojiHandler().getPackVariant().getUrl(plugin.getConfig().getString("pack-quality")), plugin.getEmojiHandler().getPackVariant().getHash(plugin.getConfig().getString("pack-quality"))); // If the Spigot version supports loading cached versions
 				} catch (Exception | NoSuchMethodError e) {
 					player.setResourcePack(plugin.getEmojiHandler().getPackVariant().getUrl(plugin.getConfig().getString("pack-quality"))); // If the Spigot version doesn't support loading cached versions
 				}
