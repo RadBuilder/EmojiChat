@@ -9,6 +9,7 @@ import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -16,14 +17,14 @@ import java.util.List;
  * EmojiChat config updater.
  *
  * @author RadBuilder
- * @version 1.7
+ * @version 1.8
  * @since 1.5
  */
 public class EmojiChatConfigUpdater {
 	/**
 	 * The current config version number.
 	 */
-	private final int CONFIG_VERSION = 4;
+	private final int CONFIG_VERSION = 5;
 	
 	/**
 	 * Creates the EmojiChat config updater with the main class instance.
@@ -63,6 +64,14 @@ public class EmojiChatConfigUpdater {
 			downloadResourcePack = config.getBoolean("download-resourcepack");
 		}
 		
+		// Config v4 values
+		boolean emojisOnSigns = config.contains("emojis-on-signs") ? config.getBoolean("emojis-on-signs") : false;
+		boolean emojisInCommands = config.contains("emojis-in-commands") ? config.getBoolean("emojis-in-commands") : false;
+		boolean onlyCommandList = config.contains("only-command-list") ? config.getBoolean("only-command-list") : false;
+		List<String> commandList = config.contains("command-list") ? config.getStringList("command-list") : Arrays.asList("/msg", "/tell");
+		int packVariant = config.contains("pack-variant") ? config.getInt("pack-variant") : 1;
+		boolean disableEmojis = config.contains("disable-emojis") ? config.getBoolean("disable-emojis") : true;
+		
 		// Config lines
 		List<String> configLines = new ArrayList<>();
 		configLines.add("# Configuration file for EmojiChat by RadBuilder");
@@ -86,25 +95,35 @@ public class EmojiChatConfigUpdater {
 		configLines.add("fix-emoji-coloring: " + fixEmojiColoring);
 		configLines.add("");
 		configLines.add("# If emojis should be displayed on signs (shortcuts and full names supported).");
-		configLines.add("emojis-on-signs: false");
+		configLines.add("emojis-on-signs: " + emojisOnSigns);
 		configLines.add("");
 		configLines.add("# If commands should have emojis (shortcuts and full names supported).");
-		configLines.add("emojis-in-commands: false");
+		configLines.add("emojis-in-commands: " + emojisInCommands);
 		configLines.add("# If emojis should ONLY work with commands in 'command-list'.");
-		configLines.add("only-command-list: false");
+		configLines.add("only-command-list: " + onlyCommandList);
 		configLines.add("# If 'only-command-list' is true, the commands here will be the only commands where emojis are allowed.");
 		configLines.add("command-list:");
-		configLines.add("- '/msg'");
-		configLines.add("- '/tell'");
+		for (String command : commandList) {
+			configLines.add("- '" + command + "'");
+		}
 		configLines.add("");
 		configLines.add("# If EmojiChat should auto download the ResourcePack. If you'd rather have your players manually");
 		configLines.add("# download or use /emojichat resourcepack, set this to false.");
 		configLines.add("download-resourcepack: " + downloadResourcePack);
 		configLines.add("# The resource pack variant to use.");
-		configLines.add("# 1 (recommended) replaces Korean characters with emojis, and 2 replaces Chinese characters with emojis.");
+		configLines.add("# 1 replaces Korean characters with emojis, and 2 replaces Chinese characters with emojis.");
 		configLines.add("# WARNING: Changing this will ruin things like signs that already have the other language's characters!");
 		configLines.add("# Don't change this unless your normal language is being overwritten by emojis.");
-		configLines.add("pack-variant: 1");
+		configLines.add("# Variant 2 is now default because of https://bugs.mojang.com/browse/MC-41270 .");
+		configLines.add("pack-variant: " + packVariant);
+		configLines.add("# If the resource pack should be 'HD' (High Definition) or 'SD' (Standard Definition).");
+		configLines.add("# HD textures aren't compatible with Minecraft (not server) versions 1.13+,");
+		configLines.add("# and will result in emojis not being displayed correctly.");
+		configLines.add("# If you're using a server that supports any Minecraft versions including 1.13+, use SD.");
+		configLines.add("# Otherwise use HD for better quality.");
+		configLines.add("# The file size difference between HD and SD packs is extremely small, and shouldn't");
+		configLines.add("# be a factor when choosing which pack to use.");
+		configLines.add("pack-quality: 'SD'");
 		configLines.add("");
 		configLines.add("# Shortcuts will replace the items in the list with the correct emoji name.");
 		configLines.add("# For example, :) will be replaced with :grinning:, which then will turn it into the emoji.");
@@ -134,51 +153,53 @@ public class EmojiChatConfigUpdater {
 			configLines.add("  - ':third:'");
 			configLines.add("  - ':3rd:'");
 		}
-		configLines.add("  microphone:");
-		configLines.add("  - ':mic:'");
-		configLines.add("  musical_keyboard:");
-		configLines.add("  - ':piano:'");
-		configLines.add("  video_game:");
-		configLines.add("  - ':controller:'");
-		configLines.add("  dart:");
-		configLines.add("  - ':target:'");
-		configLines.add("  game_die:");
-		configLines.add("  - ':dice:'");
-		configLines.add("  - ':die:'");
-		configLines.add("  heart:");
-		configLines.add("  - '<3'");
-		configLines.add("  broken_heart:");
-		configLines.add("  - '</3'");
-		configLines.add("  zero:");
-		configLines.add("  - ':0:'");
-		configLines.add("  one:");
-		configLines.add("  - ':1:'");
-		configLines.add("  two:");
-		configLines.add("  - ':2:'");
-		configLines.add("  three:");
-		configLines.add("  - ':3:'");
-		configLines.add("  four:");
-		configLines.add("  - ':4:'");
-		configLines.add("  five:");
-		configLines.add("  - ':5:'");
-		configLines.add("  six:");
-		configLines.add("  - ':6:'");
-		configLines.add("  seven:");
-		configLines.add("  - ':7:'");
-		configLines.add("  eight:");
-		configLines.add("  - ':8:'");
-		configLines.add("  nine:");
-		configLines.add("  - ':9:'");
-		configLines.add("  keycap_ten:");
-		configLines.add("  - ':ten:'");
-		configLines.add("  - ':10:'");
-		configLines.add("  asterisk:");
-		configLines.add("  - ':*:'");
+		if (configVersion < 4) {
+			configLines.add("  microphone:");
+			configLines.add("  - ':mic:'");
+			configLines.add("  musical_keyboard:");
+			configLines.add("  - ':piano:'");
+			configLines.add("  video_game:");
+			configLines.add("  - ':controller:'");
+			configLines.add("  dart:");
+			configLines.add("  - ':target:'");
+			configLines.add("  game_die:");
+			configLines.add("  - ':dice:'");
+			configLines.add("  - ':die:'");
+			configLines.add("  heart:");
+			configLines.add("  - '<3'");
+			configLines.add("  broken_heart:");
+			configLines.add("  - '</3'");
+			configLines.add("  zero:");
+			configLines.add("  - ':0:'");
+			configLines.add("  one:");
+			configLines.add("  - ':1:'");
+			configLines.add("  two:");
+			configLines.add("  - ':2:'");
+			configLines.add("  three:");
+			configLines.add("  - ':3:'");
+			configLines.add("  four:");
+			configLines.add("  - ':4:'");
+			configLines.add("  five:");
+			configLines.add("  - ':5:'");
+			configLines.add("  six:");
+			configLines.add("  - ':6:'");
+			configLines.add("  seven:");
+			configLines.add("  - ':7:'");
+			configLines.add("  eight:");
+			configLines.add("  - ':8:'");
+			configLines.add("  nine:");
+			configLines.add("  - ':9:'");
+			configLines.add("  keycap_ten:");
+			configLines.add("  - ':ten:'");
+			configLines.add("  - ':10:'");
+			configLines.add("  asterisk:");
+			configLines.add("  - ':*:'");
+		}
 		configLines.add("");
 		configLines.add("# If certain emojis should be disabled or not.");
 		configLines.add("# If true, it will disable all of the emojis specified in 'disabled-emojis'");
 		configLines.add("# If false, emojis specified in 'disabled-emojis' will be ignored.");
-		configLines.add("disable-emojis: true");
+		configLines.add("disable-emojis: " + disableEmojis);
 		configLines.add("# Emojis to disable. Remove them from the list to enable them.");
 		configLines.add("# By default, profane and potentially offensive emojis are disabled.");
 		configLines.add("disabled-emojis:");

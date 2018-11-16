@@ -1,0 +1,3 @@
+## Assets Information
+This folder contains each page required for emojis. When adding or editing emojis, ensure you update the Photoshop file for pages you've made changes to. Each emoji should have its own layer with its name. Then export as a PNG replacing **BOTH** the files found in the assets folder and the files found in the resourcepack folder.  
+*Refer to the README in the resourcepack folder for more information on resource packs and contributing.*

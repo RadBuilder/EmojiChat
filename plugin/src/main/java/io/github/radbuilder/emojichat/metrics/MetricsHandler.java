@@ -10,7 +10,7 @@ import java.util.Map;
  * Metrics handler class.
  *
  * @author RadBuilder
- * @version 1.7
+ * @version 1.8
  * @since 1.4
  */
 public class MetricsHandler {
@@ -54,7 +54,7 @@ public class MetricsHandler {
 				metrics.addCustomChart(new Metrics.SimplePie("usingFixEmojiColoring", () -> Boolean.toString(plugin.getConfig().getBoolean("fix-emoji-coloring"))));
 				
 				// If disable-emojis is being used
-				metrics.addCustomChart(new Metrics.SimplePie("usingVerifyDisabledList", () -> Boolean.toString(plugin.getConfig().getBoolean("disable-emojis"))));
+				metrics.addCustomChart(new Metrics.SimplePie("usingDisableEmojis", () -> Boolean.toString(plugin.getConfig().getBoolean("disable-emojis"))));
 				
 				// If download-resourcepack is being used
 				metrics.addCustomChart(new Metrics.SimplePie("usingDownloadResourcePack", () -> Boolean.toString(plugin.getConfig().getBoolean("download-resourcepack"))));
@@ -83,7 +83,7 @@ public class MetricsHandler {
 				// What emojis are listed under disabled-emojis, if any
 				metrics.addCustomChart(new Metrics.AdvancedPie("disabledEmojis", () -> {
 					Map<String, Integer> disabledEmojis = new HashMap<>();
-					if (!plugin.getConfig().getBoolean("disable-emojis") || disabledEmojis.isEmpty()) { // If there aren't any disabled emojis, add "None"
+					if (!plugin.getConfig().getBoolean("disable-emojis") || plugin.getConfig().getStringList("disabled-emojis").isEmpty()) { // If there aren't any disabled emojis, add "None"
 						disabledEmojis.put("None", 1);
 					} else {
 						plugin.getConfig().getStringList("disabled-emojis").forEach(s -> disabledEmojis.put(s, 1));
@@ -120,6 +120,9 @@ public class MetricsHandler {
 				
 				// Which pack variant is being used
 				metrics.addCustomChart(new Metrics.SimplePie("packVariant", () -> String.valueOf(plugin.getConfig().getInt("pack-variant"))));
+				
+				// Which pack quality is being used
+				metrics.addCustomChart(new Metrics.SimplePie("packQuality", () -> plugin.getConfig().getString("pack-quality")));
 			default:
 				metrics.addCustomChart(new Metrics.SimplePie("metricsCollection", () -> metricsLevel.name().toLowerCase()));
 				break;

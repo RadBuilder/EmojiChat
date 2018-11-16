@@ -8,7 +8,7 @@ import java.io.InputStreamReader;
  * The emoji replacement variant.
  *
  * @author RadBuilder
- * @version 1.7
+ * @version 1.8
  * @since 1.7
  */
 public enum EmojiPackVariant {
@@ -28,7 +28,7 @@ public enum EmojiPackVariant {
 	/**
 	 * The pack variant's SHA1 hash.
 	 */
-	private final byte[] hash;
+	private final byte[][] hash = new byte[2][];
 	/**
 	 * The pack variant's URL.
 	 */
@@ -41,8 +41,9 @@ public enum EmojiPackVariant {
 	 */
 	EmojiPackVariant(int id) {
 		this.id = id;
-		this.hash = byteHash(id);
-		this.url = "https://github.com/RadBuilder/EmojiChat/releases/download/v1.7/EmojiChat." + id + ".ResourcePack.v1.7.zip";
+		this.hash[0] = byteHash(id, 0);
+		this.hash[1] = byteHash(id, 1);
+		this.url = "https://github.com/RadBuilder/EmojiChat/releases/download/v1.7/EmojiChat." + id + ".{HD or SD}.ResourcePack.v1.8.zip";
 	}
 	
 	/**
@@ -59,17 +60,26 @@ public enum EmojiPackVariant {
 	 *
 	 * @return The variant's SHA1 hash.
 	 */
-	public byte[] getHash() {
-		return hash;
+	public byte[] getHash(String quality) {
+		quality = quality.toUpperCase(); // Ensure quality is uppercase for a valid hash
+		if (!quality.equals("HD") && !quality.equals("SD")) {
+			quality = "SD"; // Handle invalid config options by giving them the sd version
+		}
+		return hash[quality.equals("HD") ? 0 : 1];
 	}
 	
 	/**
 	 * Gets the variant's url.
 	 *
+	 * @param quality The quality of the pack (hd or sd).
 	 * @return The variant's url.
 	 */
-	public String getUrl() {
-		return url;
+	public String getUrl(String quality) {
+		quality = quality.toUpperCase(); // Ensure quality is uppercase for a valid URL
+		if (!quality.equals("HD") && !quality.equals("SD")) {
+			quality = "SD"; // Handle invalid config options by giving them the sd version
+		}
+		return url.replace("{HD or SD}", quality);
 	}
 	
 	/**
@@ -91,9 +101,10 @@ public enum EmojiPackVariant {
 	 * Gets the hash for the specified id.
 	 *
 	 * @param id The id to get the hash for.
+	 * @param quality The quality as an int to get the hash for. 0 for HD, 1 for SD.
 	 * @return The hash if the id is valid, a blank byte array otherwise.
 	 */
-	private byte[] byteHash(int id) {
+	private byte[] byteHash(int id, int quality) {
 		byte[] hash = new byte[20];
 		
 		try {
@@ -106,7 +117,7 @@ public enum EmojiPackVariant {
 					continue;
 				}
 				currentLine++;
-				if (currentLine == id) {
+				if (currentLine == id + quality) {
 					String[] values = line.split(",");
 					for (int i = 0; i < 20; i++) {
 						hash[i] = Byte.valueOf(values[i]);

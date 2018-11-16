@@ -7,8 +7,14 @@
     <groupId>io.github.radbuilder</groupId>
     <name>EmojiChat Parent</name>
     <artifactId>emojichat-parent</artifactId>
-    <version>1.7</version>
+    <version>1.8</version>
     <packaging>pom</packaging>
+
+    <properties>
+        <project.java.version>1.8</project.java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    </properties>
 
     <modules>
         <module>plugin</module>
@@ -21,15 +27,15 @@
             <url>https://hub.spigotmc.org/nexus/content/groups/public/</url>
         </repository>
         <!-- DiscordSRV -->
-        <repository>
-            <id>Scarsz-Jenkins</id>
-            <url>http://ci.scarsz.me/plugin/repository/everything/</url>
-        </repository>
-        <!-- DiscordSRV Backup Repo -->
         <!--<repository>-->
-            <!--<id>repo-androkai</id>-->
-            <!--<url>https://repo.androkai.net/minecraft</url>-->
+            <!--<id>Scarsz-Jenkins</id>-->
+            <!--<url>https://ci.scarsz.me/plugin/repository/everything/?guest=1</url>-->
         <!--</repository>-->
+        <!-- DiscordSRV Backup Repo -->
+        <repository>
+            <id>repo-androkai</id>
+            <url>https://repo.androkai.net/minecraft</url>
+        </repository>
         <!-- MVdWPlaceholderAPI -->
         <repository>
             <id>mvdw-software</id>
