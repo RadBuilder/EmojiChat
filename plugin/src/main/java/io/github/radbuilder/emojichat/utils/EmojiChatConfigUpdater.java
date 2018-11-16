@@ -111,9 +111,10 @@ public class EmojiChatConfigUpdater {
 		configLines.add("# download or use /emojichat resourcepack, set this to false.");
 		configLines.add("download-resourcepack: " + downloadResourcePack);
 		configLines.add("# The resource pack variant to use.");
-		configLines.add("# 1 (recommended) replaces Korean characters with emojis, and 2 replaces Chinese characters with emojis.");
+		configLines.add("# 1 replaces Korean characters with emojis, and 2 replaces Chinese characters with emojis.");
 		configLines.add("# WARNING: Changing this will ruin things like signs that already have the other language's characters!");
 		configLines.add("# Don't change this unless your normal language is being overwritten by emojis.");
+		configLines.add("# Variant 2 is now default because of https://bugs.mojang.com/browse/MC-41270 .");
 		configLines.add("pack-variant: " + packVariant);
 		configLines.add("# If the resource pack should be 'HD' (High Definition) or 'SD' (Standard Definition).");
 		configLines.add("# HD textures aren't compatible with Minecraft (not server) versions 1.13+,");

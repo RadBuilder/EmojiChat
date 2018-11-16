@@ -34,10 +34,11 @@ command-list:
 # download or use /emojichat resourcepack, set this to false.
 download-resourcepack: true
 # The resource pack variant to use.
-# 1 (recommended) replaces Korean characters with emojis, and 2 replaces Chinese characters with emojis.
+# 1 replaces Korean characters with emojis, and 2 replaces Chinese characters with emojis.
 # WARNING: Changing this will ruin things like signs that already have the other language's characters!
 # Don't change this unless your normal language is being overwritten by emojis.
-pack-variant: 1
+# Variant 2 is now default because of https://bugs.mojang.com/browse/MC-41270 .
+pack-variant: 2
 # If the resource pack should be 'HD' (High Definition) or 'SD' (Standard Definition).
 # HD textures aren't compatible with Minecraft (not server) versions 1.13+,
 # and will result in emojis not being displayed correctly.
