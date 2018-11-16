@@ -10,6 +10,12 @@
         <version>1.8</version>
     </parent>
 
+    <properties>
+        <project.java.version>1.8</project.java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    </properties>
+
     <name>EmojiChat Plugin</name>
     <artifactId>emojichat-plugin</artifactId>
     <version>1.8</version>
