@@ -43,7 +43,7 @@ public enum EmojiPackVariant {
 		this.id = id;
 		this.hash[0] = byteHash(id, 0);
 		this.hash[1] = byteHash(id, 1);
-		this.url = "https://github.com/RadBuilder/EmojiChat/releases/download/v1.7/EmojiChat." + id + ".{HD or SD}.ResourcePack.v1.8.zip";
+		this.url = "https://github.com/RadBuilder/EmojiChat/releases/download/v1.8/EmojiChat." + id + ".{HD or SD}.ResourcePack.v1.8.zip";
 	}
 	
 	/**
