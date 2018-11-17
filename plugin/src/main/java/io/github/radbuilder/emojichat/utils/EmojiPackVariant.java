@@ -72,7 +72,7 @@ public enum EmojiPackVariant {
 	 * Gets the variant's url.
 	 *
 	 * @param quality The quality of the pack (hd or sd).
-	 * @return The variant's url.c
+	 * @return The variant's url.
 	 */
 	public String getUrl(String quality) {
 		quality = quality.toUpperCase(); // Ensure quality is uppercase for a valid URL
