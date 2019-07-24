@@ -17,7 +17,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
  * EmojiChat listener class.
  *
  * @author RadBuilder
- * @version 1.8
+ * @version 1.8.2
  * @since 1.0
  */
 class EmojiChatListener implements Listener {
