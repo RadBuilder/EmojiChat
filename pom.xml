@@ -55,7 +55,7 @@
     </repositories>
 
     <build>
-        <defaultGoal>clean package install</defaultGoal>
+        <defaultGoal>clean package install -Dmaven.wagon.http.ssl.insecure=true</defaultGoal>
         <finalName>${project.name}</finalName>
         <sourceDirectory>src/main/java</sourceDirectory>
         <plugins>

@@ -5,6 +5,7 @@ import de.Linus122.TelegramChat.Telegram;
 import de.Linus122.TelegramChat.TelegramActionListener;
 import de.Linus122.TelegramComponents.Chat;
 import de.Linus122.TelegramComponents.ChatMessageToMc;
+import de.Linus122.TelegramComponents.ChatMessageToTelegram;
 import io.github.radbuilder.emojichat.EmojiChat;
 import org.apache.commons.lang.StringUtils;
 
@@ -12,7 +13,7 @@ import org.apache.commons.lang.StringUtils;
  * TelegramChat hook.
  *
  * @author RadBuilder
- * @version 1.7
+ * @version 1.8.3
  * @since 1.7
  */
 public class TelegramChatHook implements EmojiChatHook {
@@ -30,7 +31,7 @@ public class TelegramChatHook implements EmojiChatHook {
 		Telegram telegram = API.getTelegramHook();
 		telegram.addListener(new TelegramActionListener() {
 			@Override
-			public void onSendToTelegram(Chat chat) {
+			public void onSendToTelegram(ChatMessageToTelegram chat) {
 				// Replace emojis with shortcuts
 				for (String key : plugin.getEmojiHandler().getEmojis().keySet()) {
 					// Don't count metrics as it's already counted in the normal chat listener
