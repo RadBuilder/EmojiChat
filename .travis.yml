@@ -1,3 +1,4 @@
 language: java
 sudo: false
+install: mvn install -Dmaven.wagon.http.ssl.insecure=true -Dmaven.wagon.http.ssl.allowall=true -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 script: mvn -Dmaven.wagon.http.ssl.insecure=true -Dmaven.wagon.http.ssl.allowall=true package --file pom.xml
