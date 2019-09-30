@@ -19,7 +19,7 @@ import java.util.UUID;
  * Emoji handler class.
  *
  * @author RadBuilder
- * @version 1.7
+ * @version 1.8.3
  * @since 1.4
  */
 public class EmojiHandler {
@@ -296,9 +296,33 @@ public class EmojiHandler {
 	 * @return The message with correct emoji shortcuts.
 	 */
 	public String translateShorthand(String message) {
+		message = message.replace("http://", "http\\://").replace("https://", "https\\://");
+		StringBuilder replaced = new StringBuilder();
+		int previousPosition = 0;
+		
+		// Go through all shortcuts
 		for (String key : plugin.getEmojiHandler().getShortcuts().keySet()) {
-			plugin.getMetricsHandler().addShortcutUsed(StringUtils.countMatches(message, key));
-			message = message.replace(key, plugin.getEmojiHandler().getShortcuts().get(key));
+			// If the message has the shortcut
+			if (message.contains(key)) {
+				// Find location in string of occurrences of shortcut (going forward)
+				for (int i = -1; (i = message.indexOf(key, i + 1)) != -1; i++) {
+					// If character before shortcut is not an escape character
+					if (i - 1 < 0 || message.charAt(i - 1) != '\\') { // Then replace shortcut with emoji
+						replaced.append(message.substring(previousPosition, i)).append(getShortcuts().get(key)); // Add previous text and emoji, but not anything after to prevent replacement issue later
+						plugin.getMetricsHandler().addShortcutUsed(1);
+						previousPosition = i + key.length();
+					} else { // Otherwise remove backslash as it's cancelling an emoji
+						replaced.append(message.substring(previousPosition, i - 1)).append(message.substring(i, i + key.length())); // Add previous text and remove backslash, exclude the matched key but not anything after
+						plugin.getMetricsHandler().addEscapesUsed(1);
+						previousPosition = i + key.length();
+					}
+				}
+			}
+			// Reset necessary variables for next shortcut
+			replaced.append(message.substring(previousPosition)); // Add remaining text
+			previousPosition = 0;
+			message = replaced.toString();
+			replaced = new StringBuilder();
 		}
 		return message;
 	}

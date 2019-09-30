@@ -10,7 +10,7 @@ import java.util.Map;
  * Metrics handler class.
  *
  * @author RadBuilder
- * @version 1.8
+ * @version 1.8.3
  * @since 1.4
  */
 public class MetricsHandler {
@@ -22,6 +22,10 @@ public class MetricsHandler {
 	 * The number of shortcuts used.
 	 */
 	private int shortcutsUsed;
+	/**
+	 * The number of escapes used.
+	 */
+	private int escapesUsed;
 	/**
 	 * The {@link MetricsLevel} being used.
 	 */
@@ -35,6 +39,7 @@ public class MetricsHandler {
 	public MetricsHandler(EmojiChat plugin) {
 		emojisUsed = 0;
 		shortcutsUsed = 0;
+		escapesUsed = 0;
 		
 		try {
 			metricsLevel = MetricsLevel.valueOf(plugin.getConfig().getString("metrics-collection"));
@@ -117,7 +122,14 @@ public class MetricsHandler {
 					shortcutsUsed = 0; // Reset the number of shortcuts used when this is called
 					return temp;
 				}));
-				
+
+				// The number of escapes used
+				metrics.addCustomChart(new Metrics.SingleLineChart("escapesUsed", () -> {
+					int temp = escapesUsed;
+					escapesUsed = 0; // Reset the number of escapes used when this is called
+					return temp;
+				}));
+
 				// Which pack variant is being used
 				metrics.addCustomChart(new Metrics.SimplePie("packVariant", () -> String.valueOf(plugin.getConfig().getInt("pack-variant"))));
 				
@@ -146,6 +158,15 @@ public class MetricsHandler {
 	public void addShortcutUsed(int shortcutsUsed) {
 		this.shortcutsUsed += shortcutsUsed;
 	}
+
+	/**
+	 * Adds the specified number of escapes used to {@link #escapesUsed}.
+	 *
+	 * @param escapesUsed The number of escapes used to add to {@link #escapesUsed}.
+	 */
+    public void addEscapesUsed(int escapesUsed) {
+    	this.escapesUsed += escapesUsed;
+    }
 }
 
 /**
