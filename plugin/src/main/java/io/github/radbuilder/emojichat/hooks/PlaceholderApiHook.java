@@ -63,6 +63,6 @@ public class PlaceholderApiHook implements EmojiChatHook {
 	@Override
 	public void disable() {
 		enabled = false;
-		PlaceholderAPI.unregisterPlaceholderHook(plugin);
+		PlaceholderAPI.unregisterPlaceholderHook("EmojiChat");
 	}
 }
