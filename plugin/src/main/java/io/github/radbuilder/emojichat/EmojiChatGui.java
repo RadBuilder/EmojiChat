@@ -15,8 +15,8 @@ import java.util.List;
  * EmojiChat gui class.
  *
  * @author RadBuilder
+ * @version 1.8.3
  * @since 1.2
- * @version 1.5
  */
 class EmojiChatGui {
 	/**
@@ -92,8 +92,8 @@ class EmojiChatGui {
 	 * Adds an EmojiList item to the gui specified.
 	 *
 	 * @param gui The gui {@link org.bukkit.inventory.Inventory}.
-	 * @param keyList The list of {@link EmojiHandler#emojis} keys.
-	 * @param emojiMapPosition The current position in the {@link EmojiHandler#emojis}.
+	 * @param keyList The list of emoji keys.
+	 * @param emojiMapPosition The current position in the emoji map, {@link EmojiHandler#getEmojis()}.
 	 */
 	private void addItem(Inventory gui, List<String> keyList, int emojiMapPosition) {
 		ItemStack stack = new ItemStack(Material.PAPER, 1);

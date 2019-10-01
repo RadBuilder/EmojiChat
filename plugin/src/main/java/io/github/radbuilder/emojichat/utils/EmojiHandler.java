@@ -156,11 +156,11 @@ public class EmojiHandler {
 	private void loadDisabledEmojis(FileConfiguration config, EmojiChat plugin) {
 		if (config.getBoolean("disable-emojis")) {
 			for (String disabledEmoji : config.getStringList("disabled-emojis")) {
-				if (disabledEmoji == null || !emojis.containsKey(disabledEmoji)) {
+				if (disabledEmoji == null || !getEmojis().containsKey(disabledEmoji)) {
 					plugin.getLogger().warning("Invalid emoji specified in 'disabled-emojis': '" + disabledEmoji + "'. Skipping...");
 					continue;
 				}
-				disabledCharacters.add(emojis.remove(disabledEmoji)); // Remove disabled emojis from the emoji list
+				disabledCharacters.add(getEmojis().remove(disabledEmoji)); // Remove disabled emojis from the emoji list
 			}
 		}
 	}
@@ -247,9 +247,9 @@ public class EmojiHandler {
 	 * @return The converted message.
 	 */
 	public String toEmoji(String message) {
-		for (String key : emojis.keySet()) {
+		for (String key : getEmojis().keySet()) {
 			plugin.getMetricsHandler().addEmojiUsed(StringUtils.countMatches(message, key));
-			message = message.replace(key, plugin.getEmojiHandler().getEmojis().get(key).toString());
+			message = message.replace(key, getEmojis().get(key).toString());
 		}
 		return message;
 	}
@@ -261,9 +261,9 @@ public class EmojiHandler {
 	 * @return The converted line from sign.
 	 */
 	public String toEmojiFromSign(String line) {
-		for (String key : emojis.keySet()) {
+		for (String key : getEmojis().keySet()) {
 			plugin.getMetricsHandler().addEmojiUsed(StringUtils.countMatches(line, key));
-			line = line.replace(key, ChatColor.WHITE + "" + emojis.get(key) + ChatColor.BLACK); // Sets the emoji color to white for correct coloring
+			line = line.replace(key, ChatColor.WHITE + "" + getEmojis().get(key) + ChatColor.BLACK); // Sets the emoji color to white for correct coloring
 		}
 		return line;
 	}
@@ -281,9 +281,9 @@ public class EmojiHandler {
 		} else {
 			String chatColor = message.substring(0, 2); // Gets the chat color of the message, i.e. §a
 			boolean hasColor = chatColor.contains("§");
-			for (String key : emojis.keySet()) {
+			for (String key : getEmojis().keySet()) {
 				plugin.getMetricsHandler().addEmojiUsed(StringUtils.countMatches(message, key));
-				message = message.replace(key, ChatColor.WHITE + "" + emojis.get(key) + (hasColor ? chatColor : "")); // Sets the emoji color to white for correct coloring
+				message = message.replace(key, ChatColor.WHITE + "" + getEmojis().get(key) + (hasColor ? chatColor : "")); // Sets the emoji color to white for correct coloring
 			}
 		}
 		return message;
@@ -301,7 +301,7 @@ public class EmojiHandler {
 		int previousPosition = 0;
 		
 		// Go through all shortcuts
-		for (String key : plugin.getEmojiHandler().getShortcuts().keySet()) {
+		for (String key : getShortcuts().keySet()) {
 			// If the message has the shortcut
 			if (message.contains(key)) {
 				// Find location in string of occurrences of shortcut (going forward)

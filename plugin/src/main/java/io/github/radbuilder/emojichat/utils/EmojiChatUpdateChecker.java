@@ -16,7 +16,7 @@ import java.net.URL;
  * EmojiChat update checker class.
  *
  * @author RadBuilder
- * @version 1.8.1
+ * @version 1.8.3
  * @since 1.3
  */
 public class EmojiChatUpdateChecker {
@@ -45,7 +45,7 @@ public class EmojiChatUpdateChecker {
 	public EmojiChatUpdateChecker(EmojiChat plugin) {
 		String version = plugin.getDescription().getVersion().replaceAll("[^0-9]", "");
 		// Make versions 3 characters long for int comparison, i.e. 1.8 -> 180, 1.8.1 -> 181, so 1.9 -> 190 not 19
-		currentVersion = Integer.valueOf(version.length() < 3 ? version + "0" : version);
+		currentVersion = Integer.parseInt(version.length() < 3 ? version + "0" : version);
 		
 		updateTask = Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, this::checkForUpdates, 20L * 10L, 20L * 60L * 60L * 4L); // Start checking for updates after 10 seconds, then every 4 hours
 	}
@@ -67,7 +67,7 @@ public class EmojiChatUpdateChecker {
 			
 			String version = ((JSONObject) value.get(value.size() - 1)).get("name").toString().replaceAll("[^0-9]", "");
 			// Make versions 3 characters long for int comparison, i.e. 1.8 -> 180, 1.8.1 -> 181, so 1.9 -> 190 not 19
-			latestVersion = Integer.valueOf(version.length() < 3 ? version + "0" : version);
+			latestVersion = Integer.parseInt(version.length() < 3 ? version + "0" : version);
 			
 			updateAvailable = currentVersion < latestVersion;
 		} catch (Exception ignored) { // Something happened, not sure what (possibly no internet connection), so no updates available
