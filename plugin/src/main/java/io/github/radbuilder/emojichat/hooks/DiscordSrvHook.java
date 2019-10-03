@@ -37,7 +37,7 @@ public class DiscordSrvHook implements EmojiChatHook {
 		enabled = true;
 	}
 	
-	@Subscribe(priority = ListenerPriority.MONITOR)
+	@Subscribe(priority = ListenerPriority.HIGHEST)
 	public void onChatMessageFromInGame(GameChatMessagePreProcessEvent event) { // From in-game to Discord
 		if (!event.getPlayer().hasPermission("emojichat.use"))
 			return; // Don't do anything if they don't have permission
@@ -53,7 +53,7 @@ public class DiscordSrvHook implements EmojiChatHook {
 		event.setMessage(message);
 	}
 	
-	@Subscribe(priority = ListenerPriority.MONITOR)
+	@Subscribe(priority = ListenerPriority.HIGHEST)
 	public void onChatMessageFromDiscord(DiscordGuildMessagePostProcessEvent event) { // From Discord to in-game
 		// TODO: Add permission checking for Discord
 		String message = event.getProcessedMessage();
