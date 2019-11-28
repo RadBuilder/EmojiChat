@@ -13,6 +13,10 @@ public enum EmojiChatHookType {
 	 */
 	DISCORDSRV,
 	/**
+	 * DiscordSRV Staff Chat: https://www.spigotmc.org/resources/discordsrv-staff-chat.44245/
+	 */
+	DISCORDSRVSTAFFCHAT,
+	/**
 	 * MVdWPlaceholderAPI plugin: https://www.spigotmc.org/resources/mvdwplaceholderapi.11182/
 	 */
 	MVDWPLACEHOLDERAPI,
