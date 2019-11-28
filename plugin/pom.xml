@@ -7,7 +7,7 @@
     <parent>
         <groupId>io.github.radbuilder</groupId>
         <artifactId>emojichat-parent</artifactId>
-        <version>1.8.2</version>
+        <version>1.8.3</version>
     </parent>
 
     <properties>
@@ -18,7 +18,7 @@
 
     <name>EmojiChat Plugin</name>
     <artifactId>emojichat-plugin</artifactId>
-    <version>1.8.2</version>
+    <version>1.8.3</version>
     <packaging>jar</packaging>
 
     <build>
