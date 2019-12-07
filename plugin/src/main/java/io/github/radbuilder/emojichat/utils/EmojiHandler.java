@@ -19,7 +19,7 @@ import java.util.UUID;
  * Emoji handler class.
  *
  * @author RadBuilder
- * @version 1.7
+ * @version 1.8.3
  * @since 1.4
  */
 public class EmojiHandler {
@@ -156,11 +156,11 @@ public class EmojiHandler {
 	private void loadDisabledEmojis(FileConfiguration config, EmojiChat plugin) {
 		if (config.getBoolean("disable-emojis")) {
 			for (String disabledEmoji : config.getStringList("disabled-emojis")) {
-				if (disabledEmoji == null || !emojis.containsKey(disabledEmoji)) {
+				if (disabledEmoji == null || !getEmojis().containsKey(disabledEmoji)) {
 					plugin.getLogger().warning("Invalid emoji specified in 'disabled-emojis': '" + disabledEmoji + "'. Skipping...");
 					continue;
 				}
-				disabledCharacters.add(emojis.remove(disabledEmoji)); // Remove disabled emojis from the emoji list
+				disabledCharacters.add(getEmojis().remove(disabledEmoji)); // Remove disabled emojis from the emoji list
 			}
 		}
 	}
@@ -247,9 +247,9 @@ public class EmojiHandler {
 	 * @return The converted message.
 	 */
 	public String toEmoji(String message) {
-		for (String key : emojis.keySet()) {
+		for (String key : getEmojis().keySet()) {
 			plugin.getMetricsHandler().addEmojiUsed(StringUtils.countMatches(message, key));
-			message = message.replace(key, plugin.getEmojiHandler().getEmojis().get(key).toString());
+			message = message.replace(key, getEmojis().get(key).toString());
 		}
 		return message;
 	}
@@ -261,9 +261,9 @@ public class EmojiHandler {
 	 * @return The converted line from sign.
 	 */
 	public String toEmojiFromSign(String line) {
-		for (String key : emojis.keySet()) {
+		for (String key : getEmojis().keySet()) {
 			plugin.getMetricsHandler().addEmojiUsed(StringUtils.countMatches(line, key));
-			line = line.replace(key, ChatColor.WHITE + "" + emojis.get(key) + ChatColor.BLACK); // Sets the emoji color to white for correct coloring
+			line = line.replace(key, ChatColor.WHITE + "" + getEmojis().get(key) + ChatColor.BLACK); // Sets the emoji color to white for correct coloring
 		}
 		return line;
 	}
@@ -281,9 +281,9 @@ public class EmojiHandler {
 		} else {
 			String chatColor = message.substring(0, 2); // Gets the chat color of the message, i.e. §a
 			boolean hasColor = chatColor.contains("§");
-			for (String key : emojis.keySet()) {
+			for (String key : getEmojis().keySet()) {
 				plugin.getMetricsHandler().addEmojiUsed(StringUtils.countMatches(message, key));
-				message = message.replace(key, ChatColor.WHITE + "" + emojis.get(key) + (hasColor ? chatColor : "")); // Sets the emoji color to white for correct coloring
+				message = message.replace(key, ChatColor.WHITE + "" + getEmojis().get(key) + (hasColor ? chatColor : "")); // Sets the emoji color to white for correct coloring
 			}
 		}
 		return message;
@@ -296,9 +296,33 @@ public class EmojiHandler {
 	 * @return The message with correct emoji shortcuts.
 	 */
 	public String translateShorthand(String message) {
-		for (String key : plugin.getEmojiHandler().getShortcuts().keySet()) {
-			plugin.getMetricsHandler().addShortcutUsed(StringUtils.countMatches(message, key));
-			message = message.replace(key, plugin.getEmojiHandler().getShortcuts().get(key));
+		message = message.replace("http://", "http\\://").replace("https://", "https\\://");
+		StringBuilder replaced = new StringBuilder();
+		int previousPosition = 0;
+		
+		// Go through all shortcuts
+		for (String key : getShortcuts().keySet()) {
+			// If the message has the shortcut
+			if (message.contains(key)) {
+				// Find location in string of occurrences of shortcut (going forward)
+				for (int i = -1; (i = message.indexOf(key, i + 1)) != -1; i++) {
+					// If character before shortcut is not an escape character
+					if (i - 1 < 0 || message.charAt(i - 1) != '\\') { // Then replace shortcut with emoji
+						replaced.append(message.substring(previousPosition, i)).append(getShortcuts().get(key)); // Add previous text and emoji, but not anything after to prevent replacement issue later
+						plugin.getMetricsHandler().addShortcutUsed(1);
+						previousPosition = i + key.length();
+					} else { // Otherwise remove backslash as it's cancelling an emoji
+						replaced.append(message.substring(previousPosition, i - 1)).append(message.substring(i, i + key.length())); // Add previous text and remove backslash, exclude the matched key but not anything after
+						plugin.getMetricsHandler().addEscapesUsed(1);
+						previousPosition = i + key.length();
+					}
+				}
+			}
+			// Reset necessary variables for next shortcut
+			replaced.append(message.substring(previousPosition)); // Add remaining text
+			previousPosition = 0;
+			message = replaced.toString();
+			replaced = new StringBuilder();
 		}
 		return message;
 	}

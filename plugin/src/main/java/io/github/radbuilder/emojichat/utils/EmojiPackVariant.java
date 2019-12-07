@@ -8,7 +8,7 @@ import java.io.InputStreamReader;
  * The emoji replacement variant.
  *
  * @author RadBuilder
- * @version 1.8.1
+ * @version 1.8.3
  * @since 1.7
  */
 public enum EmojiPackVariant {
@@ -119,7 +119,7 @@ public enum EmojiPackVariant {
 				
 				String[] values = line.split(",");
 				for (int i = 0; i < 20; i++) {
-					hash[i] = Byte.valueOf(values[i]);
+					hash[i] = Byte.parseByte(values[i]);
 				}
 				hashes[hashesPosition] = hash;
 				hashesPosition++;

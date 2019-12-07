@@ -7,7 +7,7 @@
     <groupId>io.github.radbuilder</groupId>
     <name>EmojiChat Parent</name>
     <artifactId>emojichat-parent</artifactId>
-    <version>1.8.2</version>
+    <version>1.8.3</version>
     <packaging>pom</packaging>
 
     <properties>
@@ -55,7 +55,7 @@
     </repositories>
 
     <build>
-        <defaultGoal>clean package install</defaultGoal>
+        <defaultGoal>clean package install -Dmaven.wagon.http.ssl.insecure=true</defaultGoal>
         <finalName>${project.name}</finalName>
         <sourceDirectory>src/main/java</sourceDirectory>
         <plugins>

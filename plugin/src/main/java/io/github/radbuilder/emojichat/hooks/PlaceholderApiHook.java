@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
  * PlaceholderAPI hook.
  *
  * @author RadBuilder
- * @version 1.7
+ * @version 1.8.3
  * @since 1.4
  */
 public class PlaceholderApiHook implements EmojiChatHook {
@@ -29,7 +29,7 @@ public class PlaceholderApiHook implements EmojiChatHook {
 	 */
 	public PlaceholderApiHook(EmojiChat plugin) {
 		this.plugin = plugin;
-		PlaceholderAPI.registerPlaceholderHook(plugin, new PlaceholderHook() {
+		PlaceholderAPI.registerPlaceholderHook("EmojiChat", new PlaceholderHook() {
 			@Override
 			public String onPlaceholderRequest(Player player, String identifier) {
 				if (player != null && !player.hasPermission("emojichat.use")) // Make sure the player, if specified, has permission to use emojis
@@ -63,6 +63,6 @@ public class PlaceholderApiHook implements EmojiChatHook {
 	@Override
 	public void disable() {
 		enabled = false;
-		PlaceholderAPI.unregisterPlaceholderHook(plugin);
+		PlaceholderAPI.unregisterPlaceholderHook("EmojiChat");
 	}
 }

@@ -1,10 +1,6 @@
 package io.github.radbuilder.emojichat;
 
-import io.github.radbuilder.emojichat.hooks.DiscordSrvHook;
-import io.github.radbuilder.emojichat.hooks.EmojiChatHook;
-import io.github.radbuilder.emojichat.hooks.MVdWPlaceholderApiHook;
-import io.github.radbuilder.emojichat.hooks.PlaceholderApiHook;
-import io.github.radbuilder.emojichat.hooks.TelegramChatHook;
+import io.github.radbuilder.emojichat.hooks.*;
 import io.github.radbuilder.emojichat.metrics.MetricsHandler;
 import io.github.radbuilder.emojichat.utils.EmojiChatConfigUpdater;
 import io.github.radbuilder.emojichat.utils.EmojiChatUpdateChecker;
@@ -20,7 +16,7 @@ import java.util.List;
  * EmojiChat main class.
  *
  * @author RadBuilder
- * @version 1.7
+ * @version 1.8.3
  * @since 1.0
  */
 public class EmojiChat extends JavaPlugin {
@@ -90,6 +86,11 @@ public class EmojiChat extends JavaPlugin {
 	private void loadHooks() {
 		if (Bukkit.getPluginManager().isPluginEnabled("DiscordSRV")) { // Hook DiscordSRV if installed
 			enabledHooks.add(new DiscordSrvHook(this));
+		}
+		if (Bukkit.getPluginManager().isPluginEnabled("DiscordSRV-Staff-Chat")) { // Hook DiscordSRV Staff Chat if installed
+			DiscordSrvStaffChatHook discordSrvStaffChatHook = new DiscordSrvStaffChatHook(this);
+			enabledHooks.add(discordSrvStaffChatHook);
+			Bukkit.getPluginManager().registerEvents(discordSrvStaffChatHook, this);
 		}
 		if (Bukkit.getPluginManager().isPluginEnabled("MVdWPlaceholderAPI")) { // Hook MVdWPlaceholderAPI if installed
 			enabledHooks.add(new MVdWPlaceholderApiHook(this));
