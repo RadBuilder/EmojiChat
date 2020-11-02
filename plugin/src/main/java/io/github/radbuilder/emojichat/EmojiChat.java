@@ -6,9 +6,16 @@ import io.github.radbuilder.emojichat.utils.EmojiChatConfigUpdater;
 import io.github.radbuilder.emojichat.utils.EmojiChatUpdateChecker;
 import io.github.radbuilder.emojichat.utils.EmojiHandler;
 import org.bukkit.Bukkit;
+import org.bukkit.command.CommandMap;
+import org.bukkit.command.PluginCommand;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.SimplePluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,12 +69,7 @@ public class EmojiChat extends JavaPlugin {
 		Bukkit.getPluginManager().registerEvents(new EmojiChatListener(this), this);
 		
 		// Register the "emojichat" and "ec" commands
-		EmojiChatCommand emojiChatCommand = new EmojiChatCommand(this);
-		EmojiChatTabComplete emojiChatTabComplete = new EmojiChatTabComplete();
-		getCommand("emojichat").setExecutor(emojiChatCommand);
-		getCommand("emojichat").setTabCompleter(emojiChatTabComplete);
-		getCommand("ec").setExecutor(emojiChatCommand);
-		getCommand("ec").setTabCompleter(emojiChatTabComplete);
+		setupCommand();
 	}
 	
 	@Override
@@ -100,6 +102,47 @@ public class EmojiChat extends JavaPlugin {
 		}
 		if (Bukkit.getPluginManager().isPluginEnabled("TelegramChat")) { // Hook TelegramChat if installed
 			enabledHooks.add(new TelegramChatHook(this));
+		}
+	}
+
+	/**
+	 * Setting up command and aliases
+	 */
+	private void setupCommand() {
+		// get the aliases from the config
+		List<String> aliases = getConfig().getStringList("command-aliases");
+		CommandMap commandMap = null;
+
+		try {
+			// constructor the new command
+			Constructor<PluginCommand> constructor = PluginCommand.class.getDeclaredConstructor(String.class, Plugin.class);
+			constructor.setAccessible(true);
+
+			PluginCommand pluginCommand = constructor.newInstance("emojichat", this);
+
+			// get the commandMap
+			Field field = SimplePluginManager.class.getDeclaredField("commandMap");
+			field.setAccessible(true);
+
+			commandMap = (CommandMap) field.get(getServer().getPluginManager());
+
+			// set aliases, executor, description, tab completer and usage for pluginCommand
+			EmojiChatCommand emojiChatExecutor = new EmojiChatCommand(this);
+			EmojiChatTabComplete emojiChatTabComplete = new EmojiChatTabComplete();
+
+			pluginCommand.setAliases(aliases);
+			pluginCommand.setExecutor(emojiChatExecutor);
+			pluginCommand.setTabCompleter(emojiChatTabComplete);
+			pluginCommand.setDescription("The main EmojiChat command");
+			pluginCommand.setUsage("/<command>");
+
+			// register to the command map
+			commandMap.register("emojichat", pluginCommand);
+
+		} catch(NoSuchMethodException | NoSuchFieldException | IllegalAccessException |
+				InvocationTargetException | InstantiationException ex)
+		{
+			ex.printStackTrace();
 		}
 	}
 	
