@@ -18,6 +18,9 @@ metrics-collection: 'FULL'
 # If you're using chat color plugins, this will remove the coloring for emojis to be displayed correctly.
 fix-emoji-coloring: false
 
+# Aliases for emoji command
+command-aliases: ['ec', 'echat']
+
 # If emojis should be displayed on signs (shortcuts and full names supported).
 emojis-on-signs: false
 
